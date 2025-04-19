@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,10 +25,39 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          id="tawkto-chat-head"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+              (function(){
+              var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+              s1.async=true;
+              s1.src='https://embed.tawk.to/6802c0688216bc1911d1b8b6/1ip5bv6ch';
+              s1.charset='UTF-8';
+              s1.setAttribute('crossorigin','*');
+              s0.parentNode.insertBefore(s1,s0);
+              })();
+            `,
+          }}
+        />
+        <Script
+          id="logrocket-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: ` (function() { var s = document.createElement('script'); s.src = 'https://cdn.lgrckt-in.com/LogRocket.min.js'; s.crossOrigin = 'anonymous'; s.onload = function() { window.LogRocket && window.LogRocket.init('hresdk/isr-website'); }; document.head.appendChild(s); })(); `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+
+        {/* Or if you prefer it at the end of body */}
+        {/* <Script id="tawkto-chat" strategy="afterInteractive" dangerouslySetInnerHTML={...} /> */}
       </body>
     </html>
   );
