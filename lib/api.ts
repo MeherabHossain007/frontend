@@ -2,7 +2,7 @@ import { PageData, StrapiResponse } from "@/interfaces/page.interface";
 import axios, { AxiosResponse } from "axios";
 
 const strapiUrl =
-  process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
+  process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 const api = {
   async getPage(slug: string): Promise<PageData | null> {

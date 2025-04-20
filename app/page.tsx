@@ -3,6 +3,7 @@ import React from "react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getHomePageData, getPageMetadata } from "@/controllers/page/pageController";
+import HeroSection from "@/components/sections/HomePage/HeroSection";
 
 
 // Generate metadata for the home page
@@ -26,11 +27,7 @@ export default async function Home() {
   return (
     <div>
       {sections.map((section) => (
-        <div key={section.id}>
-          <h2>{section.title}</h2>
-          <p>{section.subtitle}</p>
-          <a href={section.buttonLink}></a>
-        </div>
+        <HeroSection key={section.id} section={section} />
       ))}
     </div>
   );

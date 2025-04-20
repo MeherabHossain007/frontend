@@ -1,18 +1,16 @@
+interface StrapiImageFormats {
+  thumbnail?: { url: string };
+  small?: { url: string };
+  medium?: { url: string };
+  large?: { url: string };
+}
+
 interface StrapiImage {
-  data: {
-    id: number;
-    attributes: {
-      url: string;
-      width: number;
-      height: number;
-      formats: {
-        thumbnail?: { url: string };
-        small?: { url: string };
-        medium?: { url: string };
-        large?: { url: string };
-      };
-    };
-  } | null;
+  id: number;
+  url: string;
+  width: number;
+  height: number;
+  formats: StrapiImageFormats;
 }
 
 interface HeroSection {
@@ -22,7 +20,7 @@ interface HeroSection {
   subtitle: string;
   buttonText?: string;
   buttonLink?: string;
-  image: StrapiImage;
+  image: StrapiImage | null;
 }
 
 // Union type for all section types
