@@ -1,7 +1,12 @@
+import { Section } from "@/interfaces/section.interface";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  section: Section;
+}
+
+export default function HeroSection({ section }: HeroSectionProps) {
   return (
     <section className="w-full px-4 py-10 md:py-20 ">
       <div className="max-w-[1600px] mx-auto flex flex-col-reverse md:flex-row items-center gap-10 md:gap-16">
@@ -19,11 +24,10 @@ export default function HeroSection() {
         {/* Right - Text & Buttons */}
         <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            {section.title}
           </h1>
           <p className="text-lg md:text-xl text-gray-400">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Repudiandae, molestias.
+            {section.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
             <Link
