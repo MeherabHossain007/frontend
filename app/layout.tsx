@@ -55,9 +55,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-
-        {/* Or if you prefer it at the end of body */}
-        {/* <Script id="tawkto-chat" strategy="afterInteractive" dangerouslySetInnerHTML={...} /> */}
       </body>
     </html>
   );
