@@ -1,4 +1,4 @@
-import { PageData, StrapiResponse } from "@/interfaces/page.interface";
+import { GlobalData, PageData, StrapiResponse } from "@/interfaces/page.interface";
 import axios, { AxiosResponse } from "axios";
 
 const strapiUrl =
@@ -18,6 +18,18 @@ const api = {
       return null;
     } catch (error) {
       console.error("Error fetching page:", error);
+      return null;
+    }
+  },
+
+  async getGlobalSettings(): Promise<GlobalData | null> {
+    try {
+      const response: AxiosResponse<StrapiResponse<GlobalData>> =
+        await axios.get(`${strapiUrl}/api/global?populate=*`);
+
+      return response.data.data;
+    } catch (error) {
+      console.error("Error fetching global settings:", error);
       return null;
     }
   },

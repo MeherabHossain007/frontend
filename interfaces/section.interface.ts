@@ -5,7 +5,7 @@ interface StrapiImageFormats {
   large?: { url: string };
 }
 
-interface StrapiImage {
+export interface StrapiImage {
   id: number;
   url: string;
   width: number;

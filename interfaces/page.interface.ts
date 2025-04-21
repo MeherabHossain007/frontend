@@ -1,4 +1,4 @@
-import { Section } from "./section.interface";
+import { Section, StrapiImage } from "./section.interface";
 
 export interface PageData {
   id: number;
@@ -24,4 +24,33 @@ export interface StrapiResponse<T> {
       total: number;
     };
   };
+}
+
+export interface GlobalData {
+  id: number;
+  documentId: string;
+  siteName: string;
+  favicon: StrapiImage;
+  navigation: NavigationItem[];
+  FooterLinks: FooterLink[];
+  socialLinks: SocialLink[];
+}
+
+export interface NavigationItem {
+  id: number;
+  label: string;
+  url: string;
+}
+
+export interface FooterLink {
+  id: number;
+  title: string | null;
+  url: string | null;
+  category: string | null;
+}
+
+export interface SocialLink {
+  id: number;
+  platform: string;
+  url: string;
 }
