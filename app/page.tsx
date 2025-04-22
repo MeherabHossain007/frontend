@@ -2,9 +2,11 @@
 import React from "react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getHomePageData, getPageMetadata } from "@/controllers/page/pageController";
-import HeroSection from "@/components/sections/HomePage/HeroSection";
-
+import {
+  getHomePageData,
+  getPageMetadata,
+} from "@/controllers/page/pageController";
+import HomeLayout from "@/components/layouts/HomeLayout";
 
 // Generate metadata for the home page
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,13 +24,9 @@ export default async function Home() {
     notFound();
   }
 
-  const { sections } = page;
-
   return (
-    <div>
-      {sections.map((section) => (
-        <HeroSection key={section.id} section={section} />
-      ))}
+    <div className="max-w-5xl mx-auto">
+      <HomeLayout page={page} />
     </div>
   );
 }

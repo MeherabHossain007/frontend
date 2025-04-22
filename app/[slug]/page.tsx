@@ -41,7 +41,6 @@ export default async function Page({ params }: PageProps) {
   return (
     <div>
       {/* Render the page content based on the page type */}
-      {pageType === "home" && <h1>Home Page</h1>}
       {pageType === "userType1" && <h1>User Type 1 Page</h1>}
       {pageType === "userType2" && <h1>User Type 2 Page</h1>}
       {pageType === "career" && <h1>Career Page</h1>}

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 interface HeroSectionProps {
-  section: Section;
+  section: Extract<Section, { __component: "sections.hero" }>;
 }
 
 export default function HeroSection({ section }: HeroSectionProps) {
