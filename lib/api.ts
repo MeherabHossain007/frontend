@@ -1,15 +1,22 @@
 import { GlobalData, PageData, StrapiResponse } from "@/interfaces/page.interface";
 import axios, { AxiosResponse } from "axios";
+import { getLocale } from "./locale";
 
 const strapiUrl =
   process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
 const api = {
   async getPage(slug: string): Promise<PageData | null> {
+    const locale = await getLocale();
+    console.log("Locale:", locale);
+    if (!locale) {
+      console.error("Locale not found");
+      return null;
+    }
     try {
       const response: AxiosResponse<StrapiResponse<PageData[]>> =
         await axios.get(
-          `${strapiUrl}/api/pages?filters[slug]=${slug}&populate[sections][populate]=*`
+          `${strapiUrl}/api/pages?filters[slug]=${slug}&locale=${locale}&populate[sections][populate]=*`
         );
 
       if (response.data.data && response.data.data.length > 0) {

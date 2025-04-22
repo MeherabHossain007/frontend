@@ -9,6 +9,7 @@ export interface PageData {
   metaTitle?: string;
   metaDescription?: string;
   pageType: "home" | "userType1" | "userType2" | "career" | "generic";
+  locale: string;
   sections: Section[];
   createdAt: string;
   updatedAt: string;

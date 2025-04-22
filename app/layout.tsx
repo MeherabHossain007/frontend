@@ -6,7 +6,6 @@ import LogRocket from "@/services/LogRocket";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,16 +28,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-      </head>
+      <head></head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar/>
+        <Navbar />
         <TawkTo />
         <LogRocket />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );

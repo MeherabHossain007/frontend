@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
-import { Facebook, Twitter, Linkedin, Download } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Download, Languages } from "lucide-react";
 import { useNavigation } from "@/lib/hooks/useNavigation";
 import { useFooterLinks } from "@/lib/hooks/useFooterLinks";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
 
 export default function Footer() {
   const { data, loading } = useNavigation();
@@ -84,6 +85,10 @@ export default function Footer() {
 
           {/* Get a Ride */}
           <div className="col-span-1">
+            <div className="flex justify-start items-center">
+              <Languages size={15} />
+              <LanguageSwitcher />
+            </div>
             <h3 className="text-lg font-semibold mb-4">Get a Ride</h3>
             <button className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-full border border-red-500 transition-colors">
               Book Now
