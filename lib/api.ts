@@ -43,11 +43,11 @@ const api = {
 
   async getAllPageSlugs(): Promise<string[]> {
     try {
-      const response: AxiosResponse<
-        StrapiResponse<{ attributes: { slug: string } }[]>
-      > = await axios.get(`${strapiUrl}/api/pages?fields[0]=slug`);
+      const response: AxiosResponse<StrapiResponse<PageData[]>> = await axios.get(
+        `${strapiUrl}/api/pages?fields[0]=slug`
+      );
 
-      return response.data.data.map((page) => page.attributes.slug);
+      return response.data.data.map((page) => page.slug);
     } catch (error) {
       console.error("Error fetching page slugs:", error);
       return [];

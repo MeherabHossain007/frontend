@@ -6,6 +6,8 @@ import LogRocket from "@/services/LogRocket";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 
+export const dynamic = "force-dynamic";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
