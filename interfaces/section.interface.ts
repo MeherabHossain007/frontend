@@ -93,6 +93,8 @@ interface TickerSection {
   __component: "sections.ticker";
   id: number;
   items: TickerItem[];
+  speed?: number;
+  direction?: "forward" | "reverse";
 }
 
 // Union type for all section types
