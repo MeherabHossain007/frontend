@@ -16,7 +16,7 @@ const api = {
     try {
       const response: AxiosResponse<StrapiResponse<PageData[]>> =
         await axios.get(
-          `${strapiUrl}/api/pages?filters[slug]=${slug}&locale=${locale}&populate[sections][populate]=*`
+          `${strapiUrl}/api/pages?filters[slug]=${slug}&locale=${locale}&customPopulate=nested`
         );
 
       if (response.data.data && response.data.data.length > 0) {

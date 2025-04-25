@@ -1,9 +1,13 @@
 "use client";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import type { Section } from "@/interfaces/section.interface";
 import Image from "next/image";
 import { Quote } from "lucide-react";
+import {
+  BlocksRenderer,
+  type BlocksContent,
+} from "@strapi/blocks-react-renderer";
 
 interface TestimonialsProps {
   section: Extract<Section, { __component: "sections.testimonials" }>;
@@ -28,7 +32,7 @@ export default function Testimonials({ section }: TestimonialsProps) {
   return (
     <section
       ref={ref}
-      className={`w-full px-4 py-12 md:py-20 bg-gray-50 dark:bg-gray-900 transition-opacity duration-700 ${
+      className={`w-full px-4 py-12 md:py-20 transition-opacity duration-700 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -53,9 +57,72 @@ export default function Testimonials({ section }: TestimonialsProps) {
               <div className="flex items-center mb-4">
                 <Quote className="text-pink-500 w-8 h-8 mr-2" />
               </div>
-              <p className="text-gray-600 dark:text-gray-400 mb-6 italic">
-                {testimonial.quote}
-              </p>
+              <BlocksRenderer
+                content={testimonial.quote as unknown as BlocksContent}
+                blocks={{
+                  paragraph: ({ children }) => (
+                    <p className="mb-4 text-base text-gray-700 dark:text-gray-300">
+                      {children}
+                    </p>
+                  ),
+                  heading: ({ children, level }) => {
+                    const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+                    return (
+                      <Tag className={`text-${level * 2}xl font-bold mb-4`}>
+                        {children}
+                      </Tag>
+                    );
+                  },
+                  list: ({ children, format }) => {
+                    const ListTag = format === "ordered" ? "ol" : "ul";
+                    return (
+                      <ListTag className="list-inside list-disc pl-5 mb-4">
+                        {children}
+                      </ListTag>
+                    );
+                  },
+                  "list-item": ({ children }) => (
+                    <li className="mb-2">{children}</li>
+                  ),
+                  quote: ({ children }) => (
+                    <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 dark:text-gray-400 mb-4">
+                      {children}
+                    </blockquote>
+                  ),
+                  code: ({ plainText }) => (
+                    <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto">
+                      <code>{plainText}</code>
+                    </pre>
+                  ),
+                  image: ({ image }) => {
+                    console.log(image);
+                    return (
+                      <Image
+                        src={image.url}
+                        width={image.width}
+                        height={image.height}
+                        alt={image.alternativeText || ""}
+                      />
+                    );
+                  },
+                  link: ({ children, url }) => (
+                    <a href={url} className="text-blue-600 hover:underline">
+                      {children}
+                    </a>
+                  ),
+                }}
+                modifiers={{
+                  bold: ({ children }) => <strong>{children}</strong>,
+                  italic: ({ children }) => <em>{children}</em>,
+                  underline: ({ children }) => <u>{children}</u>,
+                  strikethrough: ({ children }) => <s>{children}</s>,
+                  code: ({ children }) => (
+                    <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">
+                      {children}
+                    </code>
+                  ),
+                }}
+              />
               <div className="flex items-center">
                 {testimonial.avatar && (
                   <Image
