@@ -27,7 +27,14 @@ export default function HomeLayout({ page }: HomeLayoutProps) {
       case "sections.call-to-action":
         return <CallToAction key={section.id} section={section} />;
       case "sections.ticker":
-        return <Ticker key={section.id} section={section as Extract<Section, { __component: "sections.ticker" }>}/>;
+        return (
+          <Ticker
+            key={section.id}
+            section={
+              section as Extract<Section, { __component: "sections.ticker" }>
+            }
+          />
+        );
       default:
         return null;
     }
