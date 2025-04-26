@@ -7,6 +7,7 @@ import {
   getPageMetadata,
 } from "@/controllers/page/pageController";
 import UserType1Layout from "@/components/layouts/UserType1Layout";
+import CareerLayout from "@/components/layouts/CareerLayout";
 
 export async function generateMetadata({
   params,
@@ -41,8 +42,7 @@ export default async function Page({
     <div>
       {pageType === "userType1" && <UserType1Layout page={page} />}
       {pageType === "userType2" && <h1>User Type 2 Page</h1>}
-      {pageType === "career" && <h1>Career Page</h1>}
-      {pageType === "generic" && <h1>Generic Page</h1>}
+      {pageType === "career" && <CareerLayout page={page} />}
     </div>
   );
 }

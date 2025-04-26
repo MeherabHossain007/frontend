@@ -1,3 +1,5 @@
+import { type BlocksContent } from "@strapi/blocks-react-renderer";
+
 interface StrapiImageFormats {
   thumbnail?: { url: string };
   small?: { url: string };
@@ -96,7 +98,7 @@ interface TickerSection {
   direction?: "forward" | "reverse";
 }
 
-export interface SlideContent {
+interface SlideContent {
   id: number;
   title: string;
   subtitle: string;
@@ -114,6 +116,57 @@ interface FeatureSlider {
   slides: SlideContent[];
 }
 
+// Career-specific sections
+interface CareerHeroSection {
+  __component: "sections.career-hero";
+  id: number;
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  image: StrapiImage | null;
+}
+
+interface CareerVisionSection {
+  __component: "sections.career-vision";
+  id: number;
+  visionText: string;
+}
+
+interface CareerHighlightItem {
+  id: number;
+  title: string;
+  description: string;
+  linkText: string;
+  linkUrl: string;
+}
+
+interface CareerHighlightsSection {
+  __component: "sections.career-highlights";
+  id: number;
+  title: string;
+  image?: StrapiImage | null;
+  highlights: CareerHighlightItem[];
+}
+
+export interface JobPosition {
+  id: number;
+  title: string;
+  location: string;
+  department: string;
+  description?: string;
+  requirements?: BlocksContent;
+  applicationUrl?: string;
+}
+
+interface CareerJobListingsSection {
+  __component: "sections.career-job-listings";
+  id: number;
+  title: string;
+  subtitle?: string;
+  positions: JobPosition[];
+}
+
 // Union type for all section types
 export type Section =
   | HeroSection
@@ -122,4 +175,8 @@ export type Section =
   | CallToActionSection
   | TickerSection
   | TextImageSection
-  | FeatureSlider;
+  | FeatureSlider
+  | CareerHeroSection
+  | CareerVisionSection
+  | CareerHighlightsSection
+  | CareerJobListingsSection;
