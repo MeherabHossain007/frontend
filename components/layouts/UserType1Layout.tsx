@@ -16,22 +16,34 @@ export default function UserType1Layout({ page }: UserType1LayoutProps) {
   return (
     <main className="bg-gray-50 dark:bg-gray-900">
       {sections.map((section) => {
-        switch (section.__component) {
-          case "sections.hero":
-            return <HeroSection key={section.id} section={section} />;
-          case "sections.text-image":
-            return <TextImageSection key={section.id} section={section} />;
-          case "sections.feature-grid":
-            return <FeatureGrid key={section.id} section={section} />;
-          case "sections.feature-slider":
-            return <FeatureSlider key={section.id} section={section} />;
-          case "sections.testimonials":
-            return <Testimonials key={section.id} section={section} />;
-          case "sections.call-to-action":
-            return <CallToAction key={section.id} section={section} />;
-          default:
-            return null;
-        }
+        const content = (() => {
+          switch (section.__component) {
+            case "sections.hero":
+              return <HeroSection key={section.id} section={section} />;
+            case "sections.text-image":
+              return <TextImageSection key={section.id} section={section} />;
+            case "sections.feature-grid":
+              return <FeatureGrid key={section.id} section={section} />;
+            case "sections.feature-slider":
+              // Render without wrapper
+              return <FeatureSlider key={section.id} section={section} />;
+            case "sections.testimonials":
+              return <Testimonials key={section.id} section={section} />;
+            case "sections.call-to-action":
+              return <CallToAction key={section.id} section={section} />;
+            default:
+              return null;
+          }
+        })();
+
+        // Only wrap if it's not feature-slider
+        return section.__component === "sections.feature-slider" ? (
+          content
+        ) : (
+          <div key={section.id} className="max-w-5xl mx-auto">
+            {content}
+          </div>
+        );
       })}
     </main>
   );

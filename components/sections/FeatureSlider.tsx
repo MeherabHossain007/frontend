@@ -48,7 +48,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-between w-full max-w-7xl px-8">
+      <div className="relative z-10 flex items-center justify-between w-full max-w-7xl px-12">
         {/* Left: Title */}
         <div className=" w-1/2 text-left mt-40">
           <h2 className="text-lg md:text-xl font-semibold leading-tight text-white">
