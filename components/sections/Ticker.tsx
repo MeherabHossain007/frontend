@@ -7,22 +7,16 @@ import { useInView } from "react-intersection-observer";
 interface TickerProps {
   section: Extract<Section, { __component: "sections.ticker" }> & {
     speed?: number;
-    direction?: "forward" | "reverse";
   };
 }
 
 export default function Ticker({ section }: TickerProps) {
   const items = useMemo(() => section.items || [], [section.items]);
-  const [isPaused, setIsPaused] = useState(false);
   const [tickerWidth, setTickerWidth] = useState(0);
-  const tickerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   // Get speed from Strapi or use default value
   const speed = section.speed || 1;
-
-  // Get direction from Strapi or use default forward
-  const direction = section.direction || "forward";
 
   // Create triple items for smoother infinite loop
   const tripleItems = [...items, ...items, ...items];
@@ -32,12 +26,6 @@ export default function Ticker({ section }: TickerProps) {
     threshold: 0.1,
     triggerOnce: false,
   });
-
-  // Combine refs
-  const setRefs = (el: HTMLDivElement | null) => {
-    tickerRef.current = el;
-    inViewRef(el);
-  };
 
   // Calculate and set ticker dimensions
   useEffect(() => {
@@ -57,38 +45,27 @@ export default function Ticker({ section }: TickerProps) {
   // Calculate animation duration based on content width and speed from Strapi
   const getAnimationDuration = () => {
     // Base duration adjusted by content width for consistent speed
-    const baseDuration = 30;
+    const baseDuration = 100;
     const speedFactor = Math.max(tickerWidth / 1000, 1);
     return `${(baseDuration * speedFactor) / speed}s`;
   };
 
-  // Animation direction based on direction from Strapi
-  const getAnimationDirection = () => {
-    return direction === "reverse" ? "reverse" : "normal";
-  };
-
   return (
     <section
-      className="relative w-full overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-8"
+      className="relative w-full overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100 bg:[#FFDEDE] py-2"
       aria-label="Ticker showcase"
     >
       <div
-        ref={setRefs}
+        ref={inViewRef}
         className="relative max-w-screen-2xl mx-auto"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        onTouchStart={() => setIsPaused(true)}
-        onTouchEnd={() => setIsPaused(false)}
       >
         <div
           ref={contentRef}
           className="flex items-center whitespace-nowrap"
           style={{
-            transform: "translateX(0)",
-            animation:
-              inView && !isPaused
-                ? `ticker-scroll ${getAnimationDuration()} linear infinite ${getAnimationDirection()}`
-                : "none",
+            animation: inView
+              ? `ticker-scroll ${getAnimationDuration()} linear infinite`
+              : "none",
           }}
         >
           {tripleItems.map((item, index) => (
@@ -122,10 +99,10 @@ export default function Ticker({ section }: TickerProps) {
       <style jsx global>{`
         @keyframes ticker-scroll {
           0% {
-            transform: translateX(0);
+            transform: translateX(100%);
           }
           100% {
-            transform: translateX(${-tickerWidth}px);
+            transform: translateX(-${tickerWidth}px);
           }
         }
       `}</style>
