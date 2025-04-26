@@ -47,7 +47,7 @@ export default function HomeLayout({ page }: HomeLayoutProps) {
           return renderSection(section);
         }
         return (
-          <div key={section.id} className="max-w-[1280px] mx-auto">
+          <div key={section.id} className=" max-w-md md:max-w-2xl lg:max-w-5xl 2xl:max-w-7xl mx-auto">
             {renderSection(section)}
           </div>
         );
