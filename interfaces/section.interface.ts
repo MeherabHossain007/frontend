@@ -38,7 +38,6 @@ interface TextImageSection {
   reversed?: boolean;
 }
 
-
 interface FeatureItem {
   id: number;
   title: string;
@@ -97,6 +96,24 @@ interface TickerSection {
   direction?: "forward" | "reverse";
 }
 
+export interface SlideContent {
+  id: number;
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  buttonLink: string;
+  image: StrapiImage | null;
+}
+
+interface FeatureSlider {
+  __component: "sections.feature-slider";
+  id: number;
+  title: string;
+  subtitle: string;
+  backgroundImage: StrapiImage | null;
+  slides: SlideContent[];
+}
+
 // Union type for all section types
 export type Section =
   | HeroSection
@@ -104,4 +121,5 @@ export type Section =
   | TestimonialsSection
   | CallToActionSection
   | TickerSection
-  | TextImageSection;
+  | TextImageSection
+  | FeatureSlider;

@@ -4,6 +4,7 @@ import FeatureGrid from "@/components/sections/FeatureGrid";
 import CallToAction from "@/components/sections/CallToAction";
 import HeroSection from "../sections/HeroSection";
 import Testimonials from "../sections/Testimonial";
+import FeatureSlider from "../sections/FeatureSlider";
 
 interface UserType1LayoutProps {
   page: PageData;
@@ -22,6 +23,8 @@ export default function UserType1Layout({ page }: UserType1LayoutProps) {
             return <TextImageSection key={section.id} section={section} />;
           case "sections.feature-grid":
             return <FeatureGrid key={section.id} section={section} />;
+          case "sections.feature-slider":
+            return <FeatureSlider key={section.id} section={section} />;
           case "sections.testimonials":
             return <Testimonials key={section.id} section={section} />;
           case "sections.call-to-action":
