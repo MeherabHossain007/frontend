@@ -38,10 +38,10 @@ export default function Testimonials({ section }: TestimonialsProps) {
     >
       <div className="max-w-[1280px] mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 ">
             {section.title}
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-[650px] mx-auto">
             {section.subtitle}
           </p>
         </div>
@@ -50,7 +50,7 @@ export default function Testimonials({ section }: TestimonialsProps) {
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.id || index}
-              className={`bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md transition-all duration-500 delay-${
+              className={`bg-[#FFDEDE] p-6 rounded-xl shadow-md transition-all duration-500 delay-${
                 index * 100
               } ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
             >
@@ -61,7 +61,7 @@ export default function Testimonials({ section }: TestimonialsProps) {
                 content={testimonial.quote as unknown as BlocksContent}
                 blocks={{
                   paragraph: ({ children }) => (
-                    <p className="mb-4 text-base text-gray-700 dark:text-gray-300">
+                    <p className="mb-4 text-base text-gray-700 ">
                       {children}
                     </p>
                   ),
@@ -117,7 +117,7 @@ export default function Testimonials({ section }: TestimonialsProps) {
                   underline: ({ children }) => <u>{children}</u>,
                   strikethrough: ({ children }) => <s>{children}</s>,
                   code: ({ children }) => (
-                    <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">
+                    <code className="bg-gray-200 px-1 rounded ">
                       {children}
                     </code>
                   ),
@@ -134,8 +134,8 @@ export default function Testimonials({ section }: TestimonialsProps) {
                   />
                 )}
                 <div>
-                  <h4 className="font-semibold">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <h4 className="font-semibold text-black">{testimonial.name}</h4>
+                  <p className="text-sm text-gray-500 ">
                     {testimonial.title}
                   </p>
                 </div>
