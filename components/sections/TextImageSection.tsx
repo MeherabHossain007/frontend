@@ -39,17 +39,16 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
   return (
     <section
       ref={ref}
-      className={`w-full px-4 py-10 md:py-16 transition-opacity duration-700 ${
+      className={`w-full px-4 py-10 md:py-20 transition-opacity duration-700 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
       <div
-        className={`max-w-7xl mx-auto flex flex-col ${
+        className={`max-w-[1600px] mx-auto flex flex-col ${
           reversed ? "md:flex-row-reverse" : "md:flex-row"
         } items-center gap-10 md:gap-16`}
       >
-        {/* Image */}
-        <div className="w-full md:w-1/2 relative aspect-video md:aspect-square">
+        <div className="w-full md:w-1/2 relative aspect-video md:aspect-[4/3]">
           {imageUrl ? (
             <Image
               src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${imageUrl}`}
@@ -68,12 +67,12 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
         {/* Text & Buttons */}
         <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
           {section.title && (
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900 dark:text-white">
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white">
               {section.title}
             </h2>
           )}
           {section.subtitle && (
-            <p className="text-lg text-gray-600 dark:text-gray-300">
+            <p className="text-lg md:text-xl text-gray-400 dark:text-gray-300">
               {section.subtitle}
             </p>
           )}
@@ -146,21 +145,23 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
           />
 
           {section.features && section.features.length > 0 && (
-            <div className="space-y-6 mb-8">
+            <div className="space-y-6">
               {section.features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-4">
-                  <div className="text-2xl text-blue-500">
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${feature.icon?.url}`}
-                      alt={section.title}
-                      height={32}
-                      width={32}
-                      className="h-10 w-10"
-                    />
-                  </div>
+                  {feature.icon?.url && (
+                    <div className="flex-shrink-0">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${feature.icon.url}`}
+                        alt={feature.title || ""}
+                        height={32}
+                        width={32}
+                        className="h-8 w-8"
+                      />
+                    </div>
+                  )}
                   <div>
                     <h3 className="font-semibold text-lg">{feature.title}</h3>
-                    <p className="text-gray-600">{feature.description}</p>
+                    <p className="text-gray-400">{feature.description}</p>
                   </div>
                 </div>
               ))}
@@ -175,9 +176,9 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
                   href={btn.buttonLink}
                   className={`${
                     index === 0
-                      ? "bg-pink-600 hover:bg-pink-700 text-white"
-                      : "bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-100"
-                  } px-6 py-3 rounded-xl transition-colors duration-300 font-medium text-center`}
+                      ? "bg-pink-200 hover:bg-pink-300 text-pink-800"
+                      : "border border-gray-300 hover:bg-gray-100 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200"
+                  } px-8 py-2 font-bold rounded-xl transition-colors duration-300 text-lg text-center`}
                 >
                   {btn.buttonText}
                 </Link>

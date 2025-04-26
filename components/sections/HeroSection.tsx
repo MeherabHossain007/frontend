@@ -40,14 +40,14 @@ export default function HeroSection({ section }: HeroSectionProps) {
 
         {/* Right - Text & Buttons */}
         <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+          <h1 className="text-4xl md:text-5xl  font-bold leading-tight">
             {section.title}
           </h1>
           <p className="text-lg md:text-xl text-gray-400">{section.subtitle}</p>
           <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
             <Link
               href={buttonLink}
-              className="bg-pink-200 hover:bg-pink-300 text-pink-800 px-8 py-4 rounded-xl transition-colors duration-300 font-medium text-lg"
+              className="bg-pink-200 hover:bg-pink-300 text-pink-800 px-8 py-2 font-bold rounded-xl transition-colors duration-300  text-lg"
             >
               {buttonText}
             </Link>
