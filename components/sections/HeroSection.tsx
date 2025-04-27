@@ -49,10 +49,20 @@ export default function HeroSection({ section, userType }: HeroSectionProps) {
 
         {/* Right - Text & Buttons */}
         <div className="w-full flex flex-col justify-between items-center md:w-1/2 text-center md:text-left space-y-6">
-          <h1 className={`text-4xl md:text-5xl font-bold leading-tight ${shouldCenterButton ? 'text-center' : ''}`}>
+          <h1
+            className={`text-4xl md:text-5xl font-bold leading-tight ${
+              shouldCenterButton ? "text-center" : ""
+            }`}
+          >
             {section.title}
           </h1>
-          <p className="text-lg md:text-xl text-gray-400">{section.subtitle}</p>
+          <div
+            className={`text-lg md:text-xl text-gray-400 ${
+              shouldCenterButton ? "text-center" : ""
+            }`}
+          >
+            {section.subtitle}
+          </div>
 
           {/* Extra checkbox for user-type2 */}
           {showExtraCheckbox && (
