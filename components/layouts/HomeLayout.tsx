@@ -17,7 +17,7 @@ export default function HomeLayout({ page }: HomeLayoutProps) {
   const renderSection = (section: Section) => {
     switch (section.__component) {
       case "sections.hero":
-        return <HeroSection key={section.id} section={section} />;
+        return <HeroSection key={section.id} section={section} userType={page.pageType} />;
       case "sections.text-image":
         return <TextImageSection key={section.id} section={section} />;
       case "sections.feature-grid":

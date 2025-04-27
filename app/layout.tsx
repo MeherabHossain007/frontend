@@ -5,6 +5,7 @@ import TawkTo from "@/services/TawkTo";
 import LogRocket from "@/services/LogRocket";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import GoogleAnalytics from "@/services/GoogleAnalytics";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme='dark'>
+    <html lang="en" data-theme="dark">
       <head></head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -37,6 +38,7 @@ export default function RootLayout({
         <Navbar />
         <TawkTo />
         <LogRocket />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
         {children}
         <Footer />
       </body>

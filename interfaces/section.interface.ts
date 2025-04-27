@@ -22,6 +22,7 @@ interface HeroSection {
   subtitle: string;
   buttonText?: string;
   buttonLink?: string;
+  checkText: string;
   image: StrapiImage | null;
 }
 
@@ -116,6 +117,16 @@ interface FeatureSlider {
   slides: SlideContent[];
 }
 
+interface FeatureSpotlight {
+  __component: "sections.feature-spotlight";
+  id: number;
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  buttonLink: string;
+  image: StrapiImage;
+}
+
 // Career-specific sections
 interface CareerHeroSection {
   __component: "sections.career-hero";
@@ -179,4 +190,5 @@ export type Section =
   | CareerHeroSection
   | CareerVisionSection
   | CareerHighlightsSection
-  | CareerJobListingsSection;
+  | CareerJobListingsSection
+  | FeatureSpotlight;
