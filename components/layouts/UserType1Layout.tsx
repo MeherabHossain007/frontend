@@ -25,7 +25,6 @@ export default function UserType1Layout({ page }: UserType1LayoutProps) {
             case "sections.feature-grid":
               return <FeatureGrid key={section.id} section={section} />;
             case "sections.feature-slider":
-              // Render without wrapper
               return <FeatureSlider key={section.id} section={section} />;
             case "sections.testimonials":
               return <Testimonials key={section.id} section={section} />;
@@ -36,7 +35,6 @@ export default function UserType1Layout({ page }: UserType1LayoutProps) {
           }
         })();
 
-        // Only wrap if it's not feature-slider
         return section.__component === "sections.feature-slider" ? (
           content
         ) : (

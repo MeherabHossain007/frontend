@@ -34,7 +34,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
   return (
     <section
       ref={ref}
-      className="relative w-full min-h-screen overflow-hidden flex flex-col justify-center items-center py-10"
+      className="relative w-full overflow-hidden flex flex-col justify-center items-center mt-20"
     >
       {/* Background */}
       <div

@@ -28,7 +28,7 @@ export default function FeatureSpotlight({ section }: FeatureSpotlightProps) {
   }, [imageUrl]);
 
   return (
-    <section className="relative bg-gray-900 py-16 md:py-24">
+    <section className="relative bg-gray-900 py-10 md:py-16">
       <div className="container mx-auto px-4">
         {/* Image with gradient overlay */}
         <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8">
