@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   images: {
     remotePatterns: [new URL(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/**`)],
   },

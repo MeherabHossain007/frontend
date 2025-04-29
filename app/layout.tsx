@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import TawkTo from "@/services/TawkTo";
 import LogRocket from "@/services/LogRocket";
-import GoogleAnalytics from "@/services/GoogleAnalytics";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 
@@ -31,13 +30,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="dark">
+      <head></head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbar />
         <TawkTo />
         <LogRocket />
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
         {children}
         <Footer />
       </body>
