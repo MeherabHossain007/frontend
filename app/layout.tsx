@@ -4,7 +4,7 @@ import "./globals.css";
 import TawkTo from "@/services/TawkTo";
 import LogRocket from "@/services/LogRocket";
 import Navbar from "@/components/Shared/Navbar";
-import Footer from "@/components/Shared/footer";
+import Footer from "@/components/Shared/Footer";
 
 export const dynamic = "force-dynamic";
 
