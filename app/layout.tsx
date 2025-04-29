@@ -3,9 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import TawkTo from "@/services/TawkTo";
 import LogRocket from "@/services/LogRocket";
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 import GoogleAnalytics from "@/services/GoogleAnalytics";
-import Navbar from "../components/shared/Navbar";
-import Footer from "../components/shared/Footer";
 
 export const dynamic = "force-dynamic";
 
