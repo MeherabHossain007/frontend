@@ -4,8 +4,8 @@ import "./globals.css";
 import TawkTo from "@/services/TawkTo";
 import LogRocket from "@/services/LogRocket";
 import GoogleAnalytics from "@/services/GoogleAnalytics";
-import Navbar from "../components/shared/Navbar";
-import Footer from "../components/shared/Footer";
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 
 export const dynamic = "force-dynamic";
 
