@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
 import { Facebook, Twitter, Linkedin, Download, Languages } from "lucide-react";
-import { useNavigation } from "@/lib/hooks/useNavigation";
+import { useNavigationLink } from "@/lib/hooks/useNavigationLink";
 import { useFooterLinks } from "@/lib/hooks/useFooterLinks";
 import LanguageSwitcher from "../ui/LanguageSwitcher";
 
 export default function Footer() {
-  const { data, loading } = useNavigation();
+  const { data, loading } = useNavigationLink();
   const { categorizedLinks } = useFooterLinks();
 
   const getSocialIcon = (platform: string) => {
@@ -110,7 +110,8 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-12 pt-6 text-center text-lg text-gray-700 font-medium">
           <p>
-            &copy; {new Date().getFullYear()} {data?.siteName}. All rights reserved.
+            &copy; {new Date().getFullYear()} {data?.siteName}. All rights
+            reserved.
           </p>
         </div>
       </div>

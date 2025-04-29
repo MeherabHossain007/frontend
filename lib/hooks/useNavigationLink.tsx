@@ -2,7 +2,7 @@ import globalController from "@/controllers/page/globalController";
 import { GlobalData } from "@/interfaces/page.interface";
 import { useState, useEffect } from "react";
 
-export function useNavigation() {
+export function useNavigationLink() {
   const [data, setData] = useState<GlobalData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);

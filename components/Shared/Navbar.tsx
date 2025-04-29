@@ -2,14 +2,14 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useNavigation } from "@/lib/hooks/useNavigation";
+import { useNavigationLink } from "@/lib/hooks/useNavigationLink";
 import Image from "next/image";
 import PaymentSection from "../sections/Payment/PaymentSection";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const { data, loading } = useNavigation();
+  const { data, loading } = useNavigationLink();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

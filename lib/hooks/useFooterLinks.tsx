@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigation } from "./useNavigation";
+import { useNavigationLink } from "./useNavigationLink";
 import { FooterLink } from "@/interfaces/page.interface";
 
 export function useFooterLinks() {
-  const { data, loading, error } = useNavigation();
+  const { data, loading, error } = useNavigationLink();
   const [categorizedLinks, setCategorizedLinks] = useState<
     Record<string, FooterLink[]>
   >({});
