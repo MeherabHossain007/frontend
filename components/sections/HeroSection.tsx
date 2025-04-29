@@ -85,7 +85,7 @@ export default function HeroSection({ section, userType }: HeroSectionProps) {
 
           {/* Button section with conditional centering */}
           <div
-            className={`flex flex-col sm:flex-row ${
+            className={`flex w-full flex-col sm:flex-row ${
               shouldCenterButton
                 ? "justify-center"
                 : "md:justify-start justify-center"

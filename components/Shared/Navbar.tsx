@@ -134,20 +134,19 @@ export default function Navbar() {
           </div>
         )}
       </div>
-
       {/* Payment Modal */}
       {isPaymentModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-auto transform transition-all duration-300 animate-scaleIn">
             <div className="flex justify-end p-2">
               <button
                 onClick={closePaymentModal}
-                className="p-2 hover:bg-gray-100 rounded-full"
+                className="p-2 rounded-full transition-colors"
               >
-                <X size={24} />
+                <X size={24} color="#000" />
               </button>
             </div>
-            <div className="px-4 pb-6">
+            <div className="px-6 pb-8">
               <PaymentSection />
             </div>
           </div>
