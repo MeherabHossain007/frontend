@@ -34,31 +34,30 @@ const FeatureSlider = ({ section }: SliderProps) => {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden flex flex-col justify-center items-center mt-20"
+      className="relative w-full overflow-hidden flex flex-col justify-center items-center py-12 md:py-16 lg:py-20"
     >
       {/* Background */}
       <div
-        className="absolute h-[50%] inset-0 bg-cover bg-center"
+        className="absolute h-1/2 md:h-[50%] inset-0 bg-cover bg-center"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-      >
-      </div>
+      ></div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex items-center justify-between w-full max-w-7xl px-12">
-        {/* Left: Title */}
-        <div className=" w-1/2 text-left mt-40">
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl px-4 sm:px-6 lg:px-12">
+        {/* Left: Title - Full width on mobile, 1/3 on larger screens */}
+        <div className="w-full lg:w-1/3 text-center lg:text-right mt-16 lg:mt-40 mb-6 lg:mb-0">
           <h2 className="text-lg md:text-xl font-semibold leading-tight text-white">
             {section.slides[currentSlide].title}
           </h2>
         </div>
 
-        {/* Center: Phone */}
-        <div className="flex justify-center">
-          <div className="relative h-[700px] w-[700px] max-w-lg max-h-lg">
+        {/* Center: Phone - Full width on mobile, 1/3 with proper sizing on larger screens */}
+        <div className="flex justify-center w-full lg:w-1/3">
+          <div className="relative h-[300px] w-full sm:h-[400px] md:h-[500px] lg:h-[600px] max-w-lg">
             {section.slides[currentSlide].image?.url && (
               <Image
                 src={`${section.slides[currentSlide].image.url}`}
@@ -70,9 +69,9 @@ const FeatureSlider = ({ section }: SliderProps) => {
           </div>
         </div>
 
-        {/* Right: Subtitle + Button */}
-        <div className="w-1/2 flex flex-col items-start mt-48">
-          <p className="text-sm md:text-base text-white mb-6 max-w-sm">
+        {/* Right: Subtitle + Button - Full width on mobile, 1/3 on larger screens */}
+        <div className="w-full lg:w-1/3 flex flex-col items-center lg:items-start mt-6 lg:mt-48">
+          <p className="text-sm md:text-base text-white mb-6 max-w-sm text-center lg:text-left">
             {section.slides[currentSlide].subtitle}
           </p>
           <Link
@@ -85,7 +84,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
       </div>
 
       {/* Dots */}
-      <div className="absolute bottom-32 flex space-x-2 z-10">
+      <div className="relative mt-8 lg:absolute lg:bottom-32 flex space-x-2 z-10">
         {section.slides.map((_, index) => (
           <button
             key={index}
