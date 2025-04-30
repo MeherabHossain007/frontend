@@ -50,7 +50,7 @@ export default function Navbar() {
             >
               {data?.favicon && (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${data.favicon.url}`}
+                  src={`${data.favicon.url}`}
                   alt={data.siteName}
                   width={24}
                   height={24}

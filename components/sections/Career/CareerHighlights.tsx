@@ -72,7 +72,7 @@ export default function CareerHighlights({ section }: CareerHighlightsProps) {
           <div className=" absolute -right-96 top-0">
             {careerHighlightsSection.image?.url ? (
               <Image
-                src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${careerHighlightsSection.image.url}`}
+                src={`${careerHighlightsSection.image.url}`}
                 alt="Lyft career highlights"
                 width={500}
                 height={400}

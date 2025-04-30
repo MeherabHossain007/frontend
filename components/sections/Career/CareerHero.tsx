@@ -68,7 +68,7 @@ export default function CareerHero({ section }: CareerHeroProps) {
           >
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
               <Image
-                src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${imageUrl}`}
+                src={`${imageUrl}`}
                 alt="Lyft office space"
                 fill
                 className="object-cover"

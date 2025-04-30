@@ -51,7 +51,7 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
         <div className="w-full md:w-1/2 relative aspect-video md:aspect-[4/3]">
           {imageUrl ? (
             <Image
-              src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${imageUrl}`}
+              src={`${imageUrl}`}
               alt={section.title || "Section image"}
               fill
               className="object-cover rounded-xl shadow-md"
@@ -151,7 +151,7 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
                   {feature.icon?.url && (
                     <div className="flex-shrink-0">
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${feature.icon.url}`}
+                        src={`${feature.icon.url}`}
                         alt={feature.title || ""}
                         height={32}
                         width={32}

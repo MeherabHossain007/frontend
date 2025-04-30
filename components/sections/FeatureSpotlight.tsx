@@ -34,7 +34,7 @@ export default function FeatureSpotlight({ section }: FeatureSpotlightProps) {
         <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8">
           {imageUrl ? (
             <Image
-              src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${imageUrl}`}
+              src={`${imageUrl}`}
               alt={section.title}
               fill
               className="object-cover"

@@ -126,7 +126,7 @@ export default function Testimonials({ section }: TestimonialsProps) {
               <div className="flex items-center">
                 {testimonial.avatar && (
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${testimonial.avatar.url}`}
+                    src={`${testimonial.avatar.url}`}
                     alt={testimonial.name || "Testimonial avatar"}
                     width={48}
                     height={48}

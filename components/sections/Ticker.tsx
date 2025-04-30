@@ -77,7 +77,7 @@ export default function Ticker({ section }: TickerProps) {
               {item.logo ? (
                 <div className="relative overflow-hidden rounded-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${item.logo.url}`}
+                    src={`${item.logo.url}`}
                     alt={item.name || "Partner logo"}
                     width={140}
                     height={70}

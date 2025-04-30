@@ -56,7 +56,7 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
                 <div className="flex justify-center items-center mb-6">
                   <div className="relative w-32 h-32 rounded-2xl overflow-hidden ">
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${feature.icon.url}`}
+                      src={`${feature.icon.url}`}
                       alt={feature.title || "Feature icon"}
                       fill
                       sizes="96px"

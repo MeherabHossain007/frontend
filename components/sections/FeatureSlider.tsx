@@ -14,7 +14,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { ref } = useInView({ triggerOnce: true, threshold: 0.2 });
 
-  const backgroundImage = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${section?.backgroundImage?.url}`;
+  const backgroundImage = `${section?.backgroundImage?.url}`;
 
   useEffect(() => {
     if (!section.slides.length) return;
@@ -61,7 +61,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
           <div className="relative h-[700px] w-[700px] max-w-lg max-h-lg">
             {section.slides[currentSlide].image?.url && (
               <Image
-                src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${section.slides[currentSlide].image.url}`}
+                src={`${section.slides[currentSlide].image.url}`}
                 alt={section.slides[currentSlide].title}
                 fill
                 className="object-contain"

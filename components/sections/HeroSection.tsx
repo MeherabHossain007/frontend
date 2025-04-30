@@ -34,7 +34,7 @@ export default function HeroSection({ section, userType }: HeroSectionProps) {
         <div className="w-full md:w-1/2 relative aspect-video md:aspect-[4/3]">
           {imageUrl ? (
             <Image
-              src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${imageUrl}`}
+              src={`${imageUrl}`}
               alt={section.title}
               fill
               className="object-cover rounded-xl shadow-md"
