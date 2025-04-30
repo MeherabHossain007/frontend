@@ -73,7 +73,7 @@ export default function Navbar() {
 
           {/* Navigation Items - desktop */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-6">
-            {data?.navigation.slice(0, 3).map((item, index) => (
+            {data?.navigation.slice(0, 4).map((item, index) => (
               <Link
                 key={item.id}
                 href={item.url}
