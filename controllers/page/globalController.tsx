@@ -4,7 +4,7 @@ import { GlobalData, StrapiResponse } from "@/interfaces/page.interface";
 import axios from "axios";
 
 
-const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 let globalDataCache: GlobalData | null = null;
 let cacheTimestamp: number | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes

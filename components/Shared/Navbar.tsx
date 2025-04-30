@@ -11,6 +11,8 @@ export default function Navbar() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const { data, loading } = useNavigationLink();
 
+  console.log("Navbar data:", data);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -78,7 +80,7 @@ export default function Navbar() {
                 key={item.id}
                 href={item.url}
                 className={`text-white hover:text-gray-300 ${
-                  index < 2 ? "border-r border-gray-600 pr-2 lg:pr-6" : ""
+                  index < 3 ? "border-r border-gray-600 pr-2 lg:pr-6" : ""
                 }`}
               >
                 {item.label}

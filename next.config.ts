@@ -5,7 +5,9 @@ import path from "path";
 const nextConfig: NextConfig = {
   output: "standalone",
   images: {
-    remotePatterns: [new URL(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/**`)],
+    remotePatterns: [
+      new URL("https://colorful-friendship-7f48b97fdc.media.strapiapp.com/**"),
+    ],
   },
   webpack(config) {
     config.resolve.alias = {
