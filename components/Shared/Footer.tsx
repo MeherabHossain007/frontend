@@ -87,7 +87,7 @@ export default function Footer() {
           ))}
 
           {/* Get a Ride */}
-          <div className=" w-full flex flex-col justify-center xl:justify-start xl:items-start xl:text-start items-center text-center">
+          <div className="flex flex-col justify-center xl:justify-start xl:items-start xl:text-start items-center text-center">
             <div className="flex justify-center items-center mb-6">
               <Languages size={18} className="mr-2" />
               <LanguageSwitcher />
