@@ -5,6 +5,7 @@ import TawkTo from "@/services/TawkTo";
 import LogRocket from "@/services/LogRocket";
 import Navbar from "@/components/Shared/Navbar";
 import Footer from "@/components/Shared/Footer";
+import GoogleAnalytics from "@/services/GoogleAnalytics";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +37,7 @@ export default function RootLayout({
       >
         <Navbar />
         <TawkTo />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         <LogRocket />
         {children}
         <Footer />
