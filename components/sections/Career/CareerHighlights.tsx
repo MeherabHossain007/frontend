@@ -36,7 +36,7 @@ export default function CareerHighlights({ section }: CareerHighlightsProps) {
     <section
       ref={ref}
       id="highlights"
-      className={`w-full py-16 md:py-24 bg-white dark:bg-gray-900 transition-opacity duration-700 ${
+      className={`w-full py-16 md:py-24 bg-white dark:bg-gray-900 transition-opacity duration-700 overflow-hidden ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -50,7 +50,7 @@ export default function CareerHighlights({ section }: CareerHighlightsProps) {
 
         <div className="relative">
           {/* Content columns */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-20 px-20 mr-20">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-18 px-20 mr-25">
             {highlights.map((highlight, index) => (
               <div key={highlight.id || index} className="flex flex-col">
               <h2 className="text-xl md:text-3xl font-semibold mb-3 text-gray-900 dark:text-white">
@@ -69,7 +69,7 @@ export default function CareerHighlights({ section }: CareerHighlightsProps) {
             ))}
           </div>
           {/* Image on the right */}
-          <div className=" absolute -right-96 top-0">
+          <div className=" absolute -right-[22rem] top-0">
             {careerHighlightsSection.image?.url ? (
               <Image
                 src={`${careerHighlightsSection.image.url}`}

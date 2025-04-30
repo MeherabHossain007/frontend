@@ -101,7 +101,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
   return (
     <section
       id="job-listings"
-      className="w-full py-16 md:py-24 bg-white dark:bg-gray-900"
+      className="w-full mt-10 px-20 py-16 md:py-24 bg-white dark:bg-gray-900"
     >
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
