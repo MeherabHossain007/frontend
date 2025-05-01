@@ -34,6 +34,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
 
   // Group positions by department
   const positionsByDepartment = jobPositions.reduce((acc, position) => {
+    // Ensure department exists, use "Other" as default
     const dept = position.department || "Other";
     if (!acc[dept]) {
       acc[dept] = [];
@@ -44,14 +45,29 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
 
   // Extract unique departments and locations for filter dropdowns
   const departments = useMemo(
-    () => [...new Set(jobPositions.map((position) => position.department))],
+    () => [
+      ...new Set(
+        jobPositions.map((position) => position.department || "Other")
+      ),
+    ],
     [jobPositions]
   );
 
   const locations = useMemo(
-    () => [...new Set(jobPositions.map((position) => position.location))],
+    () => [...new Set(jobPositions.map((position) => position.location || "Remote"))],
     [jobPositions]
   );
+
+  console.log("Job Positions:", locations);
+
+  // Helper function to create a consistent key for location strings
+  const createLocationKey = (location: string): string => {
+    // Create a slug-like key from the location string
+    return `loc-${location
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "")}`;
+  };
 
   // Helper function to get requirements as BlocksContent
   const getRequirementsContent = (requirements: unknown): BlocksContent => {
@@ -67,14 +83,18 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
 
       const positions = positionsByDepartment[dept];
       return positions.some((position) => {
+        const positionTitle = position.title || "";
+        const positionDepartment = position.department || "Other";
+        const positionLocation = position.location || "Remote";
+
         const matchesSearch =
           searchQuery === "" ||
-          position.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          position.department.toLowerCase().includes(searchQuery.toLowerCase());
+          positionTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          positionDepartment.toLowerCase().includes(searchQuery.toLowerCase());
 
         const matchesLocation =
           selectedLocation === "All locations" ||
-          position.location === selectedLocation;
+          positionLocation === selectedLocation;
 
         return matchesSearch && matchesLocation;
       });
@@ -101,7 +121,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
   return (
     <section
       id="job-listings"
-      className="w-full mt-10 px-20 py-16 md:py-24 bg-white dark:bg-gray-900"
+      className="w-full py-16 md:py-24 bg-white dark:bg-gray-900"
     >
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
@@ -133,7 +153,9 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
               >
                 <option>All categories</option>
                 {departments.map((department) => (
-                  <option key={department}>{department}</option>
+                  <option key={department || "other"}>
+                    {department || "Other"}
+                  </option>
                 ))}
               </select>
               <ChevronDown
@@ -150,7 +172,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
               >
                 <option>All locations</option>
                 {locations.map((location) => (
-                  <option key={location}>{location}</option>
+                  <option key={createLocationKey(location)}>{location}</option>
                 ))}
               </select>
               <ChevronDown
@@ -186,18 +208,22 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
             {filteredDepartments.map((department) => {
               const positions = positionsByDepartment[department].filter(
                 (position) => {
+                  const positionTitle = position.title || "";
+                  const positionDepartment = position.department || "Other";
+                  const positionLocation = position.location;
+
                   const matchesSearch =
                     searchQuery === "" ||
-                    position.title
+                    positionTitle
                       .toLowerCase()
                       .includes(searchQuery.toLowerCase()) ||
-                    position.department
+                    positionDepartment
                       .toLowerCase()
                       .includes(searchQuery.toLowerCase());
 
                   const matchesLocation =
                     selectedLocation === "All locations" ||
-                    position.location === selectedLocation;
+                    positionLocation === selectedLocation;
 
                   return matchesSearch && matchesLocation;
                 }
@@ -237,7 +263,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                           >
                             <div>
                               <h4 className="font-medium text-gray-900 dark:text-white">
-                                {position.title}
+                                {position.title || "Untitled Position"}
                               </h4>
                               <p className="text-gray-500 dark:text-gray-400 text-sm">
                                 {position.location}

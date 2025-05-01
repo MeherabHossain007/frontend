@@ -30,7 +30,7 @@ export default function CareerHero({ section }: CareerHeroProps) {
   const imageUrl = section.image?.url;
 
   return (
-    <section ref={ref} className="w-full bg-white dark:bg-gray-900 px-36">
+    <section ref={ref} className="w-full bg-white dark:bg-gray-900">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         <div className="py-12 md:py-16 flex flex-col md:flex-row gap-8 md:gap-12">
           <div

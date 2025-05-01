@@ -28,12 +28,11 @@ export default function CareerLayout({ page }: CareerLayoutProps) {
               return null;
           }
         })();
-
         if (section.__component === "sections.career-highlights") {
-          return content;
+          return <div key={section.id}>{content}</div>;
         } else {
           return (
-            <div key={section.id} className="max-w-7xl mx-auto">
+            <div key={section.id} className="max-w-5xl mx-auto">
               {content}
             </div>
           );
