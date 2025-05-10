@@ -1,6 +1,6 @@
 import type { PageData } from "@/interfaces/page.interface";
 import CallToAction from "../sections/CallToAction";
-import FeatureGrid from "../sections/FeatureGrid";
+// import FeatureGrid from "../sections/FeatureGrid";
 import HeroSection from "../sections/HeroSection";
 import Testimonials from "../sections/Testimonial";
 import TextImageSection from "../sections/TextImageSection";
@@ -19,9 +19,9 @@ export default function HomeLayout({ page }: HomeLayoutProps) {
       case "sections.hero":
         return <HeroSection key={section.id} section={section} userType={page.pageType} />;
       case "sections.text-image":
-        return <TextImageSection key={section.id} section={section} />;
-      case "sections.feature-grid":
-        return <FeatureGrid key={section.id} section={section} />;
+        return <TextImageSection key={section.id} section={section as Extract<Section, { __component: "sections.text-image" }>} />;
+      // case "sections.feature-grid":
+      //   return <FeatureGrid key={section.id} section={section} />;
       case "sections.testimonials":
         return <Testimonials key={section.id} section={section} />;
       case "sections.call-to-action":

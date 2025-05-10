@@ -79,7 +79,7 @@ export default function Navbar() {
               <Link
                 key={item.id}
                 href={item.url}
-                className={`text-white hover:text-gray-300 ${
+                className={`text-black hover:text-gray-300 ${
                   index < 3 ? "border-r border-gray-600 pr-2 lg:pr-6" : ""
                 }`}
               >
@@ -87,12 +87,12 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <button className="text-white hover:text-gray-300 border-r border-gray-600 pr-2 lg:pr-6 flex items-center gap-1">
+            <button className="text-black hover:text-gray-800 border-r border-gray-600 pr-2 lg:pr-6 flex items-center gap-1">
               <span className="hidden lg:inline">GIFT MODAL</span>
               <span className="lg:hidden">GIFT</span>
             </button>
 
-            <button className="text-white hover:text-gray-300 flex items-center gap-1">
+            <button className="text-black hover:text-gray-800 flex items-center gap-1">
               <span className="hidden lg:inline">GET THE ANDROID APP</span>
               <span className="lg:hidden">APP</span>
             </button>

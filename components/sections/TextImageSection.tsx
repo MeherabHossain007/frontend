@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import { JSX, useEffect, useState } from "react";
 import { Section } from "@/interfaces/section.interface";
+import { ArrowRight } from "lucide-react";
 import {
   BlocksRenderer,
   type BlocksContent,
@@ -67,12 +68,12 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
         {/* Text & Buttons */}
         <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
           {section.title && (
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white">
+            <h2 className="md:text-xl font-bold leading-tight text-gray-900 ">
               {section.title}
             </h2>
           )}
           {section.subtitle && (
-            <p className="text-lg md:text-xl text-gray-400 dark:text-gray-300">
+            <p className="text-2xl md:text-3xl font-bold text-gray-900  w-[90%] md:w-[80%] mx-auto md:mx-0">
               {section.subtitle}
             </p>
           )}
@@ -155,13 +156,13 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
                         alt={feature.title || ""}
                         height={32}
                         width={32}
-                        className="h-8 w-8"
+                        className="h-8 w-8 text-black bg-black"
                       />
                     </div>
                   )}
                   <div>
                     <h3 className="font-semibold text-lg">{feature.title}</h3>
-                    <p className="text-gray-400">{feature.description}</p>
+                    <p className="text-gray-900">{feature.description}</p>
                   </div>
                 </div>
               ))}
@@ -169,18 +170,21 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
           )}
 
           {section.button && section.button.length > 0 && (
-            <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-4">
               {section.button.map((btn, index) => (
                 <Link
                   key={index}
                   href={btn.buttonLink}
-                  className={`${
+                  className={
                     index === 0
-                      ? "bg-pink-200 hover:bg-pink-300 text-pink-800"
-                      : "border border-gray-300 hover:bg-gray-100 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200"
-                  } px-8 py-2 font-bold rounded-xl transition-colors duration-300 text-lg text-center`}
+                      ? "bg-[#432DD7] hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300"
+                      : "flex items-center group text-gray-700 hover:underline"
+                  }
                 >
                   {btn.buttonText}
+                  {index !== 0 && (
+                    <ArrowRight className="ml-2 h-5 w-5 " />
+                  )}
                 </Link>
               ))}
             </div>
