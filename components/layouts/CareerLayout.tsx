@@ -12,7 +12,7 @@ export default function CareerLayout({ page }: CareerLayoutProps) {
   const { sections } = page;
 
   return (
-    <main className="bg-white dark:bg-gray-900">
+    <main className="">
       {sections.map((section) => {
         const content = (() => {
           switch (section.__component) {

@@ -136,6 +136,7 @@ interface CareerHeroSection {
   buttonText?: string;
   buttonLink?: string;
   image: StrapiImage | null;
+  vision?: string;
 }
 
 interface CareerVisionSection {

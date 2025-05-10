@@ -23,16 +23,19 @@ export default function CareerHero({ section }: CareerHeroProps) {
     }
   }, [inView]);
 
-  const title = section.title;
-  const subtitle = section.subtitle;
-  const buttonText = section.buttonText;
+  const title = section.title || "Building a more connected world, ride by ride.";
+  const subtitle = section.subtitle || "Whether it's an everyday commute or a journey that changes everything, we are driven by our purpose: to serve and connect.";
+  const buttonText = section.buttonText || "Search job openings";
   const buttonLink = section.buttonLink || "/";
   const imageUrl = section.image?.url;
+  const vision = section.vision || "We envision a world where cities feel small again. Where transportation and tech bring people together, instead of apart. We see the future as community-driven — and it starts with you.";
 
   return (
-    <section ref={ref} className="w-full bg-white dark:bg-gray-900">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-        <div className="py-12 md:py-16 flex flex-col md:flex-row gap-8 md:gap-12">
+    <section ref={ref} className="w-full">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-8">
+        {/* Main Hero Section */}
+        <div className="py-16 md:py-20 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+          {/* Left Content */}
           <div
             className={`w-full md:w-1/2 transition-all duration-1000 ${
               isVisible
@@ -40,25 +43,26 @@ export default function CareerHero({ section }: CareerHeroProps) {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            <div className="mb-6">
-              <span className="text-sm font-medium text-pink-500 uppercase">
+            <div className="mb-3">
+              <span className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
                 WORKING AT LYFT
               </span>
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               {title}
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
+            <p className="text-gray-700 mb-8 text-base md:text-lg max-w-lg">
               {subtitle}
             </p>
             <Link
               href={buttonLink}
-              className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-full font-medium"
+              className="bg-[#7141FF] hover:bg-[#5D35D6] text-white px-8 py-3 rounded-full font-medium inline-block transition-colors"
             >
               {buttonText}
             </Link>
           </div>
 
+          {/* Right Image */}
           <div
             className={`w-full md:w-1/2 transition-all duration-1000 delay-300 ${
               isVisible
@@ -66,15 +70,34 @@ export default function CareerHero({ section }: CareerHeroProps) {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
-              <Image
-                src={`${imageUrl}`}
-                alt="Lyft office space"
-                fill
-                className="object-cover"
-                priority
-              />
+            <div className="relative aspect-[16/11] rounded-md overflow-hidden">
+              {imageUrl ? (
+                <Image
+                  src={imageUrl}
+                  alt="Lyft office space"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              ) : (
+                <Image
+                  src="/api/placeholder/800/500"
+                  alt="Lyft office space"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              )}
             </div>
+          </div>
+        </div>
+
+        {/* Vision Statement */}
+        <div className="py-12 md:py-16">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-xl md:text-2xl font-medium text-gray-900">
+              {vision}
+            </p>
           </div>
         </div>
       </div>

@@ -33,12 +33,12 @@ export default function CareerVision({ section }: CareerVisionProps) {
   return (
     <section
       ref={ref}
-      className={`w-full py-12 md:py-16 bg-gray-50 dark:bg-gray-800 transition-opacity duration-700 ${
+      className={`w-full py-12 md:py-16  transition-opacity duration-700 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-        <p className="text-xl md:text-2xl text-center max-w-4xl mx-auto text-gray-700 dark:text-gray-300 leading-relaxed">
+        <p className="text-xl md:text-2xl text-center max-w-4xl mx-auto  leading-relaxed">
           {visionText}
         </p>
       </div>
