@@ -2,8 +2,8 @@
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import type { Section } from "@/interfaces/section.interface";
+import { PrimaryButton } from "@/components/ui/Buttons";
 
 interface CareerHeroProps {
   section: Extract<Section, { __component: "sections.career-hero" }>;
@@ -23,12 +23,17 @@ export default function CareerHero({ section }: CareerHeroProps) {
     }
   }, [inView]);
 
-  const title = section.title || "Building a more connected world, ride by ride.";
-  const subtitle = section.subtitle || "Whether it's an everyday commute or a journey that changes everything, we are driven by our purpose: to serve and connect.";
+  const title =
+    section.title || "Building a more connected world, ride by ride.";
+  const subtitle =
+    section.subtitle ||
+    "Whether it's an everyday commute or a journey that changes everything, we are driven by our purpose: to serve and connect.";
   const buttonText = section.buttonText || "Search job openings";
   const buttonLink = section.buttonLink || "/";
   const imageUrl = section.image?.url;
-  const vision = section.vision || "We envision a world where cities feel small again. Where transportation and tech bring people together, instead of apart. We see the future as community-driven — and it starts with you.";
+  const vision =
+    section.vision ||
+    "We envision a world where cities feel small again. Where transportation and tech bring people together, instead of apart. We see the future as community-driven — and it starts with you.";
 
   return (
     <section ref={ref} className="w-full">
@@ -54,12 +59,7 @@ export default function CareerHero({ section }: CareerHeroProps) {
             <p className="text-gray-700 mb-8 text-base md:text-lg max-w-lg">
               {subtitle}
             </p>
-            <Link
-              href={buttonLink}
-              className="bg-[#7141FF] hover:bg-[#5D35D6] text-white px-8 py-3 rounded-full font-medium inline-block transition-colors"
-            >
-              {buttonText}
-            </Link>
+            <PrimaryButton href={buttonLink} text={buttonText} />
           </div>
 
           {/* Right Image */}

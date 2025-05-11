@@ -379,7 +379,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                   />
                                 </div>
                               )}
-
+{/* 
                               {position.applicationUrl && (
                                 <div className="mt-4">
                                   <a
@@ -389,7 +389,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                     Apply Now
                                   </a>
                                 </div>
-                              )}
+                              )} */}
                             </div>
                           )}
                         </div>

@@ -24,7 +24,7 @@ export default function Footer() {
 
   if (loading) {
     return (
-      <footer className="bg-[#FFDEDE] text-gray-800 py-12">
+      <footer className="bg-gray-100 text-gray-800 py-12">
         <div className="animate-pulse max-w-[1600px] mx-auto px-4 sm:px-6">
           <div className="h-6 bg-gray-600 rounded w-40 mb-10"></div>
           <div className="flex flex-wrap gap-6">
@@ -39,7 +39,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-[#FFDEDE] text-gray-800 py-16">
+    <footer className="bg-gray-100 text-gray-800 py-16">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-wrap justify-between gap-10 ">
           {/* Company Info */}

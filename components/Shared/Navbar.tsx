@@ -11,131 +11,112 @@ export default function Navbar() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const { data, loading } = useNavigationLink();
 
-  console.log("Navbar data:", data);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const openPaymentModal = () => {
     setIsPaymentModalOpen(true);
-    // Close the mobile menu if it's open
-    if (isMenuOpen) {
-      setIsMenuOpen(false);
-    }
+    if (isMenuOpen) setIsMenuOpen(false);
   };
 
-  const closePaymentModal = () => {
-    setIsPaymentModalOpen(false);
-  };
+  const closePaymentModal = () => setIsPaymentModalOpen(false);
 
   if (loading) {
     return (
-      <div className="w-full max-w-[1280px] mx-auto">
-        <nav className="flex items-center justify-between px-4 sm:px-6 py-4 text-white">
-          <div className="animate-pulse bg-gray-700 h-10 w-20 rounded"></div>
-          <div className="animate-pulse bg-gray-700 h-10 w-32 rounded"></div>
-        </nav>
+      <div className="w-full max-w-7xl mx-auto px-4 py-4 animate-pulse">
+        <div className="h-10 bg-gray-300 rounded w-32 mb-2"></div>
+        <div className="h-6 bg-gray-300 rounded w-64"></div>
       </div>
     );
   }
 
   return (
-    <>
-      <div className="relative w-full max-w-[1280px] mx-auto">
-        <nav className="flex items-center justify-between px-4 sm:px-6 py-4 text-white">
+    <header className="w-full border-b border-gray-200">
+      <div className="max-w-7xl mx-auto">
+        <nav className="flex items-center justify-between h-16 px-4">
           {/* Logo */}
-          <div className="flex items-center">
-            <Link
-              href="/"
-              className="font-bold text-xl bg-gray-700 px-4 py-2 rounded flex items-center gap-2"
-            >
-              {data?.favicon && (
-                <Image
-                  src={`${data.favicon.url}`}
-                  alt={data.siteName}
-                  width={24}
-                  height={24}
-                  className="w-6 h-6"
-                />
-              )}
-              {data?.siteName}
+          <div className="flex-shrink-0">
+            <Link href="/">
+              <div className="flex items-center gap-2">
+                {data?.favicon?.url && (
+                  <Image
+                    src={data.favicon.url}
+                    alt={data.siteName}
+                    width={40}
+                    height={40}
+                    className="h-10 w-auto object-contain"
+                  />
+                )}
+                <span className="text-lg font-bold text-gray-900">
+                  {data?.siteName}
+                </span>
+              </div>
             </Link>
           </div>
 
-          {/* Get a ride button - positioned to the left of the nav items */}
-          <div className="hidden md:flex items-end justify-end flex-grow">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex lg:items-center lg:justify-end lg:flex-1">
             <button
-              className="bg-gray-800 text-white px-4 py-2 rounded-full border border-red-500 whitespace-nowrap mr-6"
+              className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full transition duration-150 mr-4"
               onClick={openPaymentModal}
             >
               Get a ride
             </button>
-          </div>
-
-          {/* Navigation Items - desktop */}
-          <div className="hidden md:flex items-center space-x-2 lg:space-x-6">
-            {data?.navigation.slice(0, 4).map((item, index) => (
+            {data?.navigation?.slice(0, 4).map((item) => (
               <Link
                 key={item.id}
                 href={item.url}
-                className={`text-black hover:text-gray-300 ${
-                  index < 3 ? "border-r border-gray-600 pr-2 lg:pr-6" : ""
-                }`}
+                className="text-gray-900 hover:text-pink-500 font-semibold text-sm uppercase border-r border-gray-200 px-6"
               >
                 {item.label}
               </Link>
             ))}
-
-            <button className="text-black hover:text-gray-800 border-r border-gray-600 pr-2 lg:pr-6 flex items-center gap-1">
-              <span className="hidden lg:inline">GIFT MODAL</span>
-              <span className="lg:hidden">GIFT</span>
+            <button className="text-gray-900 hover:text-pink-500 font-semibold text-sm uppercase border-r border-gray-200 px-6">
+              Gift Modal
             </button>
-
-            <button className="text-black hover:text-gray-800 flex items-center gap-1">
-              <span className="hidden lg:inline">GET THE ANDROID APP</span>
-              <span className="lg:hidden">APP</span>
+            <button className="text-gray-900 hover:text-pink-500 font-semibold text-sm uppercase px-6">
+              Get The Android App
             </button>
           </div>
 
-          {/* Mobile menu button */}
-          <button className="md:hidden text-white" onClick={toggleMenu}>
+          {/* Mobile Menu Button */}
+          <button
+            className="lg:hidden text-gray-900"
+            onClick={toggleMenu}
+          >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </nav>
 
-        {/* Mobile menu */}
+        {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-[#FFDEDE] py-4 px-4 absolute w-full z-10">
+          <div className="lg:hidden bg-gray-100 py-4 px-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4">
               <button
                 onClick={openPaymentModal}
-                className="bg-gray-800 text-white px-4 py-2 rounded-full border border-red-500 w-full"
+                className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full w-full"
               >
                 Get a ride
               </button>
-
-              {data?.navigation.map((item) => (
+              {data?.navigation?.map((item) => (
                 <Link
                   key={item.id}
                   href={item.url}
-                  className="text-gray-700 hover:text-gray-300 py-2 border-b border-gray-600"
+                  className="text-gray-900 hover:text-pink-500 font-semibold text-sm uppercase border-b border-gray-200 py-2"
                 >
                   {item.label}
                 </Link>
               ))}
-
-              <button className="text-gray-700 hover:text-gray-300 flex items-center justify-between py-2 border-b border-gray-600">
-                <span>GIFT MODAL</span>
+              <button className="text-gray-900 hover:text-pink-500 font-semibold text-sm uppercase border-b border-gray-200 py-2">
+                Gift Modal
               </button>
-
-              <button className="text-gray-700 hover:text-gray-300 flex items-center justify-between py-2">
-                <span>GET THE ANDROID APP</span>
+              <button className="text-gray-900 hover:text-pink-500 font-semibold text-sm uppercase py-2">
+                Get The Android App
               </button>
             </div>
           </div>
         )}
       </div>
+
       {/* Payment Modal */}
       {isPaymentModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fadeIn">
@@ -154,6 +135,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </>
+    </header>
   );
 }

@@ -2,9 +2,8 @@
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import type { Section } from "@/interfaces/section.interface";
-import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { PrimaryButton, SecondaryButton } from "../ui/Buttons";
 
 interface CallToActionProps {
   section: Extract<Section, { __component: "sections.call-to-action" }>;
@@ -32,7 +31,7 @@ export default function CallToAction({ section }: CallToActionProps) {
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      <div className="max-w-[1600px] mx-auto flex flex-col-reverse md:flex-row items-center gap-10 md:gap-16">
+      <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10 md:gap-16">
         {/* Left - Image */}
         {section.image && (
           <div className="w-full md:w-1/2 relative aspect-video md:aspect-[4/3]">
@@ -82,21 +81,17 @@ export default function CallToAction({ section }: CallToActionProps) {
           )}
 
           <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
-            <Link
+            <PrimaryButton
+              text={section.buttonText || "Get Started"}
               href={section.buttonLink || "#"}
-              className="bg-[#432DD7] hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300"
-            >
-              {section.buttonText || "Get Started"}
-            </Link>
+            />
 
             {section.secondaryButtonText && (
-              <Link
+              <SecondaryButton
+                text={section.secondaryButtonText}
                 href={section.secondaryButtonLink || "#"}
-                className="flex items-center group text-gray-900 hover:underline transition-all duration-300"
-              >
-                {section.secondaryButtonText}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+                showArrow={true}
+              />
             )}
           </div>
         </div>

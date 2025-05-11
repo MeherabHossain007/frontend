@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 import { JSX, useEffect, useState } from "react";
 import { Section } from "@/interfaces/section.interface";
@@ -10,6 +9,7 @@ import {
   BlocksRenderer,
   type BlocksContent,
 } from "@strapi/blocks-react-renderer";
+import { PrimaryButton, SecondaryButton } from "../ui/Buttons";
 
 interface TextImageSectionProps {
   section: Extract<Section, { __component: "sections.text-image" }>;
@@ -45,7 +45,7 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
       }`}
     >
       <div
-        className={`max-w-[1600px] mx-auto flex flex-col ${
+        className={`max-w-7xl mx-auto flex flex-col ${
           reversed ? "md:flex-row-reverse" : "md:flex-row"
         } items-center gap-10 md:gap-16`}
       >
@@ -172,20 +172,23 @@ export default function TextImageSection({ section }: TextImageSectionProps) {
           {section.button && section.button.length > 0 && (
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-4">
               {section.button.map((btn, index) => (
-                <Link
-                  key={index}
-                  href={btn.buttonLink}
-                  className={
-                    index === 0
-                      ? "bg-[#432DD7] hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300"
-                      : "flex items-center group text-gray-700 hover:underline"
-                  }
-                >
-                  {btn.buttonText}
-                  {index !== 0 && (
-                    <ArrowRight className="ml-2 h-5 w-5 " />
-                  )}
-                </Link>
+                index === 0 ? (
+                  <PrimaryButton
+                    key={index}
+                    text={btn.buttonText}
+                    href={btn.buttonLink}
+                  />
+                ) : (
+                  <SecondaryButton
+                    key={index}
+                    text={btn.buttonText}
+                    href={btn.buttonLink}
+                    className="flex items-center group"
+                  >
+                    {btn.buttonText}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </SecondaryButton>
+                )
               ))}
             </div>
           )}

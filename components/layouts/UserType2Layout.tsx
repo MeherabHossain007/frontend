@@ -15,31 +15,25 @@ export default function UserType2Layout({ page }: UserType2LayoutProps) {
   return (
     <main className="">
       {sections.map((section) => {
-        const content = (() => {
-          switch (section.__component) {
-            case "sections.hero":
-              return <HeroSection key={section.id} section={section} userType={page.pageType} />;
-            case "sections.text-image":
-              return <TextImageSection key={section.id} section={section} />;
-            // case "sections.feature-slider":
-            //   return <FeatureSlider key={section.id} section={section} />;
-            // case "sections.feature-spotlight":
-            //   return <FeatureSpotlight key={section.id} section={section} />;
-            case "sections.testimonials":
-              return <Testimonials key={section.id} section={section} />;
-            default:
-              return null;
-          }
-        })();
-
-        if (section.__component === "sections.feature-slider") {
-          return content;
-        } else {
-          return (
-            <div key={section.id} className="max-w-5xl mx-auto">
-              {content}
-            </div>
-          );
+        switch (section.__component) {
+          case "sections.hero":
+            return (
+              <HeroSection
+                key={section.id}
+                section={section}
+                userType={page.pageType}
+              />
+            );
+          case "sections.text-image":
+            return <TextImageSection key={section.id} section={section} />;
+          // case "sections.feature-slider":
+          //   return <FeatureSlider key={section.id} section={section} />;
+          // case "sections.feature-spotlight":
+          //   return <FeatureSpotlight key={section.id} section={section} />;
+          case "sections.testimonials":
+            return <Testimonials key={section.id} section={section} />;
+          default:
+            return null;
         }
       })}
     </main>
