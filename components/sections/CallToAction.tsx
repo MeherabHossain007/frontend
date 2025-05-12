@@ -2,8 +2,8 @@
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import type { Section } from "@/interfaces/section.interface";
-import Link from "next/link";
 import Image from "next/image";
+import { PrimaryButton, SecondaryButton } from "../ui/Buttons";
 
 interface CallToActionProps {
   section: Extract<Section, { __component: "sections.call-to-action" }>;
@@ -31,7 +31,7 @@ export default function CallToAction({ section }: CallToActionProps) {
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      <div className="max-w-[1600px] mx-auto flex flex-col-reverse md:flex-row items-center gap-10 md:gap-16">
+      <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10 md:gap-16">
         {/* Left - Image */}
         {section.image && (
           <div className="w-full md:w-1/2 relative aspect-video md:aspect-[4/3]">
@@ -46,11 +46,15 @@ export default function CallToAction({ section }: CallToActionProps) {
         )}
 
         {/* Right - Text & Buttons */}
-        <div className={`w-full ${section.image ? "md:w-1/2" : "w-full"} text-center md:text-left space-y-6`}>
+        <div
+          className={`w-full ${
+            section.image ? "md:w-1/2" : "w-full"
+          } text-center md:text-left space-y-6`}
+        >
           <h1 className="text-4xl md:text-4xl font-bold leading-tight">
             {section.title}
           </h1>
-          <p className="text-lg md:text-xl text-gray-400">{section.subtitle}</p>
+          <p className="text-lg md:text-xl text-gray-900">{section.subtitle}</p>
 
           {section.features && section.features.length > 0 && (
             <div className="space-y-6">
@@ -63,13 +67,13 @@ export default function CallToAction({ section }: CallToActionProps) {
                         alt={feature.title || ""}
                         height={32}
                         width={32}
-                        className="h-8 w-8"
+                        className="h-8 w-8 bg-black rounded-full p-2"
                       />
                     </div>
                   )}
                   <div className="text-left">
                     <h3 className="font-semibold text-lg">{feature.title}</h3>
-                    <p className="text-gray-400">{feature.description}</p>
+                    <p className="text-gray-900">{feature.description}</p>
                   </div>
                 </div>
               ))}
@@ -77,20 +81,17 @@ export default function CallToAction({ section }: CallToActionProps) {
           )}
 
           <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
-            <Link
+            <PrimaryButton
+              text={section.buttonText || "Get Started"}
               href={section.buttonLink || "#"}
-              className="bg-pink-200 hover:bg-pink-300 text-pink-800 px-8 py-2 font-bold rounded-xl transition-colors duration-300 text-lg"
-            >
-              {section.buttonText || "Get Started"}
-            </Link>
+            />
 
             {section.secondaryButtonText && (
-              <Link
+              <SecondaryButton
+                text={section.secondaryButtonText}
                 href={section.secondaryButtonLink || "#"}
-                className="border border-gray-300 hover:bg-gray-500 px-8 py-2 font-bold rounded-xl transition-colors duration-300 text-lg"
-              >
-                {section.secondaryButtonText}
-              </Link>
+                showArrow={true}
+              />
             )}
           </div>
         </div>

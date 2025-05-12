@@ -50,7 +50,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
       <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Left: Title - Full width on mobile, 1/3 on larger screens */}
         <div className="w-full lg:w-1/3 text-center lg:text-right mt-16 lg:mt-40 mb-6 lg:mb-0">
-          <h2 className="text-lg md:text-xl font-semibold leading-tight text-white">
+          <h2 className="text-lg md:text-xl font-semibold leading-tight text-black">
             {section.slides[currentSlide].title}
           </h2>
         </div>
@@ -71,7 +71,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
 
         {/* Right: Subtitle + Button - Full width on mobile, 1/3 on larger screens */}
         <div className="w-full lg:w-1/3 flex flex-col items-center lg:items-start mt-6 lg:mt-48">
-          <p className="text-sm md:text-base text-white mb-6 max-w-sm text-center lg:text-left">
+          <p className="text-sm md:text-base text-black mb-6 max-w-sm text-center lg:text-left">
             {section.slides[currentSlide].subtitle}
           </p>
           <Link
