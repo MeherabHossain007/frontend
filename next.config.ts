@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   images: {
     remotePatterns: [
-      new URL("https://colorful-friendship-7f48b97fdc.media.strapiapp.com/**"),
+      new URL("https://humble-excitement-d3938ee2da.media.strapiapp.com/**"),
     ],
   },
   webpack(config) {

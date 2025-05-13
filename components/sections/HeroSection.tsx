@@ -24,7 +24,7 @@ export default function HeroSection({ section, userType }: HeroSectionProps) {
       <div className="flex flex-col md:flex-row items-center justify-between gap-16">
         {/* Image Section */}
         <div className="w-full md:w-1/2">
-          <div className="relative w-full h-64 md:h-80 lg:h-96 rounded-lg overflow-hidden">
+          <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden">
             {imageUrl ? (
               <Image
                 src={imageUrl}

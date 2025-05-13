@@ -61,7 +61,7 @@ export default function Navbar() {
             >
               Get a ride
             </button>
-            {data?.navigation?.slice(0, 4).map((item) => (
+            {data?.navigation?.map((item) => (
               <Link
                 key={item.id}
                 href={item.url}
@@ -70,12 +70,6 @@ export default function Navbar() {
                 {item.label}
               </Link>
             ))}
-            <button className="text-gray-900 hover:text-pink-500 font-semibold text-sm uppercase border-r border-gray-200 px-6">
-              Gift Modal
-            </button>
-            <button className="text-gray-900 hover:text-pink-500 font-semibold text-sm uppercase px-6">
-              Get The Android App
-            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -106,12 +100,6 @@ export default function Navbar() {
                   {item.label}
                 </Link>
               ))}
-              <button className="text-gray-900 hover:text-pink-500 font-semibold text-sm uppercase border-b border-gray-200 py-2">
-                Gift Modal
-              </button>
-              <button className="text-gray-900 hover:text-pink-500 font-semibold text-sm uppercase py-2">
-                Get The Android App
-              </button>
             </div>
           </div>
         )}

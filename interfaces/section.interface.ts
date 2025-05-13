@@ -34,6 +34,7 @@ interface TextImageSection {
   richText?: unknown;
   features?: FeatureItem[];
   button?: {
+    id: string;
     buttonText: string;
     buttonLink: string;
   }[];
@@ -44,7 +45,7 @@ interface TextImageSection {
 interface FeatureItem {
   id: number;
   title: string;
-  description: string;
+  description: unknown;
   icon: StrapiImage | null;
 }
 
