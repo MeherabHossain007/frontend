@@ -60,9 +60,9 @@ export default function HomeLayout({ page }: HomeLayoutProps) {
   const getSectionBackground = (component: string, index: number): string => {
     if (component === "sections.hero") return "bg-white"; // Hero typically has its own background
     if (component === "sections.call-to-action") return "bg-purple-50"; // CTA with light highlight color
-
-    // Alternate between white and very light gray for visual separation (Lyft style)
-    return index % 2 === 0 ? "bg-white" : "bg-gray-50";
+    if (component === "sections.feature-grid") return "bg-white"; // Feature grid with white background
+      // Alternate between white and very light gray for visual separation (Lyft style)
+      return index % 2 === 0 ? "bg-gray-50" : "bg-white";
   };
 
   // Function to get section-specific padding
