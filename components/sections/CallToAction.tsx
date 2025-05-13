@@ -1,9 +1,10 @@
 "use client";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import type { Section } from "@/interfaces/section.interface";
 import Image from "next/image";
 import { PrimaryButton, SecondaryButton } from "../ui/Buttons";
+import { BlocksRenderer, BlocksContent } from "@strapi/blocks-react-renderer";
 
 interface CallToActionProps {
   section: Extract<Section, { __component: "sections.call-to-action" }>;
@@ -73,7 +74,83 @@ export default function CallToAction({ section }: CallToActionProps) {
                   )}
                   <div className="text-left">
                     <h3 className="font-semibold text-lg">{feature.title}</h3>
-                    <p className="text-gray-900">{feature.description}</p>
+                    {Array.isArray(feature.description) ? (
+                      <BlocksRenderer
+                        content={feature.description as BlocksContent}
+                        blocks={{
+                          paragraph: ({ children }) => (
+                            <p className="mb-2 text-base text-gray-700 block w-full">
+                              {children}
+                            </p>
+                          ),
+                          heading: ({ children, level }) => {
+                            const Tag =
+                              `h${level}` as keyof JSX.IntrinsicElements;
+                            return (
+                              <Tag
+                                className={`text-${
+                                  level * 2
+                                }xl font-bold mb-4 w-full`}
+                              >
+                                {children}
+                              </Tag>
+                            );
+                          },
+                          list: ({ children, format }) => {
+                            const ListTag = format === "ordered" ? "ol" : "ul";
+                            return (
+                              <ListTag className="list-inside list-disc pl-5 mb-4 w-full">
+                                {children}
+                              </ListTag>
+                            );
+                          },
+                          "list-item": ({ children }) => (
+                            <li className="mb-2">{children}</li>
+                          ),
+                          quote: ({ children }) => (
+                            <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 dark:text-gray-400 mb-4 w-full">
+                              {children}
+                            </blockquote>
+                          ),
+                          code: ({ plainText }) => (
+                            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto w-full">
+                              <code>{plainText}</code>
+                            </pre>
+                          ),
+                          image: ({ image }) => (
+                            <Image
+                              src={image.url}
+                              width={image.width}
+                              height={image.height}
+                              alt={image.alternativeText || ""}
+                            />
+                          ),
+                          link: ({ children, url }) => (
+                            <a
+                              href={url}
+                              className="text-blue-600 hover:underline"
+                            >
+                              {children}
+                            </a>
+                          ),
+                        }}
+                        modifiers={{
+                          bold: ({ children }) => <strong>{children}</strong>,
+                          italic: ({ children }) => <em>{children}</em>,
+                          underline: ({ children }) => <u>{children}</u>,
+                          strikethrough: ({ children }) => <s>{children}</s>,
+                          code: ({ children }) => (
+                            <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">
+                              {children}
+                            </code>
+                          ),
+                        }}
+                      />
+                    ) : (
+                      <p className="text-base text-gray-700">
+                        {feature.description as React.ReactNode}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}
