@@ -1,85 +1,248 @@
-// components/FeatureSpotlight.tsx
 "use client";
-
 import { Section } from "@/interfaces/section.interface";
+import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React, { JSX } from "react";
 
 interface FeatureSpotlightProps {
   section: Extract<Section, { __component: "sections.feature-spotlight" }>;
-  userType?: string;
 }
 
 export default function FeatureSpotlight({ section }: FeatureSpotlightProps) {
-  // Extract image URL from Strapi's format structure
-  const imageUrl = section.image?.url;
+  // Extract values from section to match memberRewardsData structure
+  const sectionTitle = section.title; // Maps to memberRewardsData.sectionTitle
+  const mainHeading = section.subtitle; // Maps to memberRewardsData.mainHeading
 
-  // Default fallbacks or use provided data
-  const buttonText = section.buttonText || "Learn More";
-  const buttonLink = section.buttonLink || "#";
+  // Handling button click actions
+  const handleButtonClick = (action: string) => {
+    console.log(`Button clicked: ${action}`);
+    // Add your button click logic here
+  };
 
-  // State for interaction if needed
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    // Log image URL for debugging
-    console.log("Feature image URL:", imageUrl);
-  }, [imageUrl]);
+  // Check if there are features and handle safely
+  const featuresArray = Array.isArray(section.features) ? section.features : [];
+  const firstFeature = featuresArray[0] || null;
+  const secondFeature = featuresArray[1] || null;
 
   return (
-    <section className="relative bg-gray-900 py-10 md:py-16">
-      <div className="container mx-auto px-4">
-        {/* Image with gradient overlay */}
-        <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8">
-          {imageUrl ? (
+    <section className="bg-[#f7f7fc] min-h-screen flex items-center justify-center px-6 py-16">
+      <div className="max-w-6xl w-full grid md:grid-cols-2 gap-12 md:gap-0 md:divide-x md:divide-gray-300">
+        {/* Left Side - Only render if there's at least one feature */}
+        <div className="space-y-8 pr-0 md:pr-12">
+          <p className="text-base font-semibold text-gray-600 tracking-wide">
+            {sectionTitle}
+          </p>
+          <h2
+            className="text-4xl font-bold text-[#0a0033] leading-snug"
+            dangerouslySetInnerHTML={{ __html: mainHeading }}
+          />
+
+          {firstFeature?.icon?.url && (
             <Image
-              src={`${imageUrl}`}
-              alt={section.title}
-              fill
-              className="object-cover"
-              priority
+              src={firstFeature.icon.url}
+              alt={firstFeature.title}
+              width={200}
+              height={80}
             />
-          ) : (
-            <div className="w-full h-full bg-gray-700 flex items-center justify-center">
-              <span className="text-gray-400">No image available</span>
+          )}
+
+          {firstFeature && (
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-[#0a0033]">
+                {firstFeature.title}
+              </h3>
+
+              {/* Description Block Renderer */}
+              {Array.isArray(firstFeature.description) ? (
+                <BlocksRenderer
+                  content={firstFeature.description as BlocksContent}
+                  blocks={{
+                    paragraph: ({ children }) => (
+                      <p className="text-base text-[#5f5f7a] leading-relaxed mb-4">
+                        {children}
+                      </p>
+                    ),
+                    heading: ({ children, level }) => {
+                      const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+                      return (
+                        <Tag className={`text-${level * 2}xl font-bold mb-4`}>
+                          {children}
+                        </Tag>
+                      );
+                    },
+                    list: ({ children, format }) => {
+                      const ListTag = format === "ordered" ? "ol" : "ul";
+                      return (
+                        <ListTag className="list-inside list-disc pl-5 mb-4">
+                          {children}
+                        </ListTag>
+                      );
+                    },
+                    "list-item": ({ children }) => (
+                      <li className="mb-2">{children}</li>
+                    ),
+                    quote: ({ children }) => (
+                      <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 dark:text-gray-400 mb-4">
+                        {children}
+                      </blockquote>
+                    ),
+                    code: ({ plainText }) => (
+                      <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto">
+                        <code>{plainText}</code>
+                      </pre>
+                    ),
+                    image: ({ image }) => (
+                      <Image
+                        src={image.url}
+                        width={image.width}
+                        height={image.height}
+                        alt={image.alternativeText || ""}
+                      />
+                    ),
+                    link: ({ children, url }) => (
+                      <Link
+                        href={url}
+                        className="text-[#6e00ff] hover:underline"
+                      >
+                        {children}
+                      </Link>
+                    ),
+                  }}
+                  modifiers={{
+                    bold: ({ children }) => <strong>{children}</strong>,
+                    italic: ({ children }) => <em>{children}</em>,
+                    underline: ({ children }) => <u>{children}</u>,
+                    strikethrough: ({ children }) => <s>{children}</s>,
+                    code: ({ children }) => (
+                      <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">
+                        {children}
+                      </code>
+                    ),
+                  }}
+                />
+              ) : (
+                <p className="text-base text-[#5f5f7a] leading-relaxed">
+                  {firstFeature.description as React.ReactNode}
+                </p>
+              )}
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-500/20 to-gray-900/80"></div>
-        </div>
 
-        {/* Text content */}
-        <div className="max-w-3xl">
-          <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
-            {section.title}
-          </h2>
-
-          <p className="text-lg text-gray-300 mb-8">{section.subtitle}</p>
-
-          <Link
-            href={buttonLink}
-            className="inline-flex items-center px-6 py-3 bg-teal-600 hover:bg-teal-700 
-                      text-white font-medium rounded-md transition-colors duration-200"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {buttonText}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={`h-5 w-5 ml-2 transition-transform ${
-                isHovered ? "translate-x-1" : ""
-              }`}
-              viewBox="0 0 20 20"
-              fill="currentColor"
+          {firstFeature.button?.buttonText && (
+            <Link
+              href={firstFeature.button.buttonLink || "#"}
+              className="inline-block bg-[#6e00ff] text-white font-bold py-3 px-6 rounded-full hover:bg-[#5800cc] transition"
+              onClick={() => handleButtonClick("feature0")}
             >
-              <path
-                fillRule="evenodd"
-                d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </Link>
+              {firstFeature.button.buttonText || "Learn More"}
+            </Link>
+          )}
         </div>
+
+        {/* Right Side - Only render if there's a second feature */}
+        {secondFeature && (
+          <div className="flex flex-col items-center justify-center text-center space-y-8 pl-0 md:pl-12 mt-12 md:mt-0">
+            {secondFeature.icon?.url && (
+              <Image
+                src={secondFeature.icon.url}
+                alt={secondFeature.title || "Feature Image"}
+                width={300}
+                height={200}
+              />
+            )}
+
+            <div>
+              <h3 className="text-xl font-semibold text-[#0a0033]">
+                {secondFeature.title}
+              </h3>
+
+              {/* Description Block Renderer */}
+              {Array.isArray(secondFeature.description) ? (
+                <BlocksRenderer
+                  content={secondFeature.description as BlocksContent}
+                  blocks={{
+                    paragraph: ({ children }) => (
+                      <p className="text-base text-[#5f5f7a] mt-2 leading-relaxed mb-4">
+                        {children}
+                      </p>
+                    ),
+                    heading: ({ children, level }) => {
+                      const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+                      return (
+                        <Tag className={`text-${level * 2}xl font-bold mb-4`}>
+                          {children}
+                        </Tag>
+                      );
+                    },
+                    list: ({ children, format }) => {
+                      const ListTag = format === "ordered" ? "ol" : "ul";
+                      return (
+                        <ListTag className="list-inside list-disc pl-5 mb-4">
+                          {children}
+                        </ListTag>
+                      );
+                    },
+                    "list-item": ({ children }) => (
+                      <li className="mb-2">{children}</li>
+                    ),
+                    quote: ({ children }) => (
+                      <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 dark:text-gray-400 mb-4">
+                        {children}
+                      </blockquote>
+                    ),
+                    code: ({ plainText }) => (
+                      <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto">
+                        <code>{plainText}</code>
+                      </pre>
+                    ),
+                    image: ({ image }) => (
+                      <Image
+                        src={image.url}
+                        width={image.width}
+                        height={image.height}
+                        alt={image.alternativeText || ""}
+                      />
+                    ),
+                    link: ({ children, url }) => (
+                      <Link
+                        href={url}
+                        className="text-[#6e00ff] hover:underline"
+                      >
+                        {children}
+                      </Link>
+                    ),
+                  }}
+                  modifiers={{
+                    bold: ({ children }) => <strong>{children}</strong>,
+                    italic: ({ children }) => <em>{children}</em>,
+                    underline: ({ children }) => <u>{children}</u>,
+                    strikethrough: ({ children }) => <s>{children}</s>,
+                    code: ({ children }) => (
+                      <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">
+                        {children}
+                      </code>
+                    ),
+                  }}
+                />
+              ) : (
+                <p className="text-base text-[#5f5f7a] mt-2 leading-relaxed">
+                  {secondFeature.description as React.ReactNode}
+                </p>
+              )}
+            </div>
+
+            {secondFeature.button?.buttonText && (
+              <Link
+                href={secondFeature.button.buttonLink || "#"}
+                className="inline-block bg-[#6e00ff] text-white font-bold py-3 px-6 rounded-full hover:bg-[#5800cc] transition"
+                onClick={() => handleButtonClick("feature1")}
+              >
+                {secondFeature.button.buttonText || "Get Started"}
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

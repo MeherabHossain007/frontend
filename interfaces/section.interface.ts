@@ -123,9 +123,19 @@ interface FeatureSpotlight {
   id: number;
   title: string;
   subtitle: string;
-  buttonText: string;
-  buttonLink: string;
-  image: StrapiImage;
+  features: [
+    {
+      id: number;
+      title: string;
+      description: unknown;
+      icon: StrapiImage | null;
+      button: {
+        id: string;
+        buttonText: string;
+        buttonLink: string;
+      }
+    }
+  ]
 }
 
 // Career-specific sections
