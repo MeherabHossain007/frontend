@@ -79,7 +79,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
           {/* Right: Title + Subtitle + Button */}
           <div className="w-full lg:w-1/3 flex flex-col items-center lg:items-start mt-6 lg:mt-[15rem]">
             <h3 className="text-md md:text-lg font-semibold mb-3 text-center lg:text-left">
-              {section.title}
+              {section.slides[currentSlide].title}
             </h3>
             <p className="text-sm md:text-base text-black mb-6 max-w-sm text-center lg:text-left">
               {section.slides[currentSlide].subtitle}
@@ -97,10 +97,10 @@ const FeatureSlider = ({ section }: SliderProps) => {
             )}
             {hasMultipleSlides && section.slides[currentSlide].buttonText && (
               <Link
-              href={section.slides[currentSlide].buttonLink || "#"}
-              className="inline-block bg-black text-white text-sm font-medium px-5 py-2.5 rounded-full hover:bg-gray-800 transition"
+                href={section.slides[currentSlide].buttonLink || "#"}
+                className="inline-block bg-black text-white text-sm font-medium px-5 py-2.5 rounded-full hover:bg-gray-800 transition"
               >
-              {section.slides[currentSlide].buttonText}
+                {section.slides[currentSlide].buttonText}
               </Link>
             )}
           </div>

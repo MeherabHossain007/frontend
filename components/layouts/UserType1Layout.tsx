@@ -58,6 +58,7 @@ export default function UserType1Layout({ page }: UserType1LayoutProps) {
   const getSectionPadding = (component: string): string => {
     if (component === "sections.hero") return "py-0"; // Heroes often handle their own padding
     if (component === "sections.feature-slider") return "py-0"; // Feature slider goes edge to edge
+    if (component === "sections.testimonials") return "py-0"; // Testimonial with no padding
 
     // Standard sections get responsive padding that increases on larger screens
     return "py-12 md:py-16 lg:py-24 xl:py-28";
@@ -73,11 +74,12 @@ export default function UserType1Layout({ page }: UserType1LayoutProps) {
             index
           )} ${getSectionPadding(section.__component)}`}
         >
-          {/* Feature slider is typically full width without standard container */}
-          {section.__component === "sections.feature-slider" ? (
+          {/* Full-width sections rendered without container */}
+          {section.__component === "sections.feature-slider" ||
+          section.__component === "sections.testimonials" ? (
             renderSection(section)
           ) : (
-            /* Lyft-style container - wider than typical for most sections */
+            /* Container for standard sections */
             <div
               className={`
               mx-auto px-4 sm:px-6 lg:px-10 xl:px-20
