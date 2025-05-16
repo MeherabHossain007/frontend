@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Languages, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useNavigationLink } from "@/lib/hooks/useNavigationLink";
 import Image from "next/image";
 import PaymentSection from "../sections/Payment/PaymentSection";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -70,13 +71,14 @@ export default function Navbar() {
                 {item.label}
               </Link>
             ))}
+              <div className="flex items-center ml-5">
+                <Languages size={16} className="mr-2 text-black" />
+                <LanguageSwitcher />
+              </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden text-gray-900"
-            onClick={toggleMenu}
-          >
+          <button className="lg:hidden text-gray-900" onClick={toggleMenu}>
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </nav>

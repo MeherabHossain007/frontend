@@ -9,7 +9,7 @@ export default function Footer() {
   const { data, loading } = useNavigationLink();
   const { categorizedLinks } = useFooterLinks();
 
-  const getSocialIcon = (platform: string) => {
+  const getSocialIcon = (platform : string) => {
     switch (platform.toLowerCase()) {
       case "facebook":
         return <Facebook size={20} />;
@@ -24,14 +24,14 @@ export default function Footer() {
 
   if (loading) {
     return (
-      <footer className="bg-gray-100 text-gray-800 py-12">
-        <div className="animate-pulse max-w-[1600px] mx-auto px-4 sm:px-6">
-          <div className="h-6 bg-gray-600 rounded w-40 mb-10"></div>
+      <footer className="bg-white text-gray-800 py-8">
+        <div className="animate-pulse max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="h-6 bg-gray-300 rounded w-40 mb-10"></div>
           <div className="flex flex-wrap gap-6">
-            <div className="h-28 bg-gray-700 rounded w-full sm:w-[45%] lg:w-[22%]"></div>
-            <div className="h-28 bg-gray-700 rounded w-full sm:w-[45%] lg:w-[22%]"></div>
-            <div className="h-28 bg-gray-700 rounded w-full sm:w-[45%] lg:w-[22%]"></div>
-            <div className="h-28 bg-gray-700 rounded w-full sm:w-[45%] lg:w-[22%]"></div>
+            <div className="h-28 bg-gray-200 rounded w-full sm:w-[45%] lg:w-[22%]"></div>
+            <div className="h-28 bg-gray-200 rounded w-full sm:w-[45%] lg:w-[22%]"></div>
+            <div className="h-28 bg-gray-200 rounded w-full sm:w-[45%] lg:w-[22%]"></div>
+            <div className="h-28 bg-gray-200 rounded w-full sm:w-[45%] lg:w-[22%]"></div>
           </div>
         </div>
       </footer>
@@ -39,25 +39,24 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-gray-100 text-gray-800 py-16">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex flex-wrap justify-between gap-10 ">
-          {/* Company Info */}
-          <div className="w-full sm:w-1/2 lg:w-1/4">
-            <h3 className="text-lg sm:text-xl lg:text-2xl font-extrabold mb-6">
-              {data?.siteName}
-            </h3>
-            <p className="text-sm sm:text-base lg:text-lg text-gray-700 mb-6">
-              Your reliable ride, anytime, anywhere.
-            </p>
-            <div className="flex space-x-4">
+    <footer className="bg-white text-gray-800 pt-16 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top part with links */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-16">
+          {/* Logo and social links */}
+          <div className="md:col-span-1">
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold">{data?.siteName}</h3>
+            </div>
+            <div className="flex space-x-4 mb-4">
               {data?.socialLinks.map((social) => (
                 <a
                   key={social.id}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-gray-600 transition-colors"
+                  className="hover:text-pink-600 transition-colors"
+                  aria-label={`${social.platform}`}
                 >
                   {getSocialIcon(social.platform)}
                 </a>
@@ -65,18 +64,18 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Footer Links by Category */}
+          {/* Link categories - dynamically rendering based on your data */}
           {Object.entries(categorizedLinks).map(([category, links]) => (
-            <div key={category} className="flex flex-col justify-start">
-              <h3 className="text-base sm:text-lg lg:text-xl font-bold mb-6 capitalize">
+            <div key={category} className="md:col-span-1">
+              <h3 className="font-semibold text-sm uppercase mb-4 text-gray-500">
                 {category}
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.id}>
                     <Link
                       href={link.url || "#"}
-                      className="text-sm sm:text-base text-gray-700 hover:text-gray-900 transition-colors font-medium"
+                      className="text-sm text-gray-700 hover:text-pink-600 transition-colors"
                     >
                       {link.title}
                     </Link>
@@ -86,42 +85,72 @@ export default function Footer() {
             </div>
           ))}
 
-          {/* Get a Ride */}
-          <div className="flex flex-col justify-center xl:justify-start xl:items-start xl:text-start items-center text-center">
-            <div className="flex justify-center items-center mb-6">
-              <Languages size={18} className="mr-2" />
-              <LanguageSwitcher />
-            </div>
-            <h3 className="text-base sm:text-lg lg:text-xl font-bold mb-6">
-              Get a Ride
+          {/* App downloads */}
+          <div className="md:col-span-1">
+            <h3 className="font-semibold text-sm uppercase mb-4 text-gray-500">
+              Get the app
             </h3>
-            <button className="w-full bg-pink-600 hover:bg-pink-700 text-white px-6 py-4 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 shadow-lg">
-              Book Now
-            </button>
-            <div className="mt-8">
-              <p className="text-sm sm:text-base font-bold mb-4">
-                Download Our App
-              </p>
-              <div className="flex flex-col sm:flex-row mt-4 gap-4 w-full">
-                <button className="w-full sm:w-auto flex-1 bg-pink-200 hover:bg-pink-300 text-pink-800 px-6 py-3 rounded-xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors duration-300">
-                  <Download size={18} />
-                  Android
-                </button>
-                <button className="w-full sm:w-auto flex-1 border border-gray-300 bg-gray-100 hover:bg-gray-200 text-gray-800 px-6 py-3 rounded-xl font-semibold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors duration-300">
-                  <Download size={18} />
-                  iOS
-                </button>
-              </div>
+            <div className="flex flex-col space-y-3">
+              <button className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors">
+                <Download size={16} />
+                iOS App
+              </button>
+              <button className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors">
+                <Download size={16} />
+                Android App
+              </button>
+            </div>
+          </div>
+
+          {/* Language switcher */}
+          <div className="md:col-span-1">
+            <h3 className="font-semibold text-sm uppercase mb-4 text-gray-500">
+              Language
+            </h3>
+            <div className="flex items-center">
+              <Languages size={16} className="mr-2 text-gray-500" />
+              <LanguageSwitcher />
             </div>
           </div>
         </div>
 
-        {/* Footer Bottom */}
-        <div className="border-t border-gray-800 mt-12 pt-6 text-center text-xs sm:text-sm text-gray-700 font-medium">
-          <p>
-            &copy; {new Date().getFullYear()} {data?.siteName}. All rights
-            reserved.
-          </p>
+        {/* Middle separator */}
+        <div className="border-t border-gray-200 mb-8"></div>
+
+        {/* Bottom part with copyright and terms */}
+        <div className="flex flex-col md:flex-row md:justify-between gap-4 text-sm text-gray-500">
+          <div className="flex flex-wrap gap-6">
+            <p>
+              &copy; {new Date().getFullYear()} {data?.siteName}
+            </p>
+            <Link
+              href="/terms"
+              className="hover:text-pink-600 transition-colors"
+            >
+              Terms
+            </Link>
+            <Link
+              href="/privacy"
+              className="hover:text-pink-600 transition-colors"
+            >
+              Privacy
+            </Link>
+          </div>
+
+          <div className="flex gap-6">
+            <Link
+              href="/sitemap"
+              className="hover:text-pink-600 transition-colors"
+            >
+              Sitemap
+            </Link>
+            <Link
+              href="/accessibility"
+              className="hover:text-pink-600 transition-colors"
+            >
+              Accessibility
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
