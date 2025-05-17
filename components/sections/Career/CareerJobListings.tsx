@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo, JSX } from "react";
 import { Search, ChevronDown, ChevronUp } from "lucide-react";
-import type { Section, JobPosition } from "@/interfaces/section.interface";
+import type { JobPosition, Section } from "@/interfaces/section.interface";
 import {
   BlocksRenderer,
   type BlocksContent,
@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 
 interface CareerJobListingsProps {
-  section: Section;
+  section: Extract<Section, { __component: "sections.career-job-listings" }>;
 }
 
 export default function CareerJobListings({ section }: CareerJobListingsProps) {
@@ -20,16 +20,11 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
   const [selectedLocation, setSelectedLocation] = useState("All locations");
   const [loading] = useState(false);
 
-  // Type assertion to access specific properties
-  const jobListingsSection = section as Extract<
-    Section,
-    { __component: "sections.career-job-listings" }
-  >;
-  const title = jobListingsSection.title || "Openings";
+  const title = section.title || "Openings";
 
   const jobPositions = useMemo(
-    () => jobListingsSection.positions || [],
-    [jobListingsSection.positions]
+    () => section.positions || [],
+    [section.positions]
   );
 
   // Group positions by department
@@ -54,7 +49,9 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
   );
 
   const locations = useMemo(
-    () => [...new Set(jobPositions.map((position) => position.location || "Remote"))],
+    () => [
+      ...new Set(jobPositions.map((position) => position.location || "Remote")),
+    ],
     [jobPositions]
   );
 
@@ -117,20 +114,21 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
   };
 
   return (
-    <section
-      id="job-listings"
-      className="w-full py-16 md:py-24 "
-    >
+    <section id="openings" className="w-full py-16 md:py-24 bg-white">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-        <h2 className="text-3xl font-bold mb-8 text-black">
-          {title}
-        </h2>
+        {/* Header with search icon */}
+        <div className="flex items-center mb-8">
+          <h2 className="text-3xl font-bold text-black">{title}</h2>
+          <div className="ml-auto">
+            <Search className="text-[#FF00BF]" size={24} />
+          </div>
+        </div>
 
         {/* Search and filters */}
         <div className="mb-8 flex flex-col md:flex-row gap-4 items-start md:items-center">
           <div className="relative flex-grow">
             <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
               size={20}
             />
             <input
@@ -138,14 +136,14 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
               placeholder="Search jobs"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-full bg-white  text-black focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF00BF]"
             />
           </div>
 
           <div className="flex gap-4">
             <div className="relative">
               <select
-                className="appearance-none pl-4 pr-10 py-2 border border-gray-300 dark:border-gray-700 rounded-full bg-white  text-black focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="appearance-none pl-4 pr-10 py-2 border border-gray-300 rounded-full bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF00BF]"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
@@ -157,14 +155,14 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                 ))}
               </select>
               <ChevronDown
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"
                 size={16}
               />
             </div>
 
             <div className="relative">
               <select
-                className="appearance-none pl-4 pr-10 py-2 border border-gray-300 dark:border-gray-700 rounded-full bg-white  text-black focus:outline-none focus:ring-2 focus:ring-pink-500"
+                className="appearance-none pl-4 pr-10 py-2 border border-gray-300 rounded-full bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF00BF]"
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
               >
@@ -174,7 +172,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                 ))}
               </select>
               <ChevronDown
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black pointer-events-none"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"
                 size={16}
               />
             </div>
@@ -184,17 +182,15 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
         {/* Loading state */}
         {loading && (
           <div className="py-12 text-center">
-            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-pink-500 border-r-transparent"></div>
-            <p className="mt-4 text-black">
-              Loading job listings...
-            </p>
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#FF00BF] border-r-transparent"></div>
+            <p className="mt-4 text-gray-700">Loading job listings...</p>
           </div>
         )}
 
         {/* No results state */}
         {!loading && filteredDepartments.length === 0 && (
           <div className="py-12 text-center">
-            <p className="text-black">
+            <p className="text-gray-700">
               No job positions match your search criteria.
             </p>
           </div>
@@ -202,7 +198,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
 
         {/* Job categories */}
         {!loading && (
-          <div className="space-y-4">
+          <div className="space-y-0">
             {filteredDepartments.map((department) => {
               const positions = positionsByDepartment[department].filter(
                 (position) => {
@@ -230,61 +226,58 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
               if (positions.length === 0) return null;
 
               return (
-                <div
-                  key={department}
-                  className="border-b border-gray-200 dark:border-gray-800"
-                >
+                <div key={department} className="border-b border-gray-200">
                   <button
                     onClick={() => toggleCategory(department)}
-                    className="w-full flex justify-between items-center py-4 text-left focus:outline-none"
+                    className="w-full flex justify-between items-center py-5 text-left focus:outline-none"
                   >
-                    <h3 className="text-xl font-semibold text-black">
+                    <h3 className="text-xl font-bold text-black">
                       {department}
                     </h3>
                     {expandedCategory === department ? (
-                      <ChevronUp className="text-black" size={20} />
+                      <ChevronUp className="text-gray-700" size={20} />
                     ) : (
-                      <ChevronDown className="text-black" size={20} />
+                      <ChevronDown className="text-gray-700" size={20} />
                     )}
                   </button>
 
                   {expandedCategory === department && positions.length > 0 && (
-                    <div className="py-4 space-y-4">
+                    <div className="py-2 space-y-2 mb-4">
                       {positions.map((position) => (
                         <div
                           key={position.id}
-                          className="border border-gray-100 dark:border-gray-800 rounded-lg overflow-hidden"
+                          className="rounded-lg overflow-hidden"
                         >
                           <button
                             onClick={() => togglePosition(position.id)}
-                            className="w-full flex justify-between items-center p-4 text-left focus:outline-none hover:bg-gray-50 "
+                            className="w-full flex justify-between items-center p-3 text-left focus:outline-none hover:bg-gray-50"
                           >
                             <div>
                               <h4 className="font-medium text-black">
                                 {position.title || "Untitled Position"}
                               </h4>
-                              <p className="text-black text-sm">
+                              <p className="text-gray-700 text-sm">
                                 {position.location}
                               </p>
                             </div>
                             {expandedPosition === position.id ? (
-                              <ChevronUp className="text-black" size={16} />
+                              <ChevronUp className="text-gray-700" size={16} />
                             ) : (
                               <ChevronDown
-                                className="text-black"
+                                className="text-gray-700"
                                 size={16}
                               />
                             )}
                           </button>
 
                           {expandedPosition === position.id && (
-                            <div className="p-4 bg-gray-50 ">
+                            <div className="p-4 bg-gray-50">
                               {position.description && (
                                 <div className="mb-4">
                                   <h5 className="font-medium text-black mb-2">
                                     Description
                                   </h5>
-                                  <p className="text-black">
+                                  <p className="text-gray-700">
                                     {position.description}
                                   </p>
                                 </div>
@@ -301,7 +294,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                     )}
                                     blocks={{
                                       paragraph: ({ children }) => (
-                                        <p className="mb-4 text-base text-black">
+                                        <p className="mb-4 text-base text-gray-700">
                                           {children}
                                         </p>
                                       ),
@@ -328,30 +321,32 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                         );
                                       },
                                       "list-item": ({ children }) => (
-                                        <li className="mb-2 text-black">{children}</li>
+                                        <li className="mb-2 text-gray-700">
+                                          {children}
+                                        </li>
                                       ),
                                       quote: ({ children }) => (
-                                        <blockquote className="border-l-4 border-gray-300 pl-4 italic text-black mb-4">
+                                        <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-700 mb-4">
                                           {children}
                                         </blockquote>
                                       ),
                                       code: ({ plainText }) => (
-                                        <pre className="bg-gray-100  p-4 rounded mb-4 overflow-x-auto text-black">
+                                        <pre className="bg-gray-100 p-4 rounded mb-4 overflow-x-auto text-gray-700">
                                           <code>{plainText}</code>
                                         </pre>
                                       ),
                                       image: ({ image }) => (
                                         <Image
                                           src={image.url}
-                                          width={image.width}
-                                          height={image.height}
+                                          width={image.width || 800}
+                                          height={image.height || 600}
                                           alt={image.alternativeText || ""}
                                         />
                                       ),
                                       link: ({ children, url }) => (
                                         <a
                                           href={url}
-                                          className="text-blue-600 hover:underline"
+                                          className="text-[#FF00BF] hover:underline"
                                         >
                                           {children}
                                         </a>
@@ -371,7 +366,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                         <s>{children}</s>
                                       ),
                                       code: ({ children }) => (
-                                        <code className="bg-gray-200  px-1 rounded text-black">
+                                        <code className="bg-gray-200 px-1 rounded text-gray-700">
                                           {children}
                                         </code>
                                       ),
@@ -379,17 +374,17 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                   />
                                 </div>
                               )}
-{/* 
+
                               {position.applicationUrl && (
                                 <div className="mt-4">
                                   <a
                                     href={position.applicationUrl}
-                                    className="inline-block px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white font-medium rounded-lg transition-colors"
+                                    className="inline-flex items-center justify-center px-6 py-2 bg-[#FF00BF] hover:bg-[#D900A6] text-white font-medium rounded-full transition-colors"
                                   >
                                     Apply Now
                                   </a>
                                 </div>
-                              )} */}
+                              )}
                             </div>
                           )}
                         </div>

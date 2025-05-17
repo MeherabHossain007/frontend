@@ -150,10 +150,10 @@ interface CareerHeroSection {
   vision?: string;
 }
 
-interface CareerVisionSection {
+export interface CareerVisionSection {
   __component: "sections.career-vision";
   id: number;
-  visionText: string;
+  richText: BlocksContent;
 }
 
 interface CareerHighlightItem {

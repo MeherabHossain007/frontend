@@ -3,14 +3,14 @@
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import type { Section } from "@/interfaces/section.interface";
+import { TextButton } from "@/components/ui/Buttons";
+import { Section } from "@/interfaces/section.interface";
 
-interface FeatureSliderProps {
-  section: Section;
+interface CareerHighlightsProps {
+  section: Extract<Section, { __component: "sections.career-highlights" }>;
 }
 
-export default function FeatureSlider({ section }: FeatureSliderProps) {
+export default function CareerHighlights({ section }: CareerHighlightsProps) {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -24,26 +24,25 @@ export default function FeatureSlider({ section }: FeatureSliderProps) {
     }
   }, [inView]);
 
-  // Type assertion to access specific properties
-  const careerHighlightsSection = section as Extract<
-    Section,
-    { __component: "sections.career-highlights" }
-  >;
-
-  const highlights = careerHighlightsSection.highlights || [];
+  const highlights = section.highlights || [];
 
   return (
     <section
       ref={ref}
       id="highlights"
-      className={`w-full py-16 md:py-24 transition-opacity duration-700 ${
+      className={`w-full py-16 md:py-24 bg-white transition-opacity duration-700 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 mb-16">
+        <h2 className="text-xl sm:text-2xl font-semibold text-center max-w-4xl mx-auto leading-relaxed text-black">
+          {section.title}
+        </h2>
+      </div>
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         <div className="flex flex-col lg:flex-row lg:items-start lg:gap-12 xl:gap-16">
           {/* Main content section with three columns */}
-          <div className="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-8">
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-8">
             {highlights.slice(0, 3).map((highlight, index) => (
               <div
                 key={highlight.id || index}
@@ -55,19 +54,18 @@ export default function FeatureSlider({ section }: FeatureSliderProps) {
                     : "opacity-0 translate-y-4"
                 }`}
               >
-                <h2 className="text-2xl font-semibold mb-4 text-gray-900">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-black">
                   {highlight.title || getDefaultTitle(index)}
                 </h2>
                 <p className="text-gray-700 mb-5 text-base leading-relaxed">
                   {highlight.description || getDefaultDescription(index)}
                 </p>
                 <div className="mt-auto">
-                  <Link
+                  <TextButton
                     href={highlight.linkUrl || "#"}
-                    className="text-[#7141FF] hover:text-[#000000] underline font-medium inline-block"
-                  >
-                    {highlight.linkText || "Learn more"}
-                  </Link>
+                    text={highlight.linkText || "Learn more"}
+                    className="font-bold"
+                  />
                 </div>
               </div>
             ))}
@@ -75,25 +73,25 @@ export default function FeatureSlider({ section }: FeatureSliderProps) {
 
           {/* Image on the right */}
           <div
-            className={`hidden lg:block w-full lg:w-1/3 transition-all duration-1000 delay-300 ${
+            className={`hidden lg:block lg:max-w-[400px] transition-all duration-1000 delay-300 mt-10 ${
               isVisible
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 translate-x-8"
             }`}
           >
-            {careerHighlightsSection.image?.url ? (
+            {section.image?.url ? (
               <Image
-                src={careerHighlightsSection.image.url}
+                src={section.image.url}
                 alt="Lyft vehicle illustration"
-                width={500}
+                width={400}
                 height={400}
                 className="object-contain"
               />
             ) : (
               <Image
-                src="/api/placeholder/500/400"
+                src="https://ext.same-assets.com/2392121160/2634659435.webp"
                 alt="Lyft vehicle illustration"
-                width={500}
+                width={400}
                 height={400}
                 className="object-contain"
               />

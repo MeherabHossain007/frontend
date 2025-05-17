@@ -45,3 +45,14 @@ export const SecondaryButton = ({
     </Link>
   );
 };
+
+export function TextButton({ href, text, className = "" }: GlobalButtonProps) {
+  return (
+    <Link
+      href={href}
+      className={`inline-flex items-center justify-center font-medium text-[#FF00BF] hover:text-[#D900A6] hover:underline text-base ${className}`}
+    >
+      {text}
+    </Link>
+  );
+}
