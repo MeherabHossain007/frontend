@@ -40,7 +40,7 @@ export default function CareerVision({ section }: CareerVisionProps) {
   return (
     <section
       ref={ref}
-      className={`w-full py-12 md:py-16 transition-opacity duration-700 ${
+      className={`w-full transition-opacity duration-700 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -49,7 +49,7 @@ export default function CareerVision({ section }: CareerVisionProps) {
           content={content}
           blocks={{
             paragraph: ({ children }) => (
-              <p className="mb-4 text-base text-gray-700">{children}</p>
+              <p className="mb-4 text-xs text-gray-700">{children}</p>
             ),
             heading: ({ children, level }) => {
               const Tag = `h${level}` as keyof JSX.IntrinsicElements;
@@ -87,7 +87,7 @@ export default function CareerVision({ section }: CareerVisionProps) {
               />
             ),
             link: ({ children, url }) => (
-              <a href={url} className="text-blue-600 hover:underline">
+              <a href={url} className="text-purple-600 hover:underline">
                 {children}
               </a>
             ),

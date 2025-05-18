@@ -40,7 +40,7 @@ export default function HeroSection({ section, userType }: HeroSectionProps) {
 
         {/* Content Section */}
         <div className="w-full md:w-1/2 space-y-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-navy-900">
+          <h2 className="text-3xl md:text-4xl font-bold text-navy-900">
             {section.title}
           </h2>
 
@@ -56,7 +56,7 @@ export default function HeroSection({ section, userType }: HeroSectionProps) {
               />
 
               {/* Consent Text */}
-              <p className="text-sm text-gray-600">{section.subtitle}</p>
+              <p className="text-sm font-light text-gray-600">{section.subtitle}</p>
 
               {/* CTA and Terms */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4">

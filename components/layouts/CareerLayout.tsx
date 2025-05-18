@@ -8,6 +8,7 @@ import CareerHero from "@/components/sections/Career/CareerHero";
 import CareerVision from "@/components/sections/Career/CareerVision";
 import CareerHighlights from "@/components/sections/Career/CareerHighlights";
 import CareerJobListings from "@/components/sections/Career/CareerJobListings";
+import SubNav from "../Shared/SubNav";
 
 interface CareerLayoutProps {
   page: PageData;
@@ -32,7 +33,8 @@ export default function CareerLayout({ page }: CareerLayoutProps) {
   };
 
   return (
-    <main className="w-full overflow-x-hidden">
+    <main className="w-full overflow-x-hidden mb-10">
+      <SubNav />
       {sections.map((section) => (
         <motion.section
           key={section.id}

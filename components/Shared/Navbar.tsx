@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Languages, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useNavigationLink } from "@/lib/hooks/useNavigationLink";
 import Image from "next/image";
@@ -47,9 +47,6 @@ export default function Navbar() {
                     className="h-10 w-auto object-contain"
                   />
                 )}
-                <span className="text-lg font-bold text-gray-900">
-                  {data?.siteName}
-                </span>
               </div>
             </Link>
           </div>
@@ -72,7 +69,6 @@ export default function Navbar() {
               </Link>
             ))}
               <div className="flex items-center ml-5">
-                <Languages size={16} className="mr-2 text-black" />
                 <LanguageSwitcher />
               </div>
           </div>

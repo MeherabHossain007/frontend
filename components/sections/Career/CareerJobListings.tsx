@@ -114,7 +114,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
   };
 
   return (
-    <section id="openings" className="w-full py-16 md:py-24 bg-white">
+    <section id="openings" className="w-full py-16 bg-white">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         {/* Header with search icon */}
         <div className="flex items-center mb-8">
@@ -226,12 +226,12 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
               if (positions.length === 0) return null;
 
               return (
-                <div key={department} className="border-b border-gray-200">
+                <div key={department} className="border-b-4 border-black">
                   <button
                     onClick={() => toggleCategory(department)}
                     className="w-full flex justify-between items-center py-5 text-left focus:outline-none"
                   >
-                    <h3 className="text-xl font-bold text-black">
+                    <h3 className="text-2xl font-bold text-black">
                       {department}
                     </h3>
                     {expandedCategory === department ? (

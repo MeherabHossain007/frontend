@@ -28,37 +28,34 @@ export default function CallToAction({ section }: CallToActionProps) {
   return (
     <section
       ref={ref}
-      className={`w-full px-4 py-10 md:py-20 transition-all duration-700 ${
+      className={`w-full px-4 py-12 transition-all duration-700 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10 md:gap-16">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-15">
         {/* Left - Image */}
         {section.image && (
-          <div className="w-full md:w-1/2 relative aspect-video md:aspect-[4/3]">
+          <div className="w-full md:w-1/2 relative aspect-[4/5]">
             <Image
               src={`${imageUrl}`}
               alt={section.title}
               fill
-              className="object-cover rounded-xl shadow-md"
+              className="object-contain p-4"
+              sizes="(max-width: 768px) 100vw, 40vw"
               priority
             />
           </div>
         )}
 
-        {/* Right - Text & Buttons */}
-        <div
-          className={`w-full ${
-            section.image ? "md:w-1/2" : "w-full"
-          } text-center md:text-left space-y-6`}
-        >
-          <h1 className="text-4xl md:text-4xl font-bold leading-tight">
+        {/* Right - Text & Features */}
+        <div className="w-full md:w-1/2 space-y-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-navy-900">
             {section.title}
           </h1>
-          <p className="text-lg md:text-xl text-gray-900">{section.subtitle}</p>
+          <p className="text-lg text-gray-800">{section.subtitle}</p>
 
           {section.features && section.features.length > 0 && (
-            <div className="space-y-6">
+            <div className="space-y-6 mt-8">
               {section.features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-4">
                   {feature.icon?.url && (
@@ -66,14 +63,14 @@ export default function CallToAction({ section }: CallToActionProps) {
                       <Image
                         src={`${feature.icon.url}`}
                         alt={feature.title || ""}
-                        height={32}
-                        width={32}
-                        className="h-8 w-8 bg-black rounded-full p-2"
+                        height={24}
+                        width={24}
+                        className="h-6 w-6"
                       />
                     </div>
                   )}
-                  <div className="text-left">
-                    <h3 className="font-semibold text-lg">{feature.title}</h3>
+                  <div>
+                    <h3 className="font-semibold text-xl">{feature.title}</h3>
                     {Array.isArray(feature.description) ? (
                       <BlocksRenderer
                         content={feature.description as BlocksContent}
@@ -157,12 +154,12 @@ export default function CallToAction({ section }: CallToActionProps) {
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+          <div className="pt-6">
             <PrimaryButton
-              text={section.buttonText || "Get Started"}
+              text={section.buttonText || "Join now"}
               href={section.buttonLink || "#"}
+              className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full text-lg"
             />
-
             {section.secondaryButtonText && (
               <SecondaryButton
                 text={section.secondaryButtonText}
@@ -171,6 +168,10 @@ export default function CallToAction({ section }: CallToActionProps) {
               />
             )}
           </div>
+
+          {/* {section.disclaimer && (
+            <p className="text-sm text-gray-600 mt-4">{section.disclaimer}</p>
+          )} */}
         </div>
       </div>
     </section>

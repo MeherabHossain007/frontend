@@ -50,7 +50,7 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
           content={blocks}
           blocks={{
             paragraph: ({ children }) => (
-              <p className="mb-3 text-gray-700">{children}</p>
+              <p className="mb-3 md:text-lg font-light text-gray-700">{children}</p>
             ),
             heading: ({ children, level }) => {
               const Tag = `h${level}` as keyof JSX.IntrinsicElements;
@@ -179,7 +179,7 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
           {/* Text Content */}
           <div className="w-full md:w-1/2 space-y-6 text-center md:text-left">
             {section.title && (
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-primary">
+              <h2 className="text-sm font-bold uppercase tracking-wide text-primary">
                 {section.title}
               </h2>
             )}
@@ -192,7 +192,7 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
             {renderBlocks(content)}
 
             {section.features?.length ? (
-              <div className="grid grid-cols-1 gap-5 mt-5">
+              <div className="grid grid-cols-1 gap-5 mt-10">
                 {section.features.map(renderFeature)}
               </div>
             ) : null}

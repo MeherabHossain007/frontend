@@ -17,7 +17,7 @@ export const PrimaryButton = ({ text, href, className = "", onClick }: GlobalBut
     <Link
       href={href}
       onClick={onClick}
-      className={`bg-[#432DD7] hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300 ${className}`}
+      className={`bg-[#432DD7] hover:bg-blue-700 text-white font-extrabold py-3 px-8 rounded-full transition-colors duration-300 ${className}`}
     >
       {text}
     </Link>
@@ -36,7 +36,7 @@ export const SecondaryButton = ({
     <Link
       href={href}
       onClick={onClick}
-      className={`flex items-center group text-gray-700 hover:underline ${className}`}
+      className={`flex items-center font-extrabold group text-black hover:underline ${className}`}
     >
       {children || text}
       {showArrow && (
