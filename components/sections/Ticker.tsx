@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import type { Section } from "@/interfaces/section.interface";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
@@ -14,6 +14,10 @@ export default function Ticker({ section }: TickerProps) {
   const items = useMemo(() => section.items || [], [section.items]);
   const [tickerWidth, setTickerWidth] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
+  const [currentPosition, setCurrentPosition] = useState(0);
+  const startTimeRef = useRef<number | null>(null);
+  const pausedTimeRef = useRef<number>(0);
 
   // Get speed from Strapi or use default value
   const speed = section.speed || 1;
@@ -42,30 +46,89 @@ export default function Ticker({ section }: TickerProps) {
     return () => window.removeEventListener("resize", calculateWidth);
   }, [items]);
 
-  // Calculate animation duration based on content width and speed from Strapi
-  const getAnimationDuration = () => {
-    // Base duration adjusted by content width for consistent speed
-    const baseDuration = 100;
-    const speedFactor = Math.max(tickerWidth / 1000, 1);
-    return `${(baseDuration * speedFactor) / speed}s`;
-  };
+  // Animation loop function
+  const animate = useCallback(
+    (timestamp: number) => {
+      // Calculate animation duration based on content width and speed from Strapi
+      const getAnimationDuration = () => {
+        // Base duration adjusted by content width for consistent speed
+        const baseDuration = 100;
+        const speedFactor = Math.max(tickerWidth / 1000, 1);
+        return (baseDuration * speedFactor) / speed;
+      };
+
+      if (!startTimeRef.current) {
+        startTimeRef.current = timestamp - pausedTimeRef.current;
+      }
+
+      const elapsed = timestamp - startTimeRef.current;
+      const duration = getAnimationDuration() * 1000; // Convert to milliseconds
+      const totalDistance = window.innerWidth + tickerWidth;
+
+      // Calculate current position based on elapsed time
+      const progress = (elapsed % duration) / duration;
+      const newPosition = window.innerWidth - progress * totalDistance;
+
+      setCurrentPosition(newPosition);
+
+      if (contentRef.current) {
+        contentRef.current.style.transform = `translateX(${newPosition}px)`;
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
+    },
+    [tickerWidth, speed, pausedTimeRef, startTimeRef, contentRef]
+  );
+
+  // Handle animation start/pause based on visibility
+  useEffect(() => {
+    if (tickerWidth === 0) return;
+
+    if (inView) {
+      // Resume animation
+      startTimeRef.current = null;
+      animationRef.current = requestAnimationFrame(animate);
+    } else {
+      // Pause animation and store current time
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+
+      // Calculate how much time has passed to resume from correct position
+      if (startTimeRef.current) {
+        pausedTimeRef.current = performance.now() - startTimeRef.current;
+      }
+    }
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [inView, tickerWidth, speed, animate]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section
       className="relative w-full overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100 bg:[#FFDEDE] py-2"
       aria-label="Ticker showcase"
     >
-      <div
-        ref={inViewRef}
-        className="relative max-w-screen-2xl mx-auto"
-      >
+      <div ref={inViewRef} className="relative max-w-screen-2xl mx-auto">
         <div
           ref={contentRef}
           className="flex items-center whitespace-nowrap"
           style={{
-            animation: inView
-              ? `ticker-scroll ${getAnimationDuration()} linear infinite`
-              : "none",
+            transform: `translateX(${currentPosition}px)`,
+            transition: inView ? "none" : "transform 0.3s ease-out",
           }}
         >
           {tripleItems.map((item, index) => (
@@ -95,17 +158,6 @@ export default function Ticker({ section }: TickerProps) {
           ))}
         </div>
       </div>
-
-      <style jsx global>{`
-        @keyframes ticker-scroll {
-          0% {
-            transform: translateX(100%);
-          }
-          100% {
-            transform: translateX(-${tickerWidth}px);
-          }
-        }
-      `}</style>
     </section>
   );
 }

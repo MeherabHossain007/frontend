@@ -31,7 +31,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="w-full border-b border-gray-200">
+    <header className="sticky top-0 z-40 w-full border-b border-gray-200 bg-white backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
         <nav className="flex items-center justify-between h-16 px-4">
           {/* Logo */}
@@ -68,9 +68,9 @@ export default function Navbar() {
                 {item.label}
               </Link>
             ))}
-              <div className="flex items-center ml-5">
-                <LanguageSwitcher />
-              </div>
+            <div className="flex items-center ml-5">
+              <LanguageSwitcher />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -81,7 +81,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden bg-gray-100 py-4 px-4 border-t border-gray-200">
+          <div className="lg:hidden bg-white py-4 px-4 border-t border-gray-200 shadow-lg">
             <div className="flex flex-col space-y-4">
               <button
                 onClick={openPaymentModal}

@@ -1,10 +1,19 @@
 "use client";
-import React, { useState, useRef, useEffect, JSX } from "react";
+import React, { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Keyboard, A11y } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
 import type { Section } from "@/interfaces/section.interface";
 import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { JSX } from "react/jsx-runtime";
 
 interface FeatureGridProps {
   section: Extract<Section, { __component: "sections.feature-grid" }>;
@@ -16,14 +25,12 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
     threshold: 0.1,
   });
 
-  // State and refs for carousel
   const [isVisible, setIsVisible] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(true);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+
+  const features = section.features || [];
 
   // Check if features should be in view
   useEffect(() => {
@@ -32,78 +39,20 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
     }
   }, [inView]);
 
-  // Check scroll position to control arrow visibility
-  const checkScrollPosition = () => {
-    if (!scrollContainerRef.current) return;
-
-    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-    setShowLeftArrow(scrollLeft > 0);
-    setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 5);
-  };
-
-  // Set up scroll event listener
-  useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", checkScrollPosition);
-      checkScrollPosition();
-    }
-    return () => {
-      scrollContainer?.removeEventListener("scroll", checkScrollPosition);
-    };
-  }, []);
-
   // Handle navigation
   const handlePrev = () => {
-    scrollContainerRef.current?.scrollBy({
-      left: -272, // Card width (256) + margin (16)
-      behavior: "smooth",
-    });
+    swiperInstance?.slidePrev();
   };
 
   const handleNext = () => {
-    scrollContainerRef.current?.scrollBy({
-      left: 272, // Card width (256) + margin (16)
-      behavior: "smooth",
-    });
+    swiperInstance?.slideNext();
   };
 
-  // Handle drag events
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    if (scrollContainerRef.current) {
-      setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-      setScrollLeft(scrollContainerRef.current.scrollLeft);
-    }
+  // Handle swiper events
+  const handleSlideChange = (swiper: SwiperType) => {
+    setIsBeginning(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
   };
-
-  const handleMouseUp = () => setIsDragging(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  // Touch events for mobile
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    if (scrollContainerRef.current) {
-      setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
-      setScrollLeft(scrollContainerRef.current.scrollLeft);
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const features = section.features || [];
 
   return (
     <div ref={ref} className="w-full py-16 bg-white">
@@ -119,12 +68,12 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
           <div className="flex space-x-3">
             <button
               onClick={handlePrev}
-              className={`flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 ${
-                showLeftArrow
+              className={`flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 transition-colors ${
+                !isBeginning
                   ? "text-black hover:bg-gray-100"
-                  : "text-gray-300 cursor-default"
+                  : "text-gray-300 cursor-not-allowed"
               }`}
-              disabled={!showLeftArrow}
+              disabled={isBeginning}
               aria-label="Previous slide"
             >
               <ArrowLeft className="h-5 w-5" />
@@ -132,12 +81,12 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
 
             <button
               onClick={handleNext}
-              className={`flex items-center justify-center w-12 h-12 rounded-full bg-indigo-600 ${
-                showRightArrow
-                  ? "hover:bg-indigo-700 text-white"
-                  : "bg-indigo-300 cursor-default"
+              className={`flex items-center justify-center w-12 h-12 rounded-full transition-colors ${
+                !isEnd
+                  ? "bg-indigo-600 hover:bg-indigo-700 text-white"
+                  : "bg-indigo-300 cursor-not-allowed text-white"
               }`}
-              disabled={!showRightArrow}
+              disabled={isEnd}
               aria-label="Next slide"
             >
               <ArrowRight className="h-5 w-5" />
@@ -145,132 +94,168 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
           </div>
         </div>
 
-        <div className="overflow-hidden">
-          <div
-            ref={scrollContainerRef}
-            className={`flex space-x-4 pb-6 scroll-smooth overflow-x-auto ${
-              isVisible ? "opacity-100" : "opacity-0"
-            }`}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleMouseUp}
-            onTouchMove={handleTouchMove}
-            style={{
-              cursor: isDragging ? "grabbing" : "grab",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
+        <div
+          className={`transition-opacity duration-500 ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <Swiper
+            modules={[Navigation, Pagination, Keyboard, A11y]}
+            spaceBetween={16}
+            slidesPerView="auto"
+            grabCursor={true}
+            keyboard={{
+              enabled: true,
             }}
+            onSwiper={setSwiperInstance}
+            onSlideChange={handleSlideChange}
+            onReachBeginning={() => setIsBeginning(true)}
+            onReachEnd={() => setIsEnd(true)}
+            className="pb-6"
           >
             {features.map((feature, index) => (
-              <div
-                key={feature.id || index}
-                className="flex-shrink-0 w-64 border border-gray-200 rounded-lg p-6 flex flex-col items-center bg-white shadow-sm hover:shadow-md transition duration-300"
-              >
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  {feature.title}
-                </h3>
+              <SwiperSlide key={feature.id || index} className="!w-64">
+                <div className="border border-gray-200 rounded-lg p-6 flex flex-col items-center bg-white shadow-sm hover:shadow-md transition-shadow duration-300 h-full">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
+                    {feature.title}
+                  </h3>
 
-                {feature.icon && (
-                  <div className="relative w-36 h-24 mb-6">
-                    <Image
-                      src={`${feature.icon.url}`}
-                      alt={feature.title || "Feature icon"}
-                      fill
-                      sizes="144px"
-                      className="object-contain"
-                    />
-                  </div>
-                )}
+                  {feature.icon && (
+                    <div className="relative w-36 h-24 mb-6 flex-shrink-0">
+                      <Image
+                        src={`${feature.icon.url}`}
+                        alt={feature.title || "Feature icon"}
+                        fill
+                        sizes="144px"
+                        className="object-contain"
+                      />
+                    </div>
+                  )}
 
-                <div className="w-full space-y-2">
-                  <div className="flex flex-col items-start text-gray-700">
-                    {Array.isArray(feature.description) ? (
-                      <BlocksRenderer
-                        content={feature.description as BlocksContent}
-                        blocks={{
-                          paragraph: ({ children }) => (
-                            <p className="mb-2 text-base text-gray-700 block w-full">
-                              {children}
-                            </p>
-                          ),
-                          heading: ({ children, level }) => {
-                            const Tag =
-                              `h${level}` as keyof JSX.IntrinsicElements;
-                            return (
-                              <Tag
-                                className={`text-${
-                                  level * 2
-                                }xl font-bold mb-4 w-full`}
+                  <div className="w-full space-y-2 flex-grow">
+                    <div className="flex flex-col items-start text-gray-700">
+                      {Array.isArray(feature.description) ? (
+                        <BlocksRenderer
+                          content={feature.description as BlocksContent}
+                          blocks={{
+                            paragraph: ({ children }) => (
+                              <p className="mb-2 text-base text-gray-700 block w-full">
+                                {children}
+                              </p>
+                            ),
+                            heading: ({ children, level }) => {
+                              const Tag =
+                                `h${level}` as keyof JSX.IntrinsicElements;
+                              return (
+                                <Tag
+                                  className={`text-${
+                                    level === 1
+                                      ? "2xl"
+                                      : level === 2
+                                      ? "xl"
+                                      : "lg"
+                                  } font-bold mb-4 w-full`}
+                                >
+                                  {children}
+                                </Tag>
+                              );
+                            },
+                            list: ({ children, format }) => {
+                              const ListTag =
+                                format === "ordered" ? "ol" : "ul";
+                              return (
+                                <ListTag className="list-inside list-disc pl-5 mb-4 w-full">
+                                  {children}
+                                </ListTag>
+                              );
+                            },
+                            "list-item": ({ children }) => (
+                              <li className="mb-2">{children}</li>
+                            ),
+                            quote: ({ children }) => (
+                              <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 mb-4 w-full">
+                                {children}
+                              </blockquote>
+                            ),
+                            code: ({ plainText }) => (
+                              <pre className="bg-gray-100 p-4 rounded mb-4 overflow-x-auto w-full text-sm">
+                                <code>{plainText}</code>
+                              </pre>
+                            ),
+                            image: ({ image }) => (
+                              <div className="mb-4 w-full">
+                                <Image
+                                  src={image.url}
+                                  width={image.width}
+                                  height={image.height}
+                                  alt={image.alternativeText || ""}
+                                  className="max-w-full h-auto"
+                                />
+                              </div>
+                            ),
+                            link: ({ children, url }) => (
+                              <a
+                                href={url}
+                                className="text-blue-600 hover:underline"
+                                target="_blank"
+                                rel="noopener noreferrer"
                               >
                                 {children}
-                              </Tag>
-                            );
-                          },
-                          list: ({ children, format }) => {
-                            const ListTag = format === "ordered" ? "ol" : "ul";
-                            return (
-                              <ListTag className="list-inside list-disc pl-5 mb-4 w-full">
+                              </a>
+                            ),
+                          }}
+                          modifiers={{
+                            bold: ({ children }) => <strong>{children}</strong>,
+                            italic: ({ children }) => <em>{children}</em>,
+                            underline: ({ children }) => <u>{children}</u>,
+                            strikethrough: ({ children }) => <s>{children}</s>,
+                            code: ({ children }) => (
+                              <code className="bg-gray-200 px-1 rounded text-sm">
                                 {children}
-                              </ListTag>
-                            );
-                          },
-                          "list-item": ({ children }) => (
-                            <li className="mb-2">{children}</li>
-                          ),
-                          quote: ({ children }) => (
-                            <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 dark:text-gray-400 mb-4 w-full">
-                              {children}
-                            </blockquote>
-                          ),
-                          code: ({ plainText }) => (
-                            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto w-full">
-                              <code>{plainText}</code>
-                            </pre>
-                          ),
-                          image: ({ image }) => (
-                            <Image
-                              src={image.url}
-                              width={image.width}
-                              height={image.height}
-                              alt={image.alternativeText || ""}
-                            />
-                          ),
-                          link: ({ children, url }) => (
-                            <a
-                              href={url}
-                              className="text-blue-600 hover:underline"
-                            >
-                              {children}
-                            </a>
-                          ),
-                        }}
-                        modifiers={{
-                          bold: ({ children }) => <strong>{children}</strong>,
-                          italic: ({ children }) => <em>{children}</em>,
-                          underline: ({ children }) => <u>{children}</u>,
-                          strikethrough: ({ children }) => <s>{children}</s>,
-                          code: ({ children }) => (
-                            <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded">
-                              {children}
-                            </code>
-                          ),
-                        }}
-                      />
-                    ) : (
-                      <p className="text-base text-gray-700">
-                        {feature.description as React.ReactNode}
-                      </p>
-                    )}
+                              </code>
+                            ),
+                          }}
+                        />
+                      ) : (
+                        <p className="text-base text-gray-700">
+                          {feature.description as React.ReactNode}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </SwiperSlide>
             ))}
-          </div>
+          </Swiper>
         </div>
       </div>
+
+      <style jsx global>{`
+        .swiper-slide {
+          height: auto;
+        }
+
+        .swiper-wrapper {
+          align-items: stretch;
+        }
+
+        /* Hide default swiper navigation since we use custom buttons */
+        .swiper-button-next,
+        .swiper-button-prev {
+          display: none;
+        }
+
+        /* Optional: Custom scrollbar styling */
+        .swiper-scrollbar {
+          background: rgba(0, 0, 0, 0.1);
+          border-radius: 10px;
+        }
+
+        .swiper-scrollbar-drag {
+          background: #6366f1;
+          border-radius: 10px;
+        }
+      `}</style>
     </div>
   );
 }
