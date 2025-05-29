@@ -17,8 +17,8 @@ const sectionStyles = {
     component === "sections.ticker"
       ? ""
       : index % 2 === 0
-      ? "bg-gray-50"
-      : "bg-white",
+      ? "bg-gray-50 dark:bg-gray-900"
+      : "bg-white dark:bg-black",
 
   container: "max-w-7xl",
 };

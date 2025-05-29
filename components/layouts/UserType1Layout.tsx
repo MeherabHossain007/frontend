@@ -25,8 +25,8 @@ const sectionStyles = {
     isFullWidthSection(component)
       ? ""
       : index % 2 === 0
-      ? "bg-white"
-      : "bg-gray-50",
+      ? "bg-white dark:bg-black "
+      : "bg-gray-50 dark:bg-gray-900",
   container: "max-w-7xl",
 };
 
