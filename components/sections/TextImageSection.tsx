@@ -50,12 +50,16 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
           content={blocks}
           blocks={{
             paragraph: ({ children }) => (
-              <p className="mb-3 md:text-lg font-light text-gray-700">{children}</p>
+              <p className="mb-3 md:text-lg font-light text-gray-700 dark:text-gray-300">
+                {children}
+              </p>
             ),
             heading: ({ children, level }) => {
               const Tag = `h${level}` as keyof JSX.IntrinsicElements;
               return (
-                <Tag className={`text-${level + 2}xl font-bold mb-4`}>
+                <Tag
+                  className={`text-${level + 2}xl font-bold mb-4 text-gray-900 dark:text-white`}
+                >
                   {children}
                 </Tag>
               );
@@ -63,19 +67,19 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
             list: ({ children, format }) => {
               const ListTag = format === "ordered" ? "ol" : "ul";
               return (
-                <ListTag className="list-disc pl-5 space-y-2 text-gray-700">
+                <ListTag className="list-disc pl-5 space-y-2 text-gray-700 dark:text-gray-300">
                   {children}
                 </ListTag>
               );
             },
             "list-item": ({ children }) => <li>{children}</li>,
             quote: ({ children }) => (
-              <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600">
+              <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400">
                 {children}
               </blockquote>
             ),
             code: ({ plainText }) => (
-              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto text-sm">
+              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded overflow-x-auto text-sm text-gray-800 dark:text-gray-200">
                 <code>{plainText}</code>
               </pre>
             ),
@@ -90,7 +94,10 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
               />
             ),
             link: ({ children, url }) => (
-              <a href={url} className="text-blue-600 hover:underline">
+              <a
+                href={url}
+                className="text-blue-600 dark:text-blue-400 hover:underline"
+              >
                 {children}
               </a>
             ),
@@ -129,10 +136,12 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
               />
             )}
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 {feature.title}
               </h3>
-              <div className="text-gray-600">{desc as React.ReactNode}</div>
+              <div className="text-gray-600 dark:text-gray-300">
+                {desc as React.ReactNode}
+              </div>
             </div>
           </div>
         );
@@ -177,14 +186,14 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
           } items-center gap-10 md:gap-16`}
         >
           {/* Text Content */}
-          <div className="w-full md:w-1/2 space-y-6 text-center md:text-left">
+          <div className="w-full md:w-1/2 space-y-6 text-center md:text-left ">
             {section.title && (
-              <h2 className="text-sm font-bold uppercase tracking-wide text-primary">
+              <h2 className="text-sm font-bold uppercase tracking-wide text-primary dark:text-primary">
                 {section.title}
               </h2>
             )}
             {section.subtitle && (
-              <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+              <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">
                 {section.subtitle}
               </h3>
             )}
@@ -192,13 +201,13 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
             {renderBlocks(content)}
 
             {section.features?.length ? (
-              <div className="grid grid-cols-1 gap-5 mt-10">
+              <div className="grid grid-cols-1 gap-5 mt-10 ">
                 {section.features.map(renderFeature)}
               </div>
             ) : null}
 
             {validButtons.length > 0 && (
-              <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center md:justify-start ">
                 {validButtons.map(renderButton)}
               </div>
             )}
@@ -216,7 +225,7 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
                   sizes="(max-width: 768px) 100vw, 40vw"
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+                <div className="absolute inset-0 flex items-center justify-center text-gray-500 dark:text-gray-400">
                   No Image
                 </div>
               )}

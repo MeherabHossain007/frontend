@@ -34,11 +34,11 @@ export default function CareerHero({ section }: CareerHeroProps) {
   const imageUrl = section.image?.url;
 
   return (
-    <section ref={ref} className="w-full bg-white pt-8 pb-0">
+    <section ref={ref} className="w-full bg-white dark:bg-gray-900 pt-8 pb-0 transition-colors duration-300">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         {/* Top Label */}
         <div className="mb-6">
-          <span className="text-sm font-bold text-black uppercase tracking-wide">
+          <span className="text-sm font-bold text-black dark:text-white uppercase tracking-wide">
             WORKING AT LYFT
           </span>
         </div>
@@ -53,10 +53,10 @@ export default function CareerHero({ section }: CareerHeroProps) {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-6 leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-6 leading-tight transition-colors duration-300">
               {title}
             </h1>
-            <p className="text-gray-700 mb-8 text-base md:text-lg max-w-lg">
+            <p className="text-gray-700 dark:text-gray-300 mb-8 text-base md:text-lg max-w-lg transition-colors duration-300">
               {subtitle}
             </p>
             <PrimaryButton href={buttonLink} text={buttonText} />
@@ -70,7 +70,7 @@ export default function CareerHero({ section }: CareerHeroProps) {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="relative aspect-[16/11] rounded-md overflow-hidden">
+            <div className="relative aspect-[16/11] rounded-md overflow-hidden ring-1 ring-gray-200 dark:ring-gray-700 shadow-lg dark:shadow-2xl transition-all duration-300">
               {imageUrl ? (
                 <Image
                   src={imageUrl}
@@ -88,6 +88,8 @@ export default function CareerHero({ section }: CareerHeroProps) {
                   priority
                 />
               )}
+              {/* Dark overlay for better contrast in dark mode */}
+              <div className="absolute inset-0 bg-black/0 dark:bg-black/10 transition-all duration-300" />
             </div>
           </div>
         </div>
