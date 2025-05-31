@@ -16,14 +16,14 @@ export default function Ticker({ section }: TickerProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
   const [currentPosition, setCurrentPosition] = useState(0);
-  const startTimeRef = useRef<number | null>(null);
-  const pausedTimeRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(0);
+  const isAnimatingRef = useRef(false);
 
-  // Get speed from Strapi or use default value
-  const speed = section.speed || 1;
+  // Get speed from Strapi or use default value (pixels per second)
+  const speed = (section.speed || 1) * 20; // Convert to pixels per second
 
-  // Create triple items for smoother infinite loop
-  const tripleItems = [...items, ...items, ...items];
+  // Create multiple copies for seamless infinite scroll
+  const multipleItems = [...items, ...items, ...items, ...items];
 
   // Track if ticker is in view
   const { ref: inViewRef, inView } = useInView({
@@ -35,8 +35,8 @@ export default function Ticker({ section }: TickerProps) {
   useEffect(() => {
     const calculateWidth = () => {
       if (contentRef.current) {
-        // Divide by 3 since we're using triple items
-        const itemsWidth = contentRef.current.scrollWidth / 3;
+        // Get width of one complete set
+        const itemsWidth = contentRef.current.scrollWidth / 4;
         setTickerWidth(itemsWidth);
       }
     };
@@ -46,58 +46,54 @@ export default function Ticker({ section }: TickerProps) {
     return () => window.removeEventListener("resize", calculateWidth);
   }, [items]);
 
-  // Animation loop function
-  const animate = useCallback(
-    (timestamp: number) => {
-      // Calculate animation duration based on content width and speed from Strapi
-      const getAnimationDuration = () => {
-        // Base duration adjusted by content width for consistent speed
-        const baseDuration = 100;
-        const speedFactor = Math.max(tickerWidth / 1000, 1);
-        return (baseDuration * speedFactor) / speed;
-      };
+  // Initialize starting position
+  useEffect(() => {
+    if (tickerWidth > 0 && currentPosition === 0) {
+      setCurrentPosition(window.innerWidth);
+    }
+  }, [currentPosition, tickerWidth]);
 
-      if (!startTimeRef.current) {
-        startTimeRef.current = timestamp - pausedTimeRef.current;
+  // Continuous animation function
+  const animate = useCallback((timestamp: number) => {
+    if (!isAnimatingRef.current) return;
+
+    if (lastTimeRef.current === 0) {
+      lastTimeRef.current = timestamp;
+    }
+
+    const deltaTime = (timestamp - lastTimeRef.current) / 1000; // Convert to seconds
+    const movement = speed * deltaTime;
+
+    setCurrentPosition((prevPosition) => {
+      let newPosition = prevPosition - movement;
+
+      // Reset position when one complete set has passed
+      if (newPosition <= -tickerWidth) {
+        newPosition = newPosition + tickerWidth;
       }
 
-      const elapsed = timestamp - startTimeRef.current;
-      const duration = getAnimationDuration() * 1000; // Convert to milliseconds
-      const totalDistance = window.innerWidth + tickerWidth;
+      return newPosition;
+    });
 
-      // Calculate current position based on elapsed time
-      const progress = (elapsed % duration) / duration;
-      const newPosition = window.innerWidth - progress * totalDistance;
-
-      setCurrentPosition(newPosition);
-
-      if (contentRef.current) {
-        contentRef.current.style.transform = `translateX(${newPosition}px)`;
-      }
-
-      animationRef.current = requestAnimationFrame(animate);
-    },
-    [tickerWidth, speed, pausedTimeRef, startTimeRef, contentRef]
-  );
+    lastTimeRef.current = timestamp;
+    animationRef.current = requestAnimationFrame(animate);
+  }, [speed, tickerWidth]);
 
   // Handle animation start/pause based on visibility
   useEffect(() => {
     if (tickerWidth === 0) return;
 
     if (inView) {
-      // Resume animation
-      startTimeRef.current = null;
+      // Start or resume animation
+      isAnimatingRef.current = true;
+      lastTimeRef.current = 0; // Reset timer to avoid jumps
       animationRef.current = requestAnimationFrame(animate);
     } else {
-      // Pause animation and store current time
+      // Pause animation
+      isAnimatingRef.current = false;
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
         animationRef.current = null;
-      }
-
-      // Calculate how much time has passed to resume from correct position
-      if (startTimeRef.current) {
-        pausedTimeRef.current = performance.now() - startTimeRef.current;
       }
     }
 
@@ -108,9 +104,17 @@ export default function Ticker({ section }: TickerProps) {
     };
   }, [inView, tickerWidth, speed, animate]);
 
+  // Update transform when position changes
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.style.transform = `translateX(${currentPosition}px)`;
+    }
+  }, [currentPosition]);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      isAnimatingRef.current = false;
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -125,13 +129,12 @@ export default function Ticker({ section }: TickerProps) {
       <div ref={inViewRef} className="relative max-w-screen-2xl mx-auto">
         <div
           ref={contentRef}
-          className="flex items-center whitespace-nowrap"
+          className="flex items-center whitespace-nowrap will-change-transform"
           style={{
             transform: `translateX(${currentPosition}px)`,
-            transition: inView ? "none" : "transform 0.3s ease-out",
           }}
         >
-          {tripleItems.map((item, index) => (
+          {multipleItems.map((item, index) => (
             <div
               key={`${item.id || "item"}-${index}`}
               className="group mx-8 flex-shrink-0 flex items-center"
