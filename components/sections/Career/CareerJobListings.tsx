@@ -114,13 +114,15 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
   };
 
   return (
-    <section id="openings" className="w-full py-16 bg-white">
+    <section id="openings" className="w-full py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         {/* Header with search icon */}
         <div className="flex items-center mb-8">
-          <h2 className="text-3xl font-bold text-black">{title}</h2>
+          <h2 className="text-3xl font-bold text-black dark:text-white transition-colors duration-200">
+            {title}
+          </h2>
           <div className="ml-auto">
-            <Search className="text-[#FF00BF]" size={24} />
+            <Search className="text-[#FF00BF] dark:text-[#FF66D9]" size={24} />
           </div>
         </div>
 
@@ -128,7 +130,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
         <div className="mb-8 flex flex-col md:flex-row gap-4 items-start md:items-center">
           <div className="relative flex-grow">
             <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400"
               size={20}
             />
             <input
@@ -136,43 +138,45 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
               placeholder="Search jobs"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF00BF]"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-full bg-white dark:bg-gray-800 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF00BF] dark:focus:ring-[#FF66D9] transition-colors duration-200"
             />
           </div>
 
           <div className="flex gap-4">
             <div className="relative">
               <select
-                className="appearance-none pl-4 pr-10 py-2 border border-gray-300 rounded-full bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF00BF]"
+                className="appearance-none pl-4 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-full bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF00BF] dark:focus:ring-[#FF66D9] transition-colors duration-200"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
                 <option>All categories</option>
                 {departments.map((department) => (
-                  <option key={department || "other"}>
+                  <option key={department || "other"} className="bg-white dark:bg-gray-800 text-black dark:text-white">
                     {department || "Other"}
                   </option>
                 ))}
               </select>
               <ChevronDown
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none"
                 size={16}
               />
             </div>
 
             <div className="relative">
               <select
-                className="appearance-none pl-4 pr-10 py-2 border border-gray-300 rounded-full bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF00BF]"
+                className="appearance-none pl-4 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-full bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF00BF] dark:focus:ring-[#FF66D9] transition-colors duration-200"
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
               >
                 <option>All locations</option>
                 {locations.map((location) => (
-                  <option key={createLocationKey(location)}>{location}</option>
+                  <option key={createLocationKey(location)} className="bg-white dark:bg-gray-800 text-black dark:text-white">
+                    {location}
+                  </option>
                 ))}
               </select>
               <ChevronDown
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 pointer-events-none"
                 size={16}
               />
             </div>
@@ -182,15 +186,17 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
         {/* Loading state */}
         {loading && (
           <div className="py-12 text-center">
-            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#FF00BF] border-r-transparent"></div>
-            <p className="mt-4 text-gray-700">Loading job listings...</p>
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#FF00BF] dark:border-[#FF66D9] border-r-transparent"></div>
+            <p className="mt-4 text-gray-700 dark:text-gray-300 transition-colors duration-200">
+              Loading job listings...
+            </p>
           </div>
         )}
 
         {/* No results state */}
         {!loading && filteredDepartments.length === 0 && (
           <div className="py-12 text-center">
-            <p className="text-gray-700">
+            <p className="text-gray-700 dark:text-gray-300 transition-colors duration-200">
               No job positions match your search criteria.
             </p>
           </div>
@@ -226,18 +232,18 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
               if (positions.length === 0) return null;
 
               return (
-                <div key={department} className="border-b-4 border-black">
+                <div key={department} className="border-b-4 border-black dark:border-gray-600">
                   <button
                     onClick={() => toggleCategory(department)}
-                    className="w-full flex justify-between items-center py-5 text-left focus:outline-none"
+                    className="w-full flex justify-between items-center py-5 text-left focus:outline-none hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
                   >
-                    <h3 className="text-2xl font-bold text-black">
+                    <h3 className="text-2xl font-bold text-black dark:text-white transition-colors duration-200">
                       {department}
                     </h3>
                     {expandedCategory === department ? (
-                      <ChevronUp className="text-gray-700" size={20} />
+                      <ChevronUp className="text-gray-700 dark:text-gray-300" size={20} />
                     ) : (
-                      <ChevronDown className="text-gray-700" size={20} />
+                      <ChevronDown className="text-gray-700 dark:text-gray-300" size={20} />
                     )}
                   </button>
 
@@ -246,38 +252,38 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                       {positions.map((position) => (
                         <div
                           key={position.id}
-                          className="rounded-lg overflow-hidden"
+                          className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"
                         >
                           <button
                             onClick={() => togglePosition(position.id)}
-                            className="w-full flex justify-between items-center p-3 text-left focus:outline-none hover:bg-gray-50"
+                            className="w-full flex justify-between items-center p-3 text-left focus:outline-none hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
                           >
                             <div>
-                              <h4 className="font-medium text-black">
+                              <h4 className="font-medium text-black dark:text-white transition-colors duration-200">
                                 {position.title || "Untitled Position"}
                               </h4>
-                              <p className="text-gray-700 text-sm">
+                              <p className="text-gray-700 dark:text-gray-300 text-sm transition-colors duration-200">
                                 {position.location}
                               </p>
                             </div>
                             {expandedPosition === position.id ? (
-                              <ChevronUp className="text-gray-700" size={16} />
+                              <ChevronUp className="text-gray-700 dark:text-gray-300" size={16} />
                             ) : (
                               <ChevronDown
-                                className="text-gray-700"
+                                className="text-gray-700 dark:text-gray-300"
                                 size={16}
                               />
                             )}
                           </button>
 
                           {expandedPosition === position.id && (
-                            <div className="p-4 bg-gray-50">
+                            <div className="p-4 bg-gray-50 dark:bg-gray-800 transition-colors duration-200">
                               {position.description && (
                                 <div className="mb-4">
-                                  <h5 className="font-medium text-black mb-2">
+                                  <h5 className="font-medium text-black dark:text-white mb-2 transition-colors duration-200">
                                     Description
                                   </h5>
-                                  <p className="text-gray-700">
+                                  <p className="text-gray-700 dark:text-gray-300 transition-colors duration-200">
                                     {position.description}
                                   </p>
                                 </div>
@@ -285,7 +291,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
 
                               {position.requirements && (
                                 <div className="mb-4">
-                                  <h5 className="font-medium text-black mb-2">
+                                  <h5 className="font-medium text-black dark:text-white mb-2 transition-colors duration-200">
                                     Requirements
                                   </h5>
                                   <BlocksRenderer
@@ -294,7 +300,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                     )}
                                     blocks={{
                                       paragraph: ({ children }) => (
-                                        <p className="mb-4 text-base text-gray-700">
+                                        <p className="mb-4 text-base text-gray-700 dark:text-gray-300 transition-colors duration-200">
                                           {children}
                                         </p>
                                       ),
@@ -305,7 +311,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                           <Tag
                                             className={`text-${
                                               level * 2
-                                            }xl font-bold mb-4 text-black`}
+                                            }xl font-bold mb-4 text-black dark:text-white transition-colors duration-200`}
                                           >
                                             {children}
                                           </Tag>
@@ -315,23 +321,23 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                         const ListTag =
                                           format === "ordered" ? "ol" : "ul";
                                         return (
-                                          <ListTag className="list-inside list-disc pl-5 mb-4">
+                                          <ListTag className="list-inside list-disc pl-5 mb-4 text-gray-700 dark:text-gray-300 transition-colors duration-200">
                                             {children}
                                           </ListTag>
                                         );
                                       },
                                       "list-item": ({ children }) => (
-                                        <li className="mb-2 text-gray-700">
+                                        <li className="mb-2 text-gray-700 dark:text-gray-300 transition-colors duration-200">
                                           {children}
                                         </li>
                                       ),
                                       quote: ({ children }) => (
-                                        <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-700 mb-4">
+                                        <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-700 dark:text-gray-300 mb-4 transition-colors duration-200">
                                           {children}
                                         </blockquote>
                                       ),
                                       code: ({ plainText }) => (
-                                        <pre className="bg-gray-100 p-4 rounded mb-4 overflow-x-auto text-gray-700">
+                                        <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded mb-4 overflow-x-auto text-gray-700 dark:text-gray-300 transition-colors duration-200">
                                           <code>{plainText}</code>
                                         </pre>
                                       ),
@@ -341,12 +347,13 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                           width={image.width || 800}
                                           height={image.height || 600}
                                           alt={image.alternativeText || ""}
+                                          className="rounded-lg"
                                         />
                                       ),
                                       link: ({ children, url }) => (
                                         <a
                                           href={url}
-                                          className="text-[#FF00BF] hover:underline"
+                                          className="text-[#FF00BF] dark:text-[#FF66D9] hover:underline transition-colors duration-200"
                                         >
                                           {children}
                                         </a>
@@ -354,19 +361,27 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                     }}
                                     modifiers={{
                                       bold: ({ children }) => (
-                                        <strong>{children}</strong>
+                                        <strong className="text-black dark:text-white">
+                                          {children}
+                                        </strong>
                                       ),
                                       italic: ({ children }) => (
-                                        <em>{children}</em>
+                                        <em className="text-gray-700 dark:text-gray-300">
+                                          {children}
+                                        </em>
                                       ),
                                       underline: ({ children }) => (
-                                        <u>{children}</u>
+                                        <u className="text-gray-700 dark:text-gray-300">
+                                          {children}
+                                        </u>
                                       ),
                                       strikethrough: ({ children }) => (
-                                        <s>{children}</s>
+                                        <s className="text-gray-700 dark:text-gray-300">
+                                          {children}
+                                        </s>
                                       ),
                                       code: ({ children }) => (
-                                        <code className="bg-gray-200 px-1 rounded text-gray-700">
+                                        <code className="bg-gray-200 dark:bg-gray-600 px-1 rounded text-gray-700 dark:text-gray-300 transition-colors duration-200">
                                           {children}
                                         </code>
                                       ),
@@ -379,7 +394,7 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                                 <div className="mt-4">
                                   <a
                                     href={position.applicationUrl}
-                                    className="inline-flex items-center justify-center px-6 py-2 bg-[#FF00BF] hover:bg-[#D900A6] text-white font-medium rounded-full transition-colors"
+                                    className="inline-flex items-center justify-center px-6 py-2 bg-[#FF00BF] hover:bg-[#D900A6] dark:bg-[#FF66D9] dark:hover:bg-[#FF00BF] text-white font-medium rounded-full transition-all duration-200 transform hover:scale-105"
                                   >
                                     Apply Now
                                   </a>

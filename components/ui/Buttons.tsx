@@ -36,7 +36,7 @@ export const SecondaryButton = ({
     <Link
       href={href}
       onClick={onClick}
-      className={`flex items-center font-extrabold group text-black hover:underline ${className}`}
+      className={`flex items-center font-extrabold group text-black dark:text-white hover:underline ${className}`}
     >
       {children || text}
       {showArrow && (
@@ -50,7 +50,7 @@ export function TextButton({ href, text, className = "" }: GlobalButtonProps) {
   return (
     <Link
       href={href}
-      className={`inline-flex items-center justify-center font-medium text-[#FF00BF] hover:text-[#D900A6] hover:underline text-base ${className}`}
+      className={`inline-flex items-center justify-center font-medium text-[#FF00BF] dark:text-[#FF66D9] hover:text-[#D900A6] dark:hover:text-[#FF33CC] hover:underline text-base ${className}`}
     >
       {text}
     </Link>

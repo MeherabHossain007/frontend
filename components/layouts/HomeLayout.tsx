@@ -18,7 +18,7 @@ const sectionStyles = {
       ? ""
       : index % 2 === 0
       ? "bg-gray-50 dark:bg-gray-900"
-      : "bg-white dark:bg-black",
+      : "bg-white dark:bg-gray-900",
 
   container: "max-w-7xl",
 };
