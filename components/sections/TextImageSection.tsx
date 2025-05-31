@@ -181,7 +181,7 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
         }`}
       >
         <div
-          className={`max-w-7xl mx-auto flex flex-col-reverse ${
+          className={`max-w-7xl mx-auto flex flex-col-reverse  ${
             section.reversed ? "md:flex-row" : "md:flex-row-reverse"
           } items-center gap-10 md:gap-16`}
         >
@@ -215,13 +215,13 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
 
           {/* Image */}
           <div className="w-full md:w-1/2">
-            <div className="aspect-[4/4] overflow-hidden relative">
+            <div className="aspect-[4/4] overflow-hidden relative ">
               {imageUrl ? (
                 <Image
                   src={imageUrl}
                   alt={section.title || "Section image"}
                   fill
-                  className="object-contain p-4"
+                  className="object-contain p-4 "
                   sizes="(max-width: 768px) 100vw, 40vw"
                 />
               ) : (

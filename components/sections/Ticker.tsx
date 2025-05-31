@@ -123,7 +123,7 @@ export default function Ticker({ section }: TickerProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100 bg:[#FFDEDE] py-2"
+      className="relative w-full overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-2"
       aria-label="Ticker showcase"
     >
       <div ref={inViewRef} className="relative max-w-screen-2xl mx-auto">
@@ -141,18 +141,18 @@ export default function Ticker({ section }: TickerProps) {
               role="listitem"
             >
               {item.logo ? (
-                <div className="relative overflow-hidden rounded-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg">
+                <div className="relative overflow-hidden rounded-lg transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-lg dark:hover:shadow-gray-700/30">
                   <Image
                     src={`${item.logo.url}`}
                     alt={item.name || "Partner logo"}
                     width={140}
                     height={70}
-                    className="h-12 sm:h-16 w-auto object-contain filter grayscale opacity-75 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                    className="h-12 sm:h-16 w-auto object-contain filter grayscale opacity-75 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 dark:opacity-60 dark:group-hover:opacity-100"
                   />
                 </div>
               ) : (
-                <div className="px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all group-hover:bg-blue-50 dark:group-hover:bg-gray-700">
-                  <span className="text-lg font-medium bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-300 dark:to-white bg-clip-text text-transparent group-hover:from-blue-600 group-hover:to-purple-600">
+                <div className="px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md dark:shadow-gray-700/20 dark:hover:shadow-gray-600/30 transition-all group-hover:bg-blue-50 dark:group-hover:bg-gray-700 border border-gray-200 dark:border-gray-700">
+                  <span className="text-lg font-medium bg-gradient-to-r from-gray-700 to-gray-900 dark:from-gray-200 dark:to-gray-100 bg-clip-text text-transparent group-hover:from-blue-600 group-hover:to-purple-600 dark:group-hover:from-blue-400 dark:group-hover:to-purple-400">
                     {item.name}
                   </span>
                 </div>
