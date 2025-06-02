@@ -7,7 +7,7 @@ import axios from "axios";
 const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 let globalDataCache: GlobalData | null = null;
 let cacheTimestamp: number | null = null;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 60; // 60s
 
 export const globalController = {
   /**

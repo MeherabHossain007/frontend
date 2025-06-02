@@ -58,7 +58,9 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
               const Tag = `h${level}` as keyof JSX.IntrinsicElements;
               return (
                 <Tag
-                  className={`text-${level + 2}xl font-bold mb-4 text-gray-900 dark:text-white`}
+                  className={`text-${
+                    level + 2
+                  }xl font-bold mb-4 text-gray-900 dark:text-white`}
                 >
                   {children}
                 </Tag>
@@ -127,16 +129,18 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
         return (
           <div key={idx} className="flex items-start gap-4">
             {feature.icon?.url && (
-              <Image
-                src={feature.icon.url}
-                alt={feature.title || ""}
-                width={32}
-                height={32}
-                className="h-8 w-8"
-              />
+              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center">
+                <Image
+                  src={feature.icon.url}
+                  alt={feature.title || ""}
+                  width={28}
+                  height={28}
+                  className="w-7 h-7 object-contain dark:invert dark:brightness-0 dark:contrast-200 dark:filter"
+                />
+              </div>
             )}
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-black dark:text-white">
                 {feature.title}
               </h3>
               <div className="text-gray-600 dark:text-gray-300">
@@ -188,7 +192,7 @@ const TextImageSection: React.FC<TextImageSectionProps> = React.memo(
           {/* Text Content */}
           <div className="w-full md:w-1/2 space-y-6 text-center md:text-left ">
             {section.title && (
-              <h2 className="text-sm font-bold uppercase tracking-wide text-primary dark:text-primary">
+              <h2 className="text-sm font-bold uppercase tracking-wide text-black dark:text-primary">
                 {section.title}
               </h2>
             )}
