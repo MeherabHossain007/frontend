@@ -75,7 +75,7 @@ export default function Navbar() {
                 href={item.url}
                 className={`font-semibold text-sm uppercase border-r border-gray-200 dark:border-gray-700 px-6 transition-colors duration-200 ${
                   isActiveLink(item.url)
-                    ? "text-pink-500 dark:text-indigo-400 dark:bg-indigo-900/20"
+                    ? "text-pink-500"
                     : "text-gray-900 dark:text-gray-100 hover:text-pink-500 dark:hover:text-pink-400"
                 }`}
               >
