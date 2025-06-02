@@ -6,6 +6,7 @@ import LogRocket from "@/services/LogRocket";
 import Navbar from "@/components/Shared/Navbar";
 import Footer from "@/components/Shared/Footer";
 import GoogleAnalytics from "@/services/GoogleAnalytics";
+import { preloadGlobalData } from "@/controllers/page/globalController";
 
 export const dynamic = "force-dynamic";
 
@@ -45,3 +46,6 @@ export default function RootLayout({
     </html>
   );
 }
+
+// Call this during app initialization
+preloadGlobalData();

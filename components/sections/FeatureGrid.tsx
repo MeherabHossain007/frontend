@@ -101,134 +101,148 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
             isVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          <Swiper
-            modules={[Navigation, Pagination, Keyboard, A11y]}
-            spaceBetween={16}
-            slidesPerView="auto"
-            grabCursor={true}
-            keyboard={{
-              enabled: true,
-            }}
-            onSwiper={setSwiperInstance}
-            onSlideChange={handleSlideChange}
-            onReachBeginning={() => setIsBeginning(true)}
-            onReachEnd={() => setIsEnd(true)}
-            className="pb-6"
-          >
-            {features.map((feature, index) => (
-              <SwiperSlide key={feature.id || index} className="!w-64">
-                <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col items-center bg-white dark:bg-gray-800 shadow-sm hover:shadow-md dark:hover:shadow-lg transition-shadow duration-300 h-full">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center">
-                    {feature.title}
-                  </h3>
+          <div className="swiper-container-with-mask relative">
+            <Swiper
+              modules={[Navigation, Pagination, Keyboard, A11y]}
+              spaceBetween={16}
+              slidesPerView="auto"
+              grabCursor={true}
+              keyboard={{
+                enabled: true,
+              }}
+              onSwiper={setSwiperInstance}
+              onSlideChange={handleSlideChange}
+              onReachBeginning={() => setIsBeginning(true)}
+              onReachEnd={() => setIsEnd(true)}
+              className="pb-6"
+            >
+              {features.map((feature, index) => (
+                <SwiperSlide key={feature.id || index} className="!w-64">
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col items-center bg-white dark:bg-gray-800 shadow-sm hover:shadow-md dark:hover:shadow-lg transition-shadow duration-300 h-full">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+                      {feature.title}
+                    </h3>
 
-                  {feature.icon && (
-                    <div className="relative w-36 h-24 mb-6 flex-shrink-0">
-                      <Image
-                        src={`${feature.icon.url}`}
-                        alt={feature.title || "Feature icon"}
-                        fill
-                        sizes="144px"
-                        className="object-contain"
-                      />
-                    </div>
-                  )}
+                    {feature.icon && (
+                      <div className="relative w-36 h-24 mb-6 flex-shrink-0">
+                        <Image
+                          src={`${feature.icon.url}`}
+                          alt={feature.title || "Feature icon"}
+                          fill
+                          sizes="144px"
+                          className="object-contain"
+                        />
+                      </div>
+                    )}
 
-                  <div className="w-full space-y-2 flex-grow">
-                    <div className="flex flex-col items-start text-gray-700 dark:text-gray-300">
-                      {Array.isArray(feature.description) ? (
-                        <BlocksRenderer
-                          content={feature.description as BlocksContent}
-                          blocks={{
-                            paragraph: ({ children }) => (
-                              <p className="mb-2 text-base text-gray-700 dark:text-gray-300 block w-full">
-                                {children}
-                              </p>
-                            ),
-                            heading: ({ children, level }) => {
-                              const Tag =
-                                `h${level}` as keyof JSX.IntrinsicElements;
-                              return (
-                                <Tag
-                                  className={`text-${
-                                    level === 1
-                                      ? "2xl"
-                                      : level === 2
-                                      ? "xl"
-                                      : "lg"
-                                  } font-bold mb-4 w-full text-gray-900 dark:text-white`}
+                    <div className="w-full space-y-2 flex-grow">
+                      <div className="flex flex-col items-start text-gray-700 dark:text-gray-300">
+                        {Array.isArray(feature.description) ? (
+                          <BlocksRenderer
+                            content={feature.description as BlocksContent}
+                            blocks={{
+                              paragraph: ({ children }) => (
+                                <p className="mb-2 text-base text-gray-700 dark:text-gray-300 block w-full">
+                                  {children}
+                                </p>
+                              ),
+                              heading: ({ children, level }) => {
+                                const Tag =
+                                  `h${level}` as keyof JSX.IntrinsicElements;
+                                return (
+                                  <Tag
+                                    className={`text-${
+                                      level === 1
+                                        ? "2xl"
+                                        : level === 2
+                                        ? "xl"
+                                        : "lg"
+                                    } font-bold mb-4 w-full text-gray-900 dark:text-white`}
+                                  >
+                                    {children}
+                                  </Tag>
+                                );
+                              },
+                              list: ({ children, format }) => {
+                                const ListTag =
+                                  format === "ordered" ? "ol" : "ul";
+                                return (
+                                  <ListTag className="list-inside list-disc pl-5 mb-4 w-full text-gray-700 dark:text-gray-300">
+                                    {children}
+                                  </ListTag>
+                                );
+                              },
+                              "list-item": ({ children }) => (
+                                <li className="mb-2">{children}</li>
+                              ),
+                              quote: ({ children }) => (
+                                <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400 mb-4 w-full">
+                                  {children}
+                                </blockquote>
+                              ),
+                              code: ({ plainText }) => (
+                                <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto w-full text-sm text-gray-900 dark:text-gray-100">
+                                  <code>{plainText}</code>
+                                </pre>
+                              ),
+                              image: ({ image }) => (
+                                <div className="mb-4 w-full">
+                                  <Image
+                                    src={image.url}
+                                    width={image.width}
+                                    height={image.height}
+                                    alt={image.alternativeText || ""}
+                                    className="max-w-full h-auto"
+                                  />
+                                </div>
+                              ),
+                              link: ({ children, url }) => (
+                                <a
+                                  href={url}
+                                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
                                 >
                                   {children}
-                                </Tag>
-                              );
-                            },
-                            list: ({ children, format }) => {
-                              const ListTag =
-                                format === "ordered" ? "ol" : "ul";
-                              return (
-                                <ListTag className="list-inside list-disc pl-5 mb-4 w-full text-gray-700 dark:text-gray-300">
+                                </a>
+                              ),
+                            }}
+                            modifiers={{
+                              bold: ({ children }) => (
+                                <strong>{children}</strong>
+                              ),
+                              italic: ({ children }) => <em>{children}</em>,
+                              underline: ({ children }) => <u>{children}</u>,
+                              strikethrough: ({ children }) => (
+                                <s>{children}</s>
+                              ),
+                              code: ({ children }) => (
+                                <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded text-sm text-gray-900 dark:text-gray-100">
                                   {children}
-                                </ListTag>
-                              );
-                            },
-                            "list-item": ({ children }) => (
-                              <li className="mb-2">{children}</li>
-                            ),
-                            quote: ({ children }) => (
-                              <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400 mb-4 w-full">
-                                {children}
-                              </blockquote>
-                            ),
-                            code: ({ plainText }) => (
-                              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto w-full text-sm text-gray-900 dark:text-gray-100">
-                                <code>{plainText}</code>
-                              </pre>
-                            ),
-                            image: ({ image }) => (
-                              <div className="mb-4 w-full">
-                                <Image
-                                  src={image.url}
-                                  width={image.width}
-                                  height={image.height}
-                                  alt={image.alternativeText || ""}
-                                  className="max-w-full h-auto"
-                                />
-                              </div>
-                            ),
-                            link: ({ children, url }) => (
-                              <a
-                                href={url}
-                                className="text-blue-600 dark:text-blue-400 hover:underline"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {children}
-                              </a>
-                            ),
-                          }}
-                          modifiers={{
-                            bold: ({ children }) => <strong>{children}</strong>,
-                            italic: ({ children }) => <em>{children}</em>,
-                            underline: ({ children }) => <u>{children}</u>,
-                            strikethrough: ({ children }) => <s>{children}</s>,
-                            code: ({ children }) => (
-                              <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded text-sm text-gray-900 dark:text-gray-100">
-                                {children}
-                              </code>
-                            ),
-                          }}
-                        />
-                      ) : (
-                        <p className="text-base text-gray-700 dark:text-gray-300">
-                          {feature.description as React.ReactNode}
-                        </p>
-                      )}
+                                </code>
+                              ),
+                            }}
+                          />
+                        ) : (
+                          <p className="text-base text-gray-700 dark:text-gray-300">
+                            {feature.description as React.ReactNode}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {/* Gradient mask overlays */}
+            {!isBeginning && (
+              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10 transition-opacity duration-300"></div>
+            )}
+            {!isEnd && (
+              <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10 transition-opacity duration-300"></div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -263,6 +277,11 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
           .dark .swiper-scrollbar {
             background: rgba(255, 255, 255, 0.1);
           }
+        }
+
+        /* Ensure proper stacking for gradient masks */
+        .swiper-container-with-mask {
+          isolation: isolate;
         }
       `}</style>
     </div>
