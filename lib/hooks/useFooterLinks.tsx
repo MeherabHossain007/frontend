@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import { useNavigationLink } from "./useNavigationLink";
 import { FooterLink } from "@/interfaces/page.interface";

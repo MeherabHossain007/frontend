@@ -1,14 +1,15 @@
 // src/controllers/pages/pageController.ts
-import { PageData } from "@/interfaces/page.interface";
-import api from "@/lib/api";
+"use server";
 
+import { PageData } from "@/interfaces/page.interface";
+import { getPage, getAllPageSlugs as getPageSlugs } from "@/lib/server/api";
 
 /**
  * Controller for fetching and processing home page data
  */
 export async function getHomePageData(): Promise<PageData | null> {
   try {
-    const page = await api.getPage("home-page");
+    const page = await getPage("home-page");
     return page;
   } catch (error) {
     console.error("Error fetching home page:", error);
@@ -23,7 +24,7 @@ export async function getPageDataBySlug(
   slug: string
 ): Promise<PageData | null> {
   try {
-    const page = await api.getPage(slug);
+    const page = await getPage(slug);
     return page;
   } catch (error) {
     console.error(`Error fetching page ${slug}:`, error);
@@ -36,7 +37,7 @@ export async function getPageDataBySlug(
  */
 export async function getAllPageSlugs(): Promise<string[]> {
   try {
-    const slugs = await api.getAllPageSlugs();
+    const slugs = await getPageSlugs();
     return slugs;
   } catch (error) {
     console.error("Error fetching page slugs:", error);
@@ -52,7 +53,7 @@ export async function getPageMetadata(slug: string): Promise<{
   description: string;
 }> {
   try {
-    const page = await api.getPage(slug);
+    const page = await getPage(slug);
 
     if (!page) {
       return {
@@ -78,15 +79,70 @@ export async function getPageMetadata(slug: string): Promise<{
 }
 
 /**
- * Controller for rendering sections based on type
+ * Enhanced controller for getting page data with metadata
  */
-export function getSectionComponentType(pageType: string): string {
-  const pageTypeMapping: Record<string, string> = {
-    home: "HomePageLayout",
-    userType1: "UserType1Layout",
-    userType2: "UserType2Layout",
-    career: "CareerLayout",
+export async function getPageWithMetadata(slug: string): Promise<{
+  page: PageData | null;
+  metadata: {
+    title: string;
+    description: string;
   };
+}> {
+  try {
+    const [page, metadata] = await Promise.all([
+      getPage(slug),
+      getPageMetadata(slug),
+    ]);
 
-  return pageTypeMapping[pageType];
+    return {
+      page,
+      metadata,
+    };
+  } catch (error) {
+    console.error(`Error fetching page with metadata for ${slug}:`, error);
+    return {
+      page: null,
+      metadata: {
+        title: "Error",
+        description: "An error occurred while loading the page.",
+      },
+    };
+  }
+}
+
+/**
+ * Controller for batch fetching multiple pages
+ */
+export async function getMultiplePages(slugs: string[]): Promise<{
+  [slug: string]: PageData | null;
+}> {
+  try {
+    const pagePromises = slugs.map(async (slug) => ({
+      slug,
+      page: await getPage(slug),
+    }));
+
+    const results = await Promise.all(pagePromises);
+
+    return results.reduce((acc, { slug, page }) => {
+      acc[slug] = page;
+      return acc;
+    }, {} as { [slug: string]: PageData | null });
+  } catch (error) {
+    console.error("Error fetching multiple pages:", error);
+    return {};
+  }
+}
+
+/**
+ * Controller for validating if a page exists
+ */
+export async function validatePageExists(slug: string): Promise<boolean> {
+  try {
+    const page = await getPage(slug);
+    return page !== null;
+  } catch (error) {
+    console.error(`Error validating page existence for ${slug}:`, error);
+    return false;
+  }
 }

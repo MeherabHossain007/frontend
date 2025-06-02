@@ -1,4 +1,5 @@
-import globalController from "@/controllers/page/globalController";
+"use client";
+import { getGlobalData } from "@/controllers/page/globalController";
 import { GlobalData } from "@/interfaces/page.interface";
 import { useState, useEffect } from "react";
 
@@ -11,7 +12,7 @@ export function useNavigationLink() {
     async function fetchData() {
       try {
         setLoading(true);
-        const result = await globalController.getGlobalSettings();
+        const result = await getGlobalData();
         setData(result);
       } catch (err) {
         setError(

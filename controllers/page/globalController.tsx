@@ -1,75 +1,72 @@
 // src/api/globalController.ts
+"use server";
 
-import { GlobalData, StrapiResponse } from "@/interfaces/page.interface";
-import axios from "axios";
+import { GlobalData } from "@/interfaces/page.interface";
+import { getGlobalSettings } from "@/lib/server/api";
 
-
-const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+// In-memory cache for global data
 let globalDataCache: GlobalData | null = null;
 let cacheTimestamp: number | null = null;
-const CACHE_DURATION = 60; // 60s
+const CACHE_DURATION = 60 * 1000; // 60 seconds in milliseconds
 
-export const globalController = {
-  /**
-   * Fetch global settings from Strapi API
-   */
-  async getGlobalSettings(): Promise<GlobalData | null> {
-    // Return cached data if valid
-    if (
-      globalDataCache &&
-      cacheTimestamp &&
-      Date.now() - cacheTimestamp < CACHE_DURATION
-    ) {
-      return globalDataCache;
-    }
+export async function getGlobalData(): Promise<GlobalData | null> {
+  // Return cached data if valid
+  if (
+    globalDataCache &&
+    cacheTimestamp &&
+    Date.now() - cacheTimestamp < CACHE_DURATION
+  ) {
+    return globalDataCache;
+  }
 
-    try {
-      const response = await axios.get<StrapiResponse<GlobalData>>(
-        `${strapiUrl}/api/global?populate=*`
-      );
+  try {
+    // Use the main API controller to avoid duplication
+    const data = await getGlobalSettings();
 
+    if (data) {
       // Update cache
-      globalDataCache = response.data.data;
+      globalDataCache = data;
       cacheTimestamp = Date.now();
-
-      return response.data.data;
-    } catch (error) {
-      console.error("Error fetching global settings:", error);
-      return null;
     }
-  },
 
-  /**
-   * Clear the cache
-   */
-  clearCache() {
-    globalDataCache = null;
-    cacheTimestamp = null;
-  },
+    return data;
+  } catch (error) {
+    console.error("Error fetching global data:", error);
+    return globalDataCache; // Return stale cache if available
+  }
+}
 
-  /**
-   * Get navigation items
-   */
-  async getNavigation() {
-    const data = await this.getGlobalSettings();
-    return data?.navigation || [];
-  },
+/**
+ * Get navigation items with optimized caching
+ */
+export async function getNavigation() {
+  const data = await getGlobalData();
+  return data?.navigation || [];
+}
 
-  /**
-   * Get footer links grouped by category
-   */
-  async getFooterLinks() {
-    const data = await this.getGlobalSettings();
-    return data?.FooterLinks || [];
-  },
+/**
+ * Get footer links grouped by category
+ */
+export async function getFooterLinks() {
+  const data = await getGlobalData();
+  return data?.FooterLinks || [];
+}
 
-  /**
-   * Get social links
-   */
-  async getSocialLinks() {
-    const data = await this.getGlobalSettings();
-    return data?.socialLinks || [];
-  },
-};
+/**
+ * Get social links
+ */
+export async function getSocialLinks() {
+  const data = await getGlobalData();
+  return data?.socialLinks || [];
+}
 
-export default globalController;
+/**
+ * Preload global data (useful for SSG/SSR optimization)
+ */
+export async function preloadGlobalData(): Promise<void> {
+  try {
+    await getGlobalData();
+  } catch (error) {
+    console.error("Error preloading global data:", error);
+  }
+}
