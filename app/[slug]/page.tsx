@@ -40,7 +40,7 @@ export default async function Page({
   const pageType = page.pageType;
 
   return (
-    <div>
+    <div className="mx-auto dark:bg-gray-900">
       {pageType === "userType1" && <UserType1Layout page={page} />}
       {pageType === "userType2" && <UserType2Layout page={page} />}
       {pageType === "career" && <CareerLayout page={page} />}

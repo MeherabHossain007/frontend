@@ -39,7 +39,7 @@ export default function Testimonials({ section }: TestimonialsProps) {
   return (
     <section
       ref={ref}
-      className={`w-full py-16 transition-opacity duration-700 bg-[#e0ffef] dark:bg-gray-900 ${
+      className={`w-full py-16 transition-opacity duration-700 bg-[#e0ffef] ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -47,7 +47,7 @@ export default function Testimonials({ section }: TestimonialsProps) {
         {testimonials.length > 0 && (
           <div className="max-w-4xl mx-auto text-center">
             <div className="mb-8 flex justify-center">
-              <div className="w-20 h-20 rounded-full overflow-hidden ring-4 ring-white dark:ring-gray-700 shadow-lg">
+              <div className="w-20 h-20 rounded-full overflow-hidden ring-4 ring-white shadow-lg">
                 {testimonials[activeIndex].avatar && (
                   <Image
                     src={`${testimonials[activeIndex].avatar.url}`}
@@ -60,19 +60,19 @@ export default function Testimonials({ section }: TestimonialsProps) {
               </div>
             </div>
             
-            <div className="mb-8 text-xl md:text-2xl font-medium text-center text-gray-900 dark:text-gray-100">
+            <div className="mb-8 text-xl md:text-2xl font-medium text-center text-gray-900">
               <BlocksRenderer
                 content={testimonials[activeIndex].quote as unknown as BlocksContent}
                 blocks={{
                   paragraph: ({ children }) => (
-                    <p className="mb-4 text-center text-gray-900 dark:text-gray-100">
+                    <p className="mb-4 text-center text-gray-900">
                       &quot;{children}&quot;
                     </p>
                   ),
                   heading: ({ children, level }) => {
                     const Tag = `h${level}` as keyof JSX.IntrinsicElements;
                     return (
-                      <Tag className={`text-${level * 2}xl font-bold mb-4 text-gray-900 dark:text-gray-100`}>
+                      <Tag className={`text-${level * 2}xl font-bold mb-4 text-gray-900`}>
                         {children}
                       </Tag>
                     );
@@ -80,27 +80,27 @@ export default function Testimonials({ section }: TestimonialsProps) {
                   list: ({ children, format }) => {
                     const ListTag = format === "ordered" ? "ol" : "ul";
                     return (
-                      <ListTag className="list-inside list-disc pl-5 mb-4 text-center text-gray-900 dark:text-gray-100">
+                      <ListTag className="list-inside list-disc pl-5 mb-4 text-center text-gray-900">
                         {children}
                       </ListTag>
                     );
                   },
                   "list-item": ({ children }) => (
-                    <li className="mb-2 text-gray-900 dark:text-gray-100">{children}</li>
+                    <li className="mb-2 text-gray-900">{children}</li>
                   ),
                 }}
                 modifiers={{
-                  bold: ({ children }) => <strong className="text-gray-900 dark:text-gray-100">{children}</strong>,
-                  italic: ({ children }) => <em className="text-gray-900 dark:text-gray-100">{children}</em>,
-                  underline: ({ children }) => <u className="text-gray-900 dark:text-gray-100">{children}</u>,
-                  strikethrough: ({ children }) => <s className="text-gray-900 dark:text-gray-100">{children}</s>,
+                  bold: ({ children }) => <strong className="text-gray-900">{children}</strong>,
+                  italic: ({ children }) => <em className="text-gray-900">{children}</em>,
+                  underline: ({ children }) => <u className="text-gray-900">{children}</u>,
+                  strikethrough: ({ children }) => <s className="text-gray-900">{children}</s>,
                 }}
               />
             </div>
             
             <div className="mb-8 text-center">
-              <p className="font-semibold text-black dark:text-white">— {testimonials[activeIndex].name}</p>
-              <p className="text-sm text-gray-700 dark:text-gray-300">{testimonials[activeIndex].title}</p>
+              <p className="font-semibold text-black">— {testimonials[activeIndex].name}</p>
+              <p className="text-sm text-gray-700">{testimonials[activeIndex].title}</p>
             </div>
             
             <div className="flex justify-center items-center space-x-2">
@@ -118,10 +118,10 @@ export default function Testimonials({ section }: TestimonialsProps) {
               ))}
               <button 
                 onClick={nextTestimonial}
-                className="ml-4 flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
+                className="ml-4 flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
                 aria-label="Next slide"
               >
-                <ChevronRight className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+                <ChevronRight className="w-4 h-4 text-gray-700" />
               </button>
             </div>
           </div>

@@ -25,7 +25,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="mx-auto ">
+    <div className="mx-auto dark:bg-gray-900 ">
       <HomeLayout page={page} />
     </div>
   );

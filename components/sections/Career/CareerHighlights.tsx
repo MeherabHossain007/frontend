@@ -30,12 +30,12 @@ export default function CareerHighlights({ section }: CareerHighlightsProps) {
     <section
       ref={ref}
       id="highlights"
-      className={`w-full py-16 md:py-24 bg-white dark:bg-gray-900 transition-all duration-700 ${
+      className={`w-full py-16 md:py-24 bg-white dark:bg-gray-900 transition-opacity duration-700 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 mb-16">
-        <h2 className="text-xl sm:text-2xl font-semibold text-center max-w-4xl mx-auto leading-relaxed text-black dark:text-white transition-colors duration-300">
+        <h2 className="text-xl sm:text-2xl font-semibold text-center max-w-4xl mx-auto leading-relaxed text-black dark:text-white">
           {section.title}
         </h2>
       </div>
@@ -46,7 +46,7 @@ export default function CareerHighlights({ section }: CareerHighlightsProps) {
             {highlights.slice(0, 3).map((highlight, index) => (
               <div
                 key={highlight.id || index}
-                className={`flex flex-col p-6 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:shadow-lg dark:hover:shadow-xl hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-700 delay-${
+                className={`flex flex-col transition-all duration-700 delay-${
                   index * 100
                 } ${
                   isVisible
@@ -54,10 +54,10 @@ export default function CareerHighlights({ section }: CareerHighlightsProps) {
                     : "opacity-0 translate-y-4"
                 }`}
               >
-                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-black dark:text-white transition-colors duration-300">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-black dark:text-white">
                   {highlight.title || getDefaultTitle(index)}
                 </h2>
-                <p className="text-gray-700 dark:text-gray-300 mb-5 text-base leading-relaxed transition-colors duration-300">
+                <p className="text-gray-700 dark:text-gray-300 mb-5 text-base leading-relaxed">
                   {highlight.description || getDefaultDescription(index)}
                 </p>
                 <div className="mt-auto">
@@ -79,27 +79,23 @@ export default function CareerHighlights({ section }: CareerHighlightsProps) {
                 : "opacity-0 translate-x-8"
             }`}
           >
-            <div className="relative rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 p-4 shadow-lg dark:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
-              {section.image?.url ? (
-                <Image
-                  src={section.image.url}
-                  alt="Lyft vehicle illustration"
-                  width={400}
-                  height={400}
-                  className="object-contain w-full h-auto"
-                />
-              ) : (
-                <Image
-                  src="https://ext.same-assets.com/2392121160/2634659435.webp"
-                  alt="Lyft vehicle illustration"
-                  width={400}
-                  height={400}
-                  className="object-contain w-full h-auto"
-                />
-              )}
-              {/* Subtle overlay for dark mode contrast */}
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-100/20 to-transparent dark:from-gray-800/20 pointer-events-none" />
-            </div>
+            {section.image?.url ? (
+              <Image
+                src={section.image.url}
+                alt="Lyft vehicle illustration"
+                width={400}
+                height={400}
+                className="object-contain"
+              />
+            ) : (
+              <Image
+                src="https://ext.same-assets.com/2392121160/2634659435.webp"
+                alt="Lyft vehicle illustration"
+                width={400}
+                height={400}
+                className="object-contain"
+              />
+            )}
           </div>
         </div>
       </div>

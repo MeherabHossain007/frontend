@@ -56,7 +56,7 @@ export default function LanguageSwitcher() {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        className="flex items-center space-x-1 px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100"
+        className="flex items-center space-x-1 px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-black dark:text-white"
         onClick={() => setIsOpen(!isOpen)}
       >
         <Globe size={16} />
@@ -64,11 +64,11 @@ export default function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-1 bg-white rounded-md shadow-lg border border-gray-200 w-64 z-50">
+        <div className="absolute right-0 mt-1 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 w-64 z-50">
           {Object.entries(languages).map(([code, name]) => (
             <button
               key={code}
-              className="flex items-center justify-between w-full px-4 py-3 text-left text-sm hover:bg-gray-50"
+              className="flex items-center justify-between w-full px-4 py-3 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-black dark:text-white"
               onClick={() => updateLocale(code)}
             >
               {name}

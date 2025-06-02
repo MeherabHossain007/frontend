@@ -33,7 +33,7 @@ export default function CareerLayout({ page }: CareerLayoutProps) {
   };
 
   return (
-    <main className="w-full overflow-x-hidden mb-10">
+    <main className="w-full overflow-x-hidden pb-10">
       <SubNav />
       {sections.map((section) => (
         <motion.section

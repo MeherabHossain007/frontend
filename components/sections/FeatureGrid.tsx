@@ -55,23 +55,25 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
   };
 
   return (
-    <div ref={ref} className="w-full py-16 bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div ref={ref} className="w-full py-16 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
           <div>
             <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
               {section.title}
             </h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300">{section.subtitle}</p>
+            <p className="text-lg text-gray-700 dark:text-gray-300">
+              {section.subtitle}
+            </p>
           </div>
 
           <div className="flex space-x-3">
             <button
               onClick={handlePrev}
-              className={`flex items-center justify-center w-12 h-12 rounded-full border transition-all duration-200 ${
+              className={`flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 dark:border-gray-600 transition-colors ${
                 !isBeginning
-                  ? "border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500"
-                  : "border-gray-200 dark:border-gray-700 text-gray-300 dark:text-gray-600 cursor-not-allowed"
+                  ? "text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                  : "text-gray-300 dark:text-gray-600 cursor-not-allowed"
               }`}
               disabled={isBeginning}
               aria-label="Previous slide"
@@ -81,10 +83,10 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
 
             <button
               onClick={handleNext}
-              className={`flex items-center justify-center w-12 h-12 rounded-full transition-all duration-200 ${
+              className={`flex items-center justify-center w-12 h-12 rounded-full transition-colors ${
                 !isEnd
-                  ? "bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white shadow-lg hover:shadow-xl"
-                  : "bg-indigo-300 dark:bg-indigo-800 cursor-not-allowed text-white dark:text-gray-400"
+                  ? "bg-indigo-600 hover:bg-indigo-700 text-white"
+                  : "bg-indigo-300 dark:bg-indigo-800 cursor-not-allowed text-white"
               }`}
               disabled={isEnd}
               aria-label="Next slide"
@@ -115,19 +117,19 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
           >
             {features.map((feature, index) => (
               <SwiperSlide key={feature.id || index} className="!w-64">
-                <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col items-center bg-white dark:bg-gray-800 shadow-sm hover:shadow-md dark:shadow-gray-900/20 dark:hover:shadow-gray-900/40 transition-all duration-300 h-full">
+                <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col items-center bg-white dark:bg-gray-800 shadow-sm hover:shadow-md dark:hover:shadow-lg transition-shadow duration-300 h-full">
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center">
                     {feature.title}
                   </h3>
 
                   {feature.icon && (
-                    <div className="relative w-36 h-24 mb-6 flex-shrink-0 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <div className="relative w-36 h-24 mb-6 flex-shrink-0">
                       <Image
                         src={`${feature.icon.url}`}
                         alt={feature.title || "Feature icon"}
                         fill
                         sizes="144px"
-                        className="object-contain dark:brightness-110"
+                        className="object-contain"
                       />
                     </div>
                   )}
@@ -144,24 +146,25 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
                               </p>
                             ),
                             heading: ({ children, level }) => {
-                              const Tag = `h${level}` as keyof JSX.IntrinsicElements;
-                              const headingClasses = {
-                                1: "text-2xl",
-                                2: "text-xl",
-                                3: "text-lg",
-                                4: "text-base",
-                                5: "text-sm",
-                                6: "text-sm"
-                              }[level] || "text-lg";
-                              
+                              const Tag =
+                                `h${level}` as keyof JSX.IntrinsicElements;
                               return (
-                                <Tag className={`${headingClasses} font-bold mb-4 w-full text-gray-900 dark:text-white`}>
+                                <Tag
+                                  className={`text-${
+                                    level === 1
+                                      ? "2xl"
+                                      : level === 2
+                                      ? "xl"
+                                      : "lg"
+                                  } font-bold mb-4 w-full text-gray-900 dark:text-white`}
+                                >
                                   {children}
                                 </Tag>
                               );
                             },
                             list: ({ children, format }) => {
-                              const ListTag = format === "ordered" ? "ol" : "ul";
+                              const ListTag =
+                                format === "ordered" ? "ol" : "ul";
                               return (
                                 <ListTag className="list-inside list-disc pl-5 mb-4 w-full text-gray-700 dark:text-gray-300">
                                   {children}
@@ -172,17 +175,17 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
                               <li className="mb-2">{children}</li>
                             ),
                             quote: ({ children }) => (
-                              <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400 mb-4 w-full bg-gray-50 dark:bg-gray-700 py-2 rounded-r">
+                              <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 italic text-gray-600 dark:text-gray-400 mb-4 w-full">
                                 {children}
                               </blockquote>
                             ),
                             code: ({ plainText }) => (
-                              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto w-full text-sm border border-gray-200 dark:border-gray-600">
-                                <code className="text-gray-800 dark:text-gray-200">{plainText}</code>
+                              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto w-full text-sm text-gray-900 dark:text-gray-100">
+                                <code>{plainText}</code>
                               </pre>
                             ),
                             image: ({ image }) => (
-                              <div className="mb-4 w-full rounded-lg overflow-hidden">
+                              <div className="mb-4 w-full">
                                 <Image
                                   src={image.url}
                                   width={image.width}
@@ -195,7 +198,7 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
                             link: ({ children, url }) => (
                               <a
                                 href={url}
-                                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline transition-colors"
+                                className="text-blue-600 dark:text-blue-400 hover:underline"
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
@@ -204,14 +207,12 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
                             ),
                           }}
                           modifiers={{
-                            bold: ({ children }) => (
-                              <strong className="text-gray-900 dark:text-white">{children}</strong>
-                            ),
+                            bold: ({ children }) => <strong>{children}</strong>,
                             italic: ({ children }) => <em>{children}</em>,
                             underline: ({ children }) => <u>{children}</u>,
                             strikethrough: ({ children }) => <s>{children}</s>,
                             code: ({ children }) => (
-                              <code className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1 py-0.5 rounded text-sm">
+                              <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded text-sm text-gray-900 dark:text-gray-100">
                                 {children}
                               </code>
                             ),
@@ -246,16 +247,10 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
           display: none;
         }
 
-        /* Custom scrollbar styling for dark mode */
+        /* Optional: Custom scrollbar styling */
         .swiper-scrollbar {
           background: rgba(0, 0, 0, 0.1);
           border-radius: 10px;
-        }
-
-        @media (prefers-color-scheme: dark) {
-          .swiper-scrollbar {
-            background: rgba(255, 255, 255, 0.1);
-          }
         }
 
         .swiper-scrollbar-drag {
@@ -263,19 +258,11 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
           border-radius: 10px;
         }
 
-        /* Dark mode support for class-based dark mode */
-        .dark .swiper-scrollbar {
-          background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .dark .swiper-scrollbar-drag {
-          background: #818cf8;
-        }
-
-        /* Enhanced hover effects for cards */
-        .dark .swiper-slide > div:hover {
-          border-color: rgba(75, 85, 99, 0.8);
-          background-color: rgba(55, 65, 81, 0.9);
+        /* Dark mode scrollbar */
+        @media (prefers-color-scheme: dark) {
+          .dark .swiper-scrollbar {
+            background: rgba(255, 255, 255, 0.1);
+          }
         }
       `}</style>
     </div>

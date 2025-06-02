@@ -68,7 +68,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
           <div className="flex justify-center w-full lg:w-1/3">
             <div className="relative h-[300px] w-full sm:h-[400px] md:h-[500px] lg:h-[600px] max-w-lg">
               {section.slides[currentSlide].image?.url && (
-                <div className="relative w-full h-full bg-white/10 dark:bg-gray-800/20 rounded-2xl backdrop-blur-sm border border-white/20 dark:border-gray-700/30 shadow-xl">
+                <div className="relative w-full h-full rounded-2xl">
                   <Image
                     src={section.slides[currentSlide].image.url}
                     alt={section.slides[currentSlide].title || "Feature image"}
@@ -129,21 +129,6 @@ const FeatureSlider = ({ section }: SliderProps) => {
                 }`}
               />
             ))}
-          </div>
-        )}
-
-        {/* Progress bar for auto-advancing slides */}
-        {hasMultipleSlides && inView && (
-          <div className="w-full max-w-xs mx-auto mt-4">
-            <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-black dark:bg-white rounded-full transition-all duration-300 ease-linear"
-                style={{
-                  width: `${((currentSlide + 1) / section.slides.length) * 100}%`,
-                  animation: hasMultipleSlides ? 'slideProgress 5s linear infinite' : 'none'
-                }}
-              />
-            </div>
           </div>
         )}
       </div>
