@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useNavigationLink } from "@/lib/hooks/useNavigationLink";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import PaymentSection from "../sections/Payment/PaymentSection";
 import LanguageSwitcher from "../ui/LanguageSwitcher";
@@ -12,6 +13,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const { data, loading } = useNavigationLink();
+  const pathname = usePathname();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -21,6 +23,13 @@ export default function Navbar() {
   };
 
   const closePaymentModal = () => setIsPaymentModalOpen(false);
+
+  // Function to check if a navigation item is active
+  const isActiveLink = (url: string) => {
+    if (url === "/" && pathname === "/") return true;
+    if (url !== "/" && pathname.startsWith(url)) return true;
+    return false;
+  };
 
   if (loading) {
     return (
@@ -64,7 +73,11 @@ export default function Navbar() {
               <Link
                 key={item.id}
                 href={item.url}
-                className="text-gray-900 dark:text-gray-100 hover:text-pink-500 dark:hover:text-pink-400 font-semibold text-sm uppercase border-r border-gray-200 dark:border-gray-700 px-6"
+                className={`font-semibold text-sm uppercase border-r border-gray-200 dark:border-gray-700 px-6 transition-colors duration-200 ${
+                  isActiveLink(item.url)
+                    ? "text-pink-500 dark:text-indigo-400 dark:bg-indigo-900/20"
+                    : "text-gray-900 dark:text-gray-100 hover:text-pink-500 dark:hover:text-pink-400"
+                }`}
               >
                 {item.label}
               </Link>
@@ -98,7 +111,11 @@ export default function Navbar() {
                 <Link
                   key={item.id}
                   href={item.url}
-                  className="text-gray-900 dark:text-gray-100 hover:text-pink-500 dark:hover:text-pink-400 font-semibold text-sm uppercase border-b border-gray-200 dark:border-gray-700 py-2"
+                  className={`font-semibold text-sm uppercase border-b border-gray-200 dark:border-gray-700 py-2 transition-colors duration-200 ${
+                    isActiveLink(item.url)
+                      ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 px-3 rounded-md"
+                      : "text-gray-900 dark:text-gray-100 hover:text-pink-500 dark:hover:text-pink-400"
+                  }`}
                 >
                   {item.label}
                 </Link>
