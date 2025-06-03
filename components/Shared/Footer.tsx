@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
-import { Facebook, Twitter, Linkedin, Globe } from "lucide-react";
+import { Facebook, Twitter, Linkedin } from "lucide-react";
 import { useNavigationLink } from "@/lib/hooks/useNavigationLink";
 import { useFooterLinks } from "@/lib/hooks/useFooterLinks";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
 
 export default function Footer() {
   const { data, loading } = useNavigationLink();
@@ -38,7 +39,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 pt-12 pb-8 border-t border-gray-200 dark:border-gray-700">
+    <footer className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 pt-12 pb-8 border-t border-gray-200 dark:border-gray-700 shadow-[inset_0_10px_30px_rgba(0,0,0,0.10)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main footer content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
@@ -81,8 +82,7 @@ export default function Footer() {
             </div>
 
             <div className="flex items-center">
-              <Globe size={20} className="mr-2 text-gray-500 dark:text-gray-400" />
-              <span className="font-medium">EN</span>
+              <LanguageSwitcher />
             </div>
           </div>
         </div>
@@ -90,16 +90,28 @@ export default function Footer() {
         {/* Bottom part with copyright */}
         <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-8">
           <div className="flex flex-wrap gap-6">
-            <Link href="/terms" className="hover:text-pink-600 dark:hover:text-pink-400 transition-colors">
+            <Link
+              href="/terms"
+              className="hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
+            >
               Terms
             </Link>
-            <Link href="/privacy" className="hover:text-pink-600 dark:hover:text-pink-400 transition-colors">
+            <Link
+              href="/privacy"
+              className="hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
+            >
               Privacy
             </Link>
-            <Link href="/accessibility" className="hover:text-pink-600 dark:hover:text-pink-400 transition-colors">
+            <Link
+              href="/accessibility"
+              className="hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
+            >
               Accessibility Statement
             </Link>
-            <Link href="/privacy-choices" className="hover:text-pink-600 dark:hover:text-pink-400 transition-colors">
+            <Link
+              href="/privacy-choices"
+              className="hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
+            >
               Your Privacy Choices
             </Link>
           </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
 import TawkTo from "@/services/TawkTo";
 import LogRocket from "@/services/LogRocket";
@@ -14,10 +14,14 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+const roboto = Roboto({
+  variable: "--font-roboto",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -34,7 +38,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-300`}
+        className={`${roboto.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-300`}
       >
         <Navbar />
         <TawkTo />
