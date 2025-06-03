@@ -1,5 +1,5 @@
 "use client";
-import { getGlobalData } from "@/controllers/page/globalController";
+import { getGlobalData } from "@/controllers/globalController";
 import { GlobalData, NavigationItem } from "@/interfaces/page.interface";
 import { useState, useEffect, useRef, useCallback } from "react";
 

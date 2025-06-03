@@ -2,10 +2,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import {
-  getHomePageData,
-  getPageMetadata,
-} from "@/controllers/page/pageController";
+import { getHomePageData, getPageMetadata } from "@/controllers/pageController";
 import HomeLayout from "@/components/layouts/HomeLayout";
 
 // Generate metadata for the home page

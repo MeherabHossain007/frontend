@@ -6,7 +6,7 @@ import LogRocket from "@/services/LogRocket";
 import Navbar from "@/components/Shared/Navbar";
 import Footer from "@/components/Shared/Footer";
 import GoogleAnalytics from "@/services/GoogleAnalytics";
-import { preloadGlobalData } from "@/controllers/page/globalController";
+import { preloadGlobalData } from "@/controllers/globalController";
 
 export const dynamic = "force-dynamic";
 

@@ -5,7 +5,7 @@ import {
   getAllPageSlugs,
   getPageDataBySlug,
   getPageMetadata,
-} from "@/controllers/page/pageController";
+} from "@/controllers/pageController";
 import UserType1Layout from "@/components/layouts/UserType1Layout";
 import CareerLayout from "@/components/layouts/CareerLayout";
 import UserType2Layout from "@/components/layouts/UserType2Layout";

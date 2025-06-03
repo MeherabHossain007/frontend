@@ -1,3 +1,4 @@
+"use client";
 import type { PageData } from "@/interfaces/page.interface";
 import type { Section } from "@/interfaces/section.interface";
 
