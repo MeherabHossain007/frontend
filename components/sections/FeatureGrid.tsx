@@ -55,11 +55,11 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
   };
 
   return (
-    <div ref={ref} className="w-full py-16 bg-white dark:bg-gray-900">
+    <div ref={ref} className="w-full py-16 bg-white dark:bg-zinc-900">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-12">
           <div>
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="text-4xl font-bold text-zfrom-zinc-900 dark:text-white mb-4">
               {section.title}
             </h2>
             <p className="text-lg text-gray-700 dark:text-gray-300">
@@ -72,7 +72,7 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
               onClick={handlePrev}
               className={`flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 dark:border-gray-600 transition-colors ${
                 !isBeginning
-                  ? "text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                  ? "text-black dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-800"
                   : "text-gray-300 dark:text-gray-600 cursor-not-allowed"
               }`}
               disabled={isBeginning}
@@ -118,8 +118,8 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
             >
               {features.map((feature, index) => (
                 <SwiperSlide key={feature.id || index} className="!w-64">
-                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col items-center bg-white dark:bg-gray-800 shadow-sm hover:shadow-md dark:hover:shadow-lg transition-shadow duration-300 h-full">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+                  <div className="border border-gray-200 dark:border-zinc-700 rounded-lg p-6 flex flex-col items-center bg-white dark:bg-zinc-800 shadow-sm hover:shadow-md dark:hover:shadow-lg transition-shadow duration-300 h-full">
+                    <h3 className="text-xl font-bold text-zfrom-zinc-900 dark:text-white mb-4 text-center">
                       {feature.title}
                     </h3>
 
@@ -157,7 +157,7 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
                                         : level === 2
                                         ? "xl"
                                         : "lg"
-                                    } font-bold mb-4 w-full text-gray-900 dark:text-white`}
+                                    } font-bold mb-4 w-full text-zfrom-zinc-900 dark:text-white`}
                                   >
                                     {children}
                                   </Tag>
@@ -181,7 +181,7 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
                                 </blockquote>
                               ),
                               code: ({ plainText }) => (
-                                <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto w-full text-sm text-gray-900 dark:text-gray-100">
+                                <pre className="bg-gray-100 dark:bg-zinc-800 p-4 rounded mb-4 overflow-x-auto w-full text-sm text-zfrom-zinc-900 dark:text-gray-100">
                                   <code>{plainText}</code>
                                 </pre>
                               ),
@@ -217,7 +217,7 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
                                 <s>{children}</s>
                               ),
                               code: ({ children }) => (
-                                <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded text-sm text-gray-900 dark:text-gray-100">
+                                <code className="bg-gray-200 dark:bg-gray-700 px-1 rounded text-sm text-zfrom-zinc-900 dark:text-gray-100">
                                   {children}
                                 </code>
                               ),
@@ -237,10 +237,10 @@ export default function FeatureGrid({ section }: FeatureGridProps) {
 
             {/* Gradient mask overlays */}
             {!isBeginning && (
-              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white dark:from-gray-900 to-transparent pointer-events-none z-10 transition-opacity duration-300"></div>
+              <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white dark:from-zinc-900 to-transparent pointer-events-none z-10 transition-opacity duration-300"></div>
             )}
             {!isEnd && (
-              <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none z-10 transition-opacity duration-300"></div>
+              <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white dark:from-zinc-900 to-transparent pointer-events-none z-10 transition-opacity duration-300"></div>
             )}
           </div>
         </div>

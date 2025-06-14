@@ -26,7 +26,7 @@ export default function FeatureSpotlight({ section }: FeatureSpotlightProps) {
   const secondFeature = featuresArray[1] || null;
 
   return (
-    <section className="bg-[#f7f7fc] dark:bg-gray-900 min-h-screen flex items-center justify-center px-6 py-16 transition-colors duration-300">
+    <section className="bg-[#f7f7fc] dark:bg-zinc-900 min-h-screen flex items-center justify-center px-6 py-16 transition-colors duration-300">
       <div className="max-w-6xl w-full grid md:grid-cols-2 gap-12 md:gap-0 md:divide-x md:divide-gray-300 dark:md:divide-gray-600">
         {/* Left Side - Only render if there's at least one feature */}
         <div className="space-y-8 pr-0 md:pr-12">
@@ -67,7 +67,11 @@ export default function FeatureSpotlight({ section }: FeatureSpotlightProps) {
                     heading: ({ children, level }) => {
                       const Tag = `h${level}` as keyof JSX.IntrinsicElements;
                       return (
-                        <Tag className={`text-${level * 2}xl font-bold mb-4 text-[#0a0033] dark:text-white`}>
+                        <Tag
+                          className={`text-${
+                            level * 2
+                          }xl font-bold mb-4 text-[#0a0033] dark:text-white`}
+                        >
                           {children}
                         </Tag>
                       );
@@ -90,7 +94,9 @@ export default function FeatureSpotlight({ section }: FeatureSpotlightProps) {
                     ),
                     code: ({ plainText }) => (
                       <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto">
-                        <code className="text-gray-800 dark:text-gray-200">{plainText}</code>
+                        <code className="text-gray-800 dark:text-gray-200">
+                          {plainText}
+                        </code>
                       </pre>
                     ),
                     image: ({ image }) => (
@@ -112,7 +118,11 @@ export default function FeatureSpotlight({ section }: FeatureSpotlightProps) {
                     ),
                   }}
                   modifiers={{
-                    bold: ({ children }) => <strong className="text-[#0a0033] dark:text-white">{children}</strong>,
+                    bold: ({ children }) => (
+                      <strong className="text-[#0a0033] dark:text-white">
+                        {children}
+                      </strong>
+                    ),
                     italic: ({ children }) => <em>{children}</em>,
                     underline: ({ children }) => <u>{children}</u>,
                     strikethrough: ({ children }) => <s>{children}</s>,
@@ -173,7 +183,11 @@ export default function FeatureSpotlight({ section }: FeatureSpotlightProps) {
                     heading: ({ children, level }) => {
                       const Tag = `h${level}` as keyof JSX.IntrinsicElements;
                       return (
-                        <Tag className={`text-${level * 2}xl font-bold mb-4 text-[#0a0033] dark:text-white`}>
+                        <Tag
+                          className={`text-${
+                            level * 2
+                          }xl font-bold mb-4 text-[#0a0033] dark:text-white`}
+                        >
                           {children}
                         </Tag>
                       );
@@ -196,7 +210,9 @@ export default function FeatureSpotlight({ section }: FeatureSpotlightProps) {
                     ),
                     code: ({ plainText }) => (
                       <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 overflow-x-auto">
-                        <code className="text-gray-800 dark:text-gray-200">{plainText}</code>
+                        <code className="text-gray-800 dark:text-gray-200">
+                          {plainText}
+                        </code>
                       </pre>
                     ),
                     image: ({ image }) => (
@@ -218,7 +234,11 @@ export default function FeatureSpotlight({ section }: FeatureSpotlightProps) {
                     ),
                   }}
                   modifiers={{
-                    bold: ({ children }) => <strong className="text-[#0a0033] dark:text-white">{children}</strong>,
+                    bold: ({ children }) => (
+                      <strong className="text-[#0a0033] dark:text-white">
+                        {children}
+                      </strong>
+                    ),
                     italic: ({ children }) => <em>{children}</em>,
                     underline: ({ children }) => <u>{children}</u>,
                     strikethrough: ({ children }) => <s>{children}</s>,

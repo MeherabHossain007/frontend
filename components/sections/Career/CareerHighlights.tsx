@@ -30,7 +30,7 @@ export default function CareerHighlights({ section }: CareerHighlightsProps) {
     <section
       ref={ref}
       id="highlights"
-      className={`w-full py-16 md:py-24 bg-white dark:bg-gray-900 transition-opacity duration-700 ${
+      className={`w-full py-16 md:py-24 bg-white dark:bg-zinc-900 transition-opacity duration-700 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >

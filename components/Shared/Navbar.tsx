@@ -41,7 +41,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
         <nav className="flex items-center justify-between h-16 px-4">
           {/* Logo */}
@@ -99,7 +99,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden bg-white dark:bg-gray-900 py-4 px-4 border-t border-gray-200 dark:border-gray-700 shadow-lg">
+          <div className="lg:hidden bg-white dark:bg-zinc-900 py-4 px-4 border-t border-gray-200 dark:border-gray-700 shadow-lg">
             <div className="flex flex-col space-y-4">
               <button
                 onClick={openPaymentModal}

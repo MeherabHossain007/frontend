@@ -123,7 +123,7 @@ export default function Ticker({ section }: TickerProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-2"
+      className="relative w-full overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100 dark:from-zinc-800 dark:to-zinc-800 py-2"
       aria-label="Ticker showcase"
     >
       <div ref={inViewRef} className="relative max-w-screen-2xl mx-auto">

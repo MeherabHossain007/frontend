@@ -38,7 +38,7 @@ export default function CareerLayout({ page }: CareerLayoutProps) {
       {sections.map((section) => (
         <motion.section
           key={section.id}
-          className="w-full bg-white dark:bg-gray-900"
+          className="w-full bg-white dark:bg-zinc-900"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}

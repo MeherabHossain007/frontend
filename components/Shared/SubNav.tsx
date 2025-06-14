@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function SubNav() {
   return (
-    <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+    <div className="bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-gray-700">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         <div className="flex space-x-6 overflow-x-auto py-3">
           <Link

@@ -4,6 +4,7 @@ import { Facebook, Twitter, Linkedin } from "lucide-react";
 import { useNavigationLink } from "@/lib/hooks/useNavigationLink";
 import { useFooterLinks } from "@/lib/hooks/useFooterLinks";
 import LanguageSwitcher from "../ui/LanguageSwitcher";
+import { PrimaryButton, SecondaryButton } from "../ui/Buttons";
 
 export default function Footer() {
   const { data, loading } = useNavigationLink();
@@ -24,7 +25,7 @@ export default function Footer() {
 
   if (loading) {
     return (
-      <footer className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 py-8">
+      <footer className="bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-100 py-8">
         <div className="animate-pulse max-w-7xl mx-auto px-4 sm:px-6">
           <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-40 mb-10"></div>
           <div className="flex flex-wrap gap-6">
@@ -39,7 +40,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 pt-12 pb-8 border-t border-gray-200 dark:border-gray-700 shadow-[inset_0_10px_30px_rgba(0,0,0,0.10)]">
+    <footer className="bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-100 pt-12 pb-8 border-t border-gray-200 dark:border-gray-700 shadow-[inset_0_10px_30px_rgba(0,0,0,0.10)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main footer content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
@@ -67,18 +68,18 @@ export default function Footer() {
           {/* App downloads and language selector */}
           <div className="space-y-6">
             <div className="space-y-2">
-              <Link
+              <PrimaryButton
                 href="#"
-                className="inline-block bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 px-6 py-3 rounded-full text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors w-full text-center"
+                text="Lyft driver app"
+                className="inline-block px-6 py-3 rounded-full text-sm font-medium transition-colors w-full text-center"
               >
-                Lyft driver app
-              </Link>
-              <Link
+              </PrimaryButton>
+              <SecondaryButton
                 href="#"
-                className="inline-block bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 px-6 py-3 rounded-full text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors w-full text-center"
+                text="Lyft rider app"
+                className="inline-block px-6 py-3 rounded-full text-sm font-medium transition-colors w-full text-center"
               >
-                Lyft rider app
-              </Link>
+              </SecondaryButton>
             </div>
 
             <div className="flex items-center">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Roboto } from "next/font/google";
+import { Calistoga } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import TawkTo from "@/services/TawkTo";
 import LogRocket from "@/services/LogRocket";
@@ -10,17 +11,43 @@ import { preloadGlobalData } from "@/controllers/globalController";
 
 export const dynamic = "force-dynamic";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+
+const calistoga = Calistoga({
+  variable: "--font-calistoga",
   subsets: ["latin"],
+  weight: "400",
+  display: "swap",
 });
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-const roboto = Roboto({
-  variable: "--font-roboto",
-  subsets: ["latin"],
+
+const gilroy = localFont({
+  src: [
+    {
+      path: "./fonts/Gilroy-Light_0.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Gilroy-Regular_0.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Gilroy-Medium_0.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Gilroy-SemiBold_0.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Gilroy-Bold_0.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-gilroy",
   display: "swap",
 });
 
@@ -38,7 +65,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body
         suppressHydrationWarning
-        className={`${roboto.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-300`}
+        className={`${calistoga.variable} ${gilroy.className} antialiased bg-white dark:bg-zinc-900 text-black dark:text-white transition-colors duration-300`}
       >
         <Navbar />
         <TawkTo />

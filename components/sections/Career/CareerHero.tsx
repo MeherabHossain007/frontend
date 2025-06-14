@@ -34,7 +34,10 @@ export default function CareerHero({ section }: CareerHeroProps) {
   const imageUrl = section.image?.url;
 
   return (
-    <section ref={ref} className="w-full bg-white dark:bg-gray-900 pt-8 pb-0 transition-colors duration-300">
+    <section
+      ref={ref}
+      className="w-full bg-white dark:bg-zinc-900 pt-8 pb-0 transition-colors duration-300"
+    >
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         {/* Top Label */}
         <div className="mb-6">

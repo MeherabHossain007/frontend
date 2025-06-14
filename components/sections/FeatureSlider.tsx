@@ -38,7 +38,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden flex flex-col justify-center items-center py-12 md:py-16 lg:py-20 bg-white dark:bg-gray-900 transition-colors duration-300"
+      className="relative w-full overflow-hidden flex flex-col justify-center items-center py-12 md:py-16 lg:py-20 bg-white dark:bg-zinc-900 transition-colors duration-300"
     >
       {/* Background */}
       <div
@@ -89,7 +89,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
             <p className="text-sm md:text-base text-black dark:text-white mb-6 max-w-sm text-center lg:text-left transition-colors duration-300">
               {section.slides[currentSlide].subtitle}
             </p>
-            
+
             {!hasMultipleSlides && section.slides[currentSlide].buttonText && (
               <SecondaryButton
                 key={section.slides[currentSlide].id}
@@ -101,7 +101,7 @@ const FeatureSlider = ({ section }: SliderProps) => {
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
               </SecondaryButton>
             )}
-            
+
             {hasMultipleSlides && section.slides[currentSlide].buttonText && (
               <Link
                 href={section.slides[currentSlide].buttonLink || "#"}
@@ -135,8 +135,12 @@ const FeatureSlider = ({ section }: SliderProps) => {
 
       <style jsx>{`
         @keyframes slideProgress {
-          0% { width: 0%; }
-          100% { width: 100%; }
+          0% {
+            width: 0%;
+          }
+          100% {
+            width: 100%;
+          }
         }
       `}</style>
     </section>

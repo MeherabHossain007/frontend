@@ -17,7 +17,7 @@ export default function HeroSection({ section, userType }: HeroSectionProps) {
   const showExtraInput = userType === "userType1";
 
   return (
-    <section className="w-full bg-white dark:bg-gray-900 py-16 px-4 md:px-6">
+    <section className="w-full bg-white dark:bg-zinc-900 py-16 px-4 md:px-6">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16">
         {/* Image Section */}
         <div className="w-full md:w-1/2">
@@ -80,7 +80,9 @@ export default function HeroSection({ section, userType }: HeroSectionProps) {
             </>
           ) : (
             <>
-              <p className="text-lg text-gray-700 dark:text-gray-300">{section.subtitle}</p>
+              <p className="text-lg text-gray-700 dark:text-gray-300">
+                {section.subtitle}
+              </p>
               <div className="pt-4">
                 <PrimaryButton
                   text={section.buttonText || "Get Started"}

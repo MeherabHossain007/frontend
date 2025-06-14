@@ -114,7 +114,10 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
   };
 
   return (
-    <section id="openings" className="w-full py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
+    <section
+      id="openings"
+      className="w-full py-16 bg-white dark:bg-zinc-900 transition-colors duration-200"
+    >
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         {/* Header with search icon */}
         <div className="flex items-center mb-8">
@@ -151,7 +154,10 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
               >
                 <option>All categories</option>
                 {departments.map((department) => (
-                  <option key={department || "other"} className="bg-white dark:bg-gray-800 text-black dark:text-white">
+                  <option
+                    key={department || "other"}
+                    className="bg-white dark:bg-gray-800 text-black dark:text-white"
+                  >
                     {department || "Other"}
                   </option>
                 ))}
@@ -170,7 +176,10 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
               >
                 <option>All locations</option>
                 {locations.map((location) => (
-                  <option key={createLocationKey(location)} className="bg-white dark:bg-gray-800 text-black dark:text-white">
+                  <option
+                    key={createLocationKey(location)}
+                    className="bg-white dark:bg-gray-800 text-black dark:text-white"
+                  >
                     {location}
                   </option>
                 ))}
@@ -232,7 +241,10 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
               if (positions.length === 0) return null;
 
               return (
-                <div key={department} className="border-b-4 border-black dark:border-gray-600">
+                <div
+                  key={department}
+                  className="border-b-4 border-black dark:border-gray-600"
+                >
                   <button
                     onClick={() => toggleCategory(department)}
                     className="w-full flex justify-between items-center py-5 text-left focus:outline-none hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
@@ -241,9 +253,15 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                       {department}
                     </h3>
                     {expandedCategory === department ? (
-                      <ChevronUp className="text-gray-700 dark:text-gray-300" size={20} />
+                      <ChevronUp
+                        className="text-gray-700 dark:text-gray-300"
+                        size={20}
+                      />
                     ) : (
-                      <ChevronDown className="text-gray-700 dark:text-gray-300" size={20} />
+                      <ChevronDown
+                        className="text-gray-700 dark:text-gray-300"
+                        size={20}
+                      />
                     )}
                   </button>
 
@@ -267,7 +285,10 @@ export default function CareerJobListings({ section }: CareerJobListingsProps) {
                               </p>
                             </div>
                             {expandedPosition === position.id ? (
-                              <ChevronUp className="text-gray-700 dark:text-gray-300" size={16} />
+                              <ChevronUp
+                                className="text-gray-700 dark:text-gray-300"
+                                size={16}
+                              />
                             ) : (
                               <ChevronDown
                                 className="text-gray-700 dark:text-gray-300"
