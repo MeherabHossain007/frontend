@@ -16,20 +16,15 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
   const openPaymentModal = () => {
     setIsPaymentModalOpen(true);
     if (isMenuOpen) setIsMenuOpen(false);
   };
-
   const closePaymentModal = () => setIsPaymentModalOpen(false);
 
-  // Function to check if a navigation item is active
-  const isActiveLink = (url: string) => {
-    if (url === "/" && pathname === "/") return true;
-    if (url !== "/" && pathname.startsWith(url)) return true;
-    return false;
-  };
+  const isActiveLink = (url: string) =>
+    (url === "/" && pathname === "/") ||
+    (url !== "/" && pathname.startsWith(url));
 
   if (loading) {
     return (
@@ -41,66 +36,62 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto">
-        <nav className="flex items-center justify-between h-16 px-4">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link href="/">
-              <div className="flex items-center gap-2">
-                {data?.favicon?.url && (
-                  <Image
-                    src={data.favicon.url}
-                    alt={data.siteName}
-                    width={40}
-                    height={40}
-                    className="h-10 w-auto object-contain"
-                  />
-                )}
-              </div>
-            </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:justify-end lg:flex-1">
-            <button
-              className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold rounded-full transition duration-150 mr-4"
-              onClick={openPaymentModal}
-            >
-              Get a ride
-            </button>
-            {data?.navigation?.map((item) => (
-              <Link
-                key={item.id}
-                href={item.url}
-                className={`font-semibold text-sm uppercase border-r border-gray-200 dark:border-gray-700 px-6 transition-colors duration-200 ${
-                  isActiveLink(item.url)
-                    ? "text-pink-500"
-                    : "text-gray-900 dark:text-gray-100 hover:text-pink-500 dark:hover:text-pink-400"
-                }`}
-              >
-                {item.label}
+    <>
+      <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto">
+          <nav className="flex items-center justify-between h-16 px-4">
+            <div className="flex-shrink-0">
+              <Link href="/">
+                <div className="flex items-center gap-2">
+                  {data?.favicon?.url && (
+                    <Image
+                      src={data.favicon.url}
+                      alt={data.siteName}
+                      width={40}
+                      height={40}
+                      className="h-10 w-auto object-contain"
+                    />
+                  )}
+                </div>
               </Link>
-            ))}
-            <div className="flex items-center ml-5 gap-3">
-              <DarkModeSwitcher />
-              <LanguageSwitcher />
             </div>
-          </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden text-gray-900 dark:text-gray-100"
-            onClick={toggleMenu}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </nav>
+            <div className="hidden lg:flex lg:items-center lg:justify-end lg:flex-1">
+              <button
+                className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold rounded-full transition duration-150 mr-4"
+                onClick={openPaymentModal}
+              >
+                Get a ride
+              </button>
+              {data?.navigation?.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.url}
+                  className={`font-semibold text-sm uppercase border-r border-gray-200 dark:border-gray-700 px-6 transition-colors duration-200 ${
+                    isActiveLink(item.url)
+                      ? "text-pink-500"
+                      : "text-gray-900 dark:text-gray-100 hover:text-pink-500 dark:hover:text-pink-400"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <div className="flex items-center ml-5 gap-3">
+                <DarkModeSwitcher />
+                <LanguageSwitcher />
+              </div>
+            </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden bg-white dark:bg-zinc-900 py-4 px-4 border-t border-gray-200 dark:border-gray-700 shadow-lg">
-            <div className="flex flex-col space-y-4">
+            <button
+              className="lg:hidden text-gray-900 dark:text-gray-100"
+              onClick={toggleMenu}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </nav>
+
+          {isMenuOpen && (
+            <div className="lg:hidden bg-white dark:bg-zinc-900 py-4 px-4 border-t border-gray-200 dark:border-gray-700 shadow-lg">
               <button
                 onClick={openPaymentModal}
                 className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold rounded-full w-full"
@@ -125,28 +116,26 @@ export default function Navbar() {
                 <LanguageSwitcher />
               </div>
             </div>
-          </div>
-        )}
-      </div>
-
-      {/* Payment Modal */}
+          )}
+        </div>
+      </header>
       {isPaymentModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fadeIn">
-          <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-auto transform transition-all duration-300 animate-scaleIn">
-            <div className="flex justify-end p-2">
+        <div className="absolute inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center overflow-y-auto">
+          <div className="relative bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-end pr-4 pt-4">
               <button
                 onClick={closePaymentModal}
-                className="p-2 rounded-full transition-colors hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="p-2 rounded-full transition-colors hover:bg-gray-100 dark:hover:bg-zinc-700"
               >
                 <X size={24} className="text-gray-900 dark:text-gray-100" />
               </button>
             </div>
-            <div className="px-6 pb-8">
+            <div className="p-6">
               <PaymentSection />
             </div>
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
