@@ -53,7 +53,7 @@ export default function PaymentSection() {
               title="Onramper Payment Widget"
               allow="accelerometer; autoplay; camera; gyroscope; payment; microphone"
               allowFullScreen
-              className="w-full h-[500px] rounded-lg border border-gray-200 dark:border-gray-600"
+              className="w-full h-screen rounded-lg"
               onLoad={() => setIframeLoaded(true)}
             />
           </div>
