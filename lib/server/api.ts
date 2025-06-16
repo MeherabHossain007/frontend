@@ -23,7 +23,7 @@ export async function getPage(slug: string): Promise<PageData | null> {
         cache: "force-cache",
         next: {
           revalidate: 60,
-          tags: [`page-${slug}`],
+          tags: [`page-${slug}-${locale}`],
         },
       }
     );
